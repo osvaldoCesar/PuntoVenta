@@ -213,6 +213,9 @@
                 fullscreenLoading: false,
             }
         },
+        mounted(){
+            this.getListarUsuarios()
+        },
         computed: {
             // Obtener el número de páginas
             pageCount(){
@@ -251,7 +254,12 @@
                 this.listUsuarios = [];
             },
             getListarUsuarios(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando usuarios...'
+                })
                 var url = '/administracion/usuario/getListarUsuarios'
                 axios.get(url, {
                     params: {
@@ -263,14 +271,14 @@
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listUsuarios =  response.data;
-                    this.fullscreenLoading = false;
+                    loading.close()
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close()
                     }
                 });
             },

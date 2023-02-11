@@ -132,6 +132,9 @@
                 fullscreenLoading: false,
             }
         },
+        mounted() {
+            this.getListarCategorias();
+        },
         computed: {
             // Obtener el número de páginas
             pageCount(){
@@ -168,7 +171,12 @@
                 this.listCategorias = [];
             },
             getListarCategorias(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando categorías...'
+                })
                 var url = '/configuracion/categoria/getListarCategorias'
                 axios.get(url, {
                     params: {
@@ -178,14 +186,14 @@
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listCategorias =  response.data;
-                    this.fullscreenLoading = false;
+                    loading.close();
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close();
                     }
                 });
             },

@@ -135,6 +135,9 @@
                 fullscreenLoading: false,
             }
         },
+        mounted(){
+            this.getListarClientes();
+        },
         computed: {
             // Obtener el número de páginas
             pageCount(){
@@ -168,7 +171,12 @@
                 this.fillBsqCliente.cDocumento   = '';
             },
             getListarClientes(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando clientes...'
+                })
                 var url = '/operacion/cliente/getListarClientes'
                 axios.get(url, {
                     params: {
@@ -178,14 +186,14 @@
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listClientes =  response.data;
-                    this.fullscreenLoading = false;
+                    loading.close();
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close();
                     }
                 });
             },

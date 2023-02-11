@@ -132,6 +132,9 @@ import axios from 'axios';
                 perPage: 5,
             }
         },
+        mounted(){
+            this.getListarPermisos();
+        },
         computed: {
             // Obtener el número de páginas
             pageCount(){
@@ -166,7 +169,12 @@ import axios from 'axios';
                 this.fillBsqPermiso.cSlug = '';
             },
             getListarPermisos(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando permisos...'
+                })
                 var url = '/administracion/permiso/getListarPermisos'
                 axios.get(url, {
                     params: {
@@ -176,8 +184,16 @@ import axios from 'axios';
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listPermisos =  response.data;
-                    this.fullscreenLoading = false;
-                })
+                    loading.close();
+                }).catch(error =>{
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        loading.close();
+                    }
+                });
             },
             nextPage() {
                 this.pageNumber++;

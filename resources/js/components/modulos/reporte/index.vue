@@ -178,6 +178,9 @@
                 perPage: 5
             }
         },
+        mounted(){
+            this.getListarPedidos()
+        },
         computed: {
             // Obtener el número de páginas
             pageCount() {
@@ -231,7 +234,12 @@
                 this.fillBsqPedido.cEstado    =   '';
             },
             getListarPedidos(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando pedidos...'
+                })
 
                 var url = '/reporte/pedido/getListarPedidos'
                 axios.get(url, {
@@ -246,24 +254,23 @@
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listPedidos   =   response.data;
-                    this.fullscreenLoading = false;
+                    loading.close()
                 }).catch(error => {
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close()
                     }
                 })
             },
             setGenerarDocumento(){
                 const loading = this.$vs.loading({
-                    type: 'circles',
-                    color: '#AC8600',
-                    background: '#E5D9AF',
-                    text: 'Cargando...'
-                })
-
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Generando documento...'
+                });
                 var url = '/reporte/pedido/export'
                 axios.get(url, {
                     responseType: 'blob',
@@ -282,7 +289,7 @@
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close()
                     }
                 })
             },

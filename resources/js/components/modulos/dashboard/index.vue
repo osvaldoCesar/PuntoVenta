@@ -53,8 +53,15 @@
             }
         },
         mounted(){
+            const loading = this.$vs.loading({
+                type: 'points',
+                color: '#90A637',
+                background: '#DBE6B1',
+                text: 'Cargando...'
+            })
             this.getProductosMasVendidos();
             this.getVentasPorDia();
+            loading.close();
         },
         methods: {
             getProductosMasVendidos(){

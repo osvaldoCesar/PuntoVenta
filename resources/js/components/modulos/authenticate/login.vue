@@ -70,10 +70,10 @@
                     return;
                 }
                 const loading = this.$vs.loading({
-                    type: 'circles',
-                    color: '#AC8600',
-                    background: '#E5D9AF',
-                    text: 'Cargando...'
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Iniciando sesión...'
                 })
                 var url = '/authenticate/login'
                 axios.post(url,{

@@ -197,23 +197,25 @@
                 this.listProductos = [];
             },
             getListarCategorias(){
-                this.fullscreenLoading = true;
                 var url = '/configuracion/categoria/getListarCategorias'
                 axios.get(url).then(response => {
                     this.listCategorias =  response.data;
-                    this.fullscreenLoading = false;
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
                 });
             },
             getListarProductos(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando productos...'
+                })
                 var url = '/configuracion/producto/getListarProductos'
                 axios.get(url, {
                     params: {
@@ -224,14 +226,14 @@
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listProductos =  response.data;
-                    this.fullscreenLoading = false;
+                    loading.close();
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close();
                     }
                 });
             },

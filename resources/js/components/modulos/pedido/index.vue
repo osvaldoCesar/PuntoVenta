@@ -222,7 +222,12 @@
                 this.listPedidos = [];
             },
             getListarPedidos(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando pedidos...'
+                })
                 var url = '/operacion/pedido/getListarPedidos'
                 axios.get(url, {
                     params: {
@@ -234,23 +239,23 @@
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listPedidos =  response.data;
-                    this.fullscreenLoading = false;
+                    loading.close();
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close();
                     }
                 });
             },
             setGenerarDocumento(nIdPedido){
                 const loading = this.$vs.loading({
-                    type: 'circles',
-                    color: '#AC8600',
-                    background: '#E5D9AF',
-                    text: 'Cargando...'
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Generando documento...'
                 })
 
                 var config = {
@@ -271,7 +276,7 @@
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close();
                     }
                 });
             },
@@ -286,7 +291,12 @@
                 }).then((result) => {
                     if (result.value) {
                         // Aquí irá la confirmación del botón, petición al servidor
-                        this.fullscreenLoading = true;
+                        const loading = this.$vs.loading({
+                            type: 'points',
+                            color: '#90A637',
+                            background: '#DBE6B1',
+                            text: 'Validando...'
+                        })
                         var url = '/operacion/pedido/setCambiarEstadoPedido';
                         axios.post(url, {
                             'nIdPedido': id,
@@ -298,13 +308,13 @@
                                 showConfirmButton: false,
                                 timer: 1500,
                             })
-                            this.getListarPedidos();
+                            loading.close();
                         }).catch(error =>{
                             if (error.response.status == 401) {
                                 this.$router.push({name: 'login'})
                                 location.reload();
                                 sessionStorage.clear();
-                                this.fullscreenLoading = false;
+                                loading.close();
                             }
                         });
                     }

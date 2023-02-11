@@ -232,6 +232,9 @@ import axios from 'axios';
                 mensajeError: []
             }
         },
+        mounted(){
+            this.getListarRoles()
+        },
         computed: {
             // Obtener el número de páginas
             pageCount(){
@@ -279,7 +282,12 @@ import axios from 'axios';
                 this.modalOption         = 0;
             },
             getListarRoles(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando roles...'
+                })
                 var url = '/administracion/rol/getListarRoles'
                 axios.get(url, {
                     params: {
@@ -289,14 +297,14 @@ import axios from 'axios';
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listRoles =  response.data;
-                    this.fullscreenLoading = false;
+                    loading.close()
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close()
                     }
                 });
             },
@@ -328,7 +336,6 @@ import axios from 'axios';
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
                 });
             },
