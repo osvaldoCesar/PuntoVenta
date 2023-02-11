@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{csrf_token()}}">
-    <title>Curso de Laravel y VuewJS</title>
+    <title>Punto de venta Welldent</title>
 
     <link rel="stylesheet" href="{{ asset('css/plantilla.css') }}">
     <!-- Google Font: Source Sans Pro -->

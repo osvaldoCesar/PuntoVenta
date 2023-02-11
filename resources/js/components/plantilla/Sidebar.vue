@@ -3,8 +3,8 @@ import axios from 'axios';
     <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-expand">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img :src="ruta + '/img/adminLTELogo.png'" alt="Sistema Laravel Vue" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">Sistema Laravel Vue</span>
+            <img :src="ruta + '/img/adminLTELogo.png'" alt="Punto de venta Welldent" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Punto de venta Welldent</span>
         </a>
         <!-- Sidebar -->
         <div class="sidebar">
@@ -44,7 +44,7 @@ import axios from 'axios';
                             </router-link>
                         </template>
                     </li>
-                    <template v-if="listPermisos.includes('pedido.index', 'cliente.index')">
+                    <template v-if="listPermisos.includes('pedido.index', 'cliente.index', 'doctor.index')">
                         <li class="nav-header">OPERACIONES</li>
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('pedido.index')">
@@ -57,8 +57,18 @@ import axios from 'axios';
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('cliente.index')">
                                 <router-link :to="'/cliente'" class="nav-link">
-                                    <i class="nav-icon fas fa-user-friends"></i>
+                                    <i class="nav-icon fa-solid fa-user-doctor"></i>
+                                    <!-- <i class="nav-icon fas fa-user-friends"></i> -->
                                     <p>Clientes</p>
+                                </router-link>
+                            </template>
+                        </li>
+
+                        <li class="nav-item">
+                            <template v-if="listPermisos.includes('doctor.index')">
+                                <router-link :to="'/cliente'" class="nav-link">
+                                    <i class="nav-icon fas fa-user-friends"></i>
+                                    <p>Doctores</p>
                                 </router-link>
                             </template>
                         </li>
