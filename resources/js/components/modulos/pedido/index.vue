@@ -79,7 +79,10 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-md-4 offset-4">
-                            <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarPedidos" v-loading.fullscreen.lock="fullscreenLoading">Buscar</button>
+                            <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarPedidos"
+                            element-loading-text="Cargando..."
+                            element-loading-background="rgba(0, 0, 0, 0.5)"
+                            v-loading.fullscreen.lock="fullscreenLoading">Buscar</button>
                             <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarCriteriosBsq">Limpiar</button>
                         </div>
                     </div>

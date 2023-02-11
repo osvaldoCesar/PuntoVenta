@@ -116,3 +116,23 @@
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
     background-color: #90a637;
 }
+
+.el-loading-spinner .path {
+    stroke: #90a637 !important;
+    stroke-width: 6px !important;
+}
+
+.el-loading-spinner .el-loading-text {
+    color: #90a637 !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.el-loading-mask.is-fullscreen .el-loading-spinner .circular {
+    height: 80px !important;
+    width: 80px !important;
+}
+
+.vs-loading__load__text {
+    font-size: 1.0em !important;
+}

@@ -3,8 +3,11 @@ import axios from 'axios';
     <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-expand">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img :src="ruta + '/img/adminLTELogo.png'" alt="Punto de venta Welldent" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">Punto de venta Welldent</span>
+            <vs-avatar circle>
+                <img :src="ruta + '/img/adminLTELogo.png'" alt="Punto de venta Welldent">
+            </vs-avatar>
+            <!-- <img :src="ruta + '/img/adminLTELogo.png'" alt="Punto de venta Welldent" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
+            <span class="brand-text font-weight-light">Punto de venta</span>
         </a>
         <!-- Sidebar -->
         <div class="sidebar">
@@ -12,10 +15,16 @@ import axios from 'axios';
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
                     <template v-if="!usuario.file_id">
-                        <img :src="ruta + '/img/avatar.png'" class="img-circle elevation-2" :alt="usuario.fullname">
+                        <vs-avatar circle>
+                            <img :src="ruta + '/img/avatar.png'" :alt="usuario.fullname">
+                        </vs-avatar>
+                        <!-- <img :src="ruta + '/img/avatar.png'" class="img-circle elevation-2" :alt="usuario.fullname"> -->
                     </template>
                     <template v-else>
-                        <img :src="usuario.file.path" class="img-circle elevation-2" :alt="usuario.fullname" style="height: 34px !important">
+                        <vs-avatar circle>
+                            <img :src="usuario.file.path" :alt="usuario.fullname">
+                        </vs-avatar>
+                        <!-- <img :src="usuario.file.path" class="img-circle elevation-2" :alt="usuario.fullname" style="height: 34px !important"> -->
                     </template>
                 </div>
                 <div class="info">
@@ -57,8 +66,7 @@ import axios from 'axios';
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('cliente.index')">
                                 <router-link :to="'/cliente'" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-user-doctor"></i>
-                                    <!-- <i class="nav-icon fas fa-user-friends"></i> -->
+                                    <i class="nav-icon fas fa-user-friends"></i>
                                     <p>Clientes</p>
                                 </router-link>
                             </template>
@@ -66,8 +74,8 @@ import axios from 'axios';
 
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('doctor.index')">
-                                <router-link :to="'/cliente'" class="nav-link">
-                                    <i class="nav-icon fas fa-user-friends"></i>
+                                <router-link :to="'/doctor'" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-user-doctor"></i>
                                     <p>Doctores</p>
                                 </router-link>
                             </template>
