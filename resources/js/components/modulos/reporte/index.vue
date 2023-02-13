@@ -31,7 +31,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">#Documento</label>
+                                                <label class="col-md-3 col-form-label">RFC Cliente</label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control" v-model="fillBsqPedido.cDocumento" @keyup.enter="getListarPedidos">
                                                 </div>
@@ -106,7 +106,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#Pedido</th>
-                                                <th>#Documento</th>
+                                                <th>RFC Cliente</th>
                                                 <th>Cliente</th>
                                                 <th>Total</th>
                                                 <th>Vendedor</th>

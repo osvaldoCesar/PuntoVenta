@@ -51,17 +51,17 @@
 
 <body>
     <div class="cabecera">
-        <table width="50%" cellspacing="0" cellspacing="1" border="1" align="center">
+        <table width="100%" cellspacing="0" cellspacing="1" border="1" align="center">
             <tr>
                 <td>
-                    <table width="50%" cellspacing="0" cellspacing="1" align="center">
+                    <table width="100%" cellspacing="0" cellspacing="1" align="center">
                         <tr>
-                            <td>
-                                <img src="{{$logo}}" alt="Punto Venta Welldent" class="logo" width="50" height="50">
+                            <td align="center">
+                                <img src="{{$logo}}" alt="Logo de Welldent" class="logo" width="100" height="100">
                             </td>
                         </tr>
                         <tr>
-                            <td width="50%" cellspacing="0" cellspacing="1" align="center">
+                            <td width="100%" cellspacing="0" cellspacing="1" align="center">
                                 Servicio de Welldent
                             </td>
                         </tr>
@@ -85,12 +85,16 @@
                             <td>Vendedor</td>
                             <td>{{$rpta1[0]->cVendedor}}</td>
                         </tr>
+                        <tr>
+                            <td>Doctor Asignado</td>
+                            <td>{{$rpta1[0]->dDoctor}}</td>
+                        </tr>
                     </table>
                 </td>
             </tr>
         </table>
 
-        <table width="50%" cellspacing="0" cellspacing="1" border="1" align="center">
+        <table width="100%" cellspacing="0" cellspacing="1" border="1" align="center">
             <tr align="center" align="middle">
                 <td colspan="2">
                     <h3><strong>Información del Cliente</strong></h3>
@@ -115,7 +119,7 @@
         </table>
 
         @if (count($rpta2) > 0)
-        <table width="50%" cellspacing="0" cellspacing="1" border="1" align="center">
+        <table width="100%" cellspacing="0" cellspacing="1" border="1" align="center">
             <thead style="background-color: lightgray;">
                 <tr align="center" align="middle">
                     <th colspan="5">Detalle del Pedido</th>

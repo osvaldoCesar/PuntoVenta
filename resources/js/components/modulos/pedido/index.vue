@@ -39,9 +39,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">#Documento</label>
+                                                <label class="col-md-3 col-form-label">RFC Cliente</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqPedido.cDescripcion" @keyup.enter="getListarPedidos">
+                                                    <input type="text" class="form-control" v-model="fillBsqPedido.cDocumento" @keyup.enter="getListarPedidos">
                                                 </div>
                                             </div>
                                         </div>
@@ -98,8 +98,9 @@
                             <thead>
                                 <tr>
                                     <th>#Pedido</th>
-                                    <th>#Documento</th>
+                                    <th>RFC Cliente</th>
                                     <th>Cliente</th>
+                                    <th>Doctor</th>
                                     <th>Total</th>
                                     <th>Vendedor</th>
                                     <th>Estado</th>
@@ -111,6 +112,7 @@
                                     <td v-text="item.pedido"></td>
                                     <td v-text="item.documento"></td>
                                     <td v-text="item.cliente"></td>
+                                    <td v-text="item.doctor"></td>
                                     <td v-text="item.total"></td>
                                     <td v-text="item.vendedor"></td>
                                     <td>
