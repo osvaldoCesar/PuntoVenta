@@ -29,9 +29,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-12 col-form-label">Documento</label>
+                                                <label class="col-md-12 col-form-label">RFC</label>
                                                 <div class="col-md-12">
-                                                    <input type="number" max="8" class="form-control" v-model="fillCrearCliente.cDocumento" @keyup.enter="setRegistrarCliente">
+                                                    <input type="text" class="form-control" v-model="fillCrearCliente.cDocumento" @keyup.enter="setRegistrarCliente">
                                                 </div>
                                             </div>
                                         </div>

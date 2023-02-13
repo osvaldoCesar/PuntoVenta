@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">#Documento</label>
+                                                <label class="col-md-3 col-form-label">RFC</label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control" v-model="fillBsqCliente.cDescripcion" @keyup.enter="getListarClientes">
                                                 </div>
@@ -70,7 +70,7 @@
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>#Documento</th>
+                                    <th>RFC</th>
                                     <th>Correo</th>
                                     <th>Teléfono</th>
                                     <th>Acciones</th>
