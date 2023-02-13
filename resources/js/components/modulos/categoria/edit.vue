@@ -98,7 +98,8 @@ import axios from 'axios';
                     display: 'none',
                 },
                 error: 0,
-                mensajeError: []
+                mensajeError: [],
+                notificacion: '',
             }
         },
         mounted() {
@@ -113,7 +114,6 @@ import axios from 'axios';
                 this.modalShow = !this.modalShow;
             },
             getListarCategorias(){
-                this.fullscreenLoading = true;
                 var url = '/configuracion/categoria/getListarCategorias'
                 axios.get(url, {
                     params: {
@@ -122,14 +122,12 @@ import axios from 'axios';
                 }).then(response => {
                     this.fillEditarCategoria.cNombre        =   response.data[0].name;
                     this.fillEditarCategoria.cDescripcion   =   response.data[0].description;
-                    this.fullscreenLoading = false;
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
                 });
             },
@@ -138,27 +136,27 @@ import axios from 'axios';
                     this.modalShow = true;
                     return;
                 }
-                this.fullscreenLoading = true;
                 var url = '/configuracion/categoria/setEditarCategoria'
                 axios.post(url, {
                     'nIdCategoria'  :  this.fillEditarCategoria.nIdCategoria,
                     'cNombre'       :  this.fillEditarCategoria.cNombre,
                     'cDescripcion'  :  this.fillEditarCategoria.cDescripcion,
                 }).then(response => {
-                    this.fullscreenLoading = false;
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Se actualizó la categoría correctamente',
-                        showConfirmButton: false,
-                        timer: 1500
+                    this.notificacion = this.$vs.notification({
+                        title: 'Notificación Punto de venta',
+                        text: 'Se actualizó la categoría correctamente',
+                        color: 'success',
                     })
+                    setTimeout(() => {
+                        notificacion.toggleClass('new-class')
+                    }, 2000)
+                    this.$router.push('/categoria');
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
                 });
             },

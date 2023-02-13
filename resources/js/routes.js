@@ -136,9 +136,9 @@ export const rutas = [
         name: 'producto.editar',
         component: require('./components/modulos/producto/edit').default,
         beforeEnter: (to, from, next) => {
-            verificarAcceso(to, from ,next);
+            verificarAcceso(to, from, next);
         },
-        props: true,
+        props: true
     },
 
     /* Usuarios */

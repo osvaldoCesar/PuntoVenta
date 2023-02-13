@@ -138,7 +138,6 @@ import axios from 'axios';
                     this.modalShow = true;
                     return;
                 }
-                this.fullscreenLoading = true;
                 var url = '/administracion/permiso/setEditarPermiso'
                 axios.post(url, {
                     'nIdPermiso' : this.fillEditarPermiso.nIdPermiso,
@@ -146,13 +145,15 @@ import axios from 'axios';
                     'cSlug'      : this.fillEditarPermiso.cSlug,
                 }).then(response => {
                     this.fullscreenLoading          =   false;
-                    console.log( `Hola sí entró al response de permiso/setEditarPermiso` );
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Se actualizó el permiso correctamente',
-                        showConfirmButton: false,
-                        timer: 1500
+                    this.notificacion = this.$vs.notification({
+                        title: 'Notificación Punto de venta',
+                        text: 'Se actualizó el permiso correctamente',
+                        color: 'success',
                     })
+                    setTimeout(() => {
+                        notificacion.toggleClass('new-class')
+                    }, 2000)
+                    this.$router.push('/permiso');
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {

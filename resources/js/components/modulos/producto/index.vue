@@ -219,9 +219,9 @@
                 var url = '/configuracion/producto/getListarProductos'
                 axios.get(url, {
                     params: {
-                        'cNombre'  : this.fillBsqProducto.cNombre,
-                        'cDescription' : this.fillBsqProducto.cDescription,
-                        'nIdCategoria' : this.fillBsqProducto.nIdCategoria
+                        'cNombre'       : this.fillBsqProducto.cNombre,
+                        'cDescription'  : this.fillBsqProducto.cDescription,
+                        'nIdCategoria'  : this.fillBsqProducto.nIdCategoria
                     }
                 }).then(response => {
                     this.inicializarPaginacion();

@@ -161,7 +161,6 @@ import { nextTick } from 'vue';
                 this.modalShow = !this.modalShow;
             },
             getListarClientes(){
-                // this.fullscreenLoading = true;
                 var url = '/operacion/cliente/getListarClientes'
                 axios.get(url, {
                     params: {
@@ -173,14 +172,12 @@ import { nextTick } from 'vue';
                     this.fillEditarCliente.cApellido     = response.data[0].lastname;
                     this.fillEditarCliente.cEmail        = response.data[0].email;
                     this.fillEditarCliente.cTelefono     = response.data[0].phone;
-                    // this.fullscreenLoading = false;
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        // this.fullscreenLoading = false;
                     }
                 });
             },
@@ -189,12 +186,6 @@ import { nextTick } from 'vue';
                     this.modalShow = true;
                     return;
                 }
-                this.loading = this.$vs.loading({
-                    type: 'points',
-                    color: '#90A637',
-                    background: '#DBE6B1',
-                    text: 'Editando cliente...'
-                })
                 var url = '/operacion/cliente/setEditarCliente'
                 axios.post(url, {
                     'nIdCliente'    :  this.fillEditarCliente.nIdCliente,
@@ -204,7 +195,14 @@ import { nextTick } from 'vue';
                     'cEmail'        :  this.fillEditarCliente.cEmail,
                     'cTelefono'     :  this.fillEditarCliente.cTelefono,
                 }).then(response => {
-                    this.loading.close();
+                    this.notificacion = this.$vs.notification({
+                        title: 'Notificación Punto de venta',
+                        text: 'Se actualizó el Cliente correctamente',
+                        color: 'success',
+                    })
+                    setTimeout(() => {
+                        notificacion.toggleClass('new-class')
+                    }, 2000)
                     this.$router.push('/cliente');
                 }).catch(error =>{
                     console.log(error.response);

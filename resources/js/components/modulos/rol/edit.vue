@@ -160,7 +160,6 @@ import axios from 'axios';
                 this.modalShow = !this.modalShow;
             },
             getListarRoles(){
-                this.fullscreenLoading = true;
                 var url = '/administracion/rol/getListarRoles'
                 axios.get(url, {
                     params: {
@@ -169,14 +168,12 @@ import axios from 'axios';
                 }).then(response => {
                     this.fillEditarRol.cNombre  =   response.data[0].name;
                     this.fillEditarRol.cSlug    =   response.data[0].slug;
-                    this.fullscreenLoading = false;
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
                 });
             },
@@ -195,7 +192,6 @@ import axios from 'axios';
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
                 });
             },
@@ -218,7 +214,6 @@ import axios from 'axios';
                     this.modalShow = true;
                     return;
                 }
-                this.fullscreenLoading = true;
 
                 var url = '/administracion/rol/setEditarRolPermisos'
                 axios.post(url, {
@@ -234,7 +229,6 @@ import axios from 'axios';
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
                 });
             },
@@ -249,7 +243,6 @@ import axios from 'axios';
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
                 });
             },
@@ -263,12 +256,15 @@ import axios from 'axios';
                 sessionStorage.setItem("listRolPermisosByUsuario", JSON.stringify(me.listRolPermisosByUsuarioFilter));
                 EventBus.$emit('notifyRolPermisosByUsuario', me.listRolPermisosByUsuarioFilter);
                 this.fullscreenLoading = false;
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Se actualizó el rol correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
+                this.notificacion = this.$vs.notification({
+                    title: 'Notificación Punto de venta',
+                    text: 'Se actualizó el rol correctamente',
+                    color: 'success',
                 })
+                setTimeout(() => {
+                    notificacion.toggleClass('new-class')
+                }, 2000)
+                this.$router.push('/rol');
             },
             validarEditarRolPermisos(){
                 this.error = 0;

@@ -190,12 +190,6 @@ import { nextTick } from 'vue';
                     this.modalShow = true;
                     return;
                 }
-                this.loading = this.$vs.loading({
-                    type: 'circles',
-                    color: '#AC8600',
-                    background: '#E5D9AF',
-                    text: 'Cargando...'
-                })
                 var url = '/operacion/doctor/setEditarDoctor'
                 axios.post(url, {
                     'nIdDoctor'  :   this.fillEditarDoctor.nIdDoctor,
@@ -205,7 +199,14 @@ import { nextTick } from 'vue';
                     'dEmail'     :   this.fillEditarDoctor.dEmail,
                     'dTelefono'  :   this.fillEditarDoctor.dTelefono,
                 }).then(response => {
-                    this.loading.close();
+                    this.notificacion = this.$vs.notification({
+                        title: 'Notificación Punto de venta',
+                        text: 'Se actualizó el Doctor correctamente',
+                        color: 'success',
+                    })
+                    setTimeout(() => {
+                        notificacion.toggleClass('new-class')
+                    }, 2000)
                     this.$router.push('/doctor');
                 }).catch(error =>{
                     console.log(error.response);

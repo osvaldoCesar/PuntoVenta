@@ -4,11 +4,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Editar Producto</h1>
-                    </div><!-- /.col -->
+                        <h1 class="m-0 text-dark">Editar Producto</h1>
+                    </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
+
         <div class="content container-fluid">
             <div class="card">
                 <div class="card-header">
@@ -61,11 +62,11 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Categoría</label>
+                                                <label class="col-md-3 col-form-label">Categoria</label>
                                                 <div class="col-md-9">
-                                                    <el-select v-model="fillEditarProducto.nIdCategoria"
-                                                    placeholder="Seleccione una Categoría"
-                                                    clearable>
+                                                    <el-select  v-model="fillEditarProducto.nIdCategoria"
+                                                                placeholder="Seleccione una Categoria"
+                                                                clearable>
                                                         <el-option
                                                             v-for="item in listCategorias"
                                                             :key="item.id"
@@ -92,6 +93,7 @@
                 </div>
             </div>
         </div>
+
         <div class="modal fade" :class="{ show: modalShow }" :style=" modalShow ? mostrarModal : ocultarModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -112,9 +114,8 @@
 </template>
 
 <script>
-import axios from 'axios';
     export default {
-        data() {
+        data(){
             return {
                 fillEditarProducto: {
                     nIdProducto: this.$attrs.id,
@@ -122,7 +123,7 @@ import axios from 'axios';
                     cDescripcion: '',
                     nStock: 1,
                     fPrecio: 1,
-                    nIdCategoria: '',
+                    nIdCategoria: ''
                 },
                 listCategorias: [],
                 fullscreenLoading: false,
@@ -144,108 +145,101 @@ import axios from 'axios';
         },
         methods: {
             limpiarCriterios(){
-                this.fillEditarProducto.cNombre      =  '';
-                this.fillEditarProducto.cDescripcion =  '';
-                this.fillEditarProducto.nStock       =  1;
-                this.fillEditarProducto.fPrecio      =  1;
-                this.fillEditarProducto.nIdCategoria =  '';
+                this.fillEditarProducto.cNombre      = '';
+                this.fillEditarProducto.cDescripcion = '';
+                this.fillEditarProducto.nStock       = 1;
+                this.fillEditarProducto.fPrecio      = 1;
+                this.fillEditarProducto.nIdCategoria = '';
             },
             abrirModal(){
                 this.modalShow = !this.modalShow;
             },
             getListarCategorias(){
-                this.fullscreenLoading = true;
                 var url = '/configuracion/categoria/getListarCategorias'
                 axios.get(url).then(response => {
-                    this.listCategorias =  response.data;
-                    this.fullscreenLoading = false;
-                }).catch(error =>{
-                    console.log(error.response);
+                    this.listCategorias   =   response.data;
+                }).catch(error => {
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
                     }
-                });
+                })
             },
             getListarProductos(){
-                this.fullscreenLoading = true;
                 var url = '/configuracion/producto/getListarProductos'
                 axios.get(url, {
                     params: {
-                        'nIdProducto'  : this.fillEditarProducto.nIdProducto
+                        'nIdProducto'   :   this.fillEditarProducto.nIdProducto
                     }
                 }).then(response => {
-                    this.fillEditarProducto.cNombre         =  response.data[0].name;
-                    this.fillEditarProducto.cDescripcion    =  response.data[0].description;
-                    this.fillEditarProducto.nStock          =  response.data[0].stock;
-                    this.fillEditarProducto.fPrecio         =  response.data[0].price;
-                    this.fillEditarProducto.nIdCategoria    =  response.data[0].nIdCategoria;
-                    this.fullscreenLoading = false;
-                }).catch(error =>{
-                    console.log(error.response);
+                    this.fillEditarProducto.cNombre         =   response.data[0].name;
+                    this.fillEditarProducto.cDescripcion    =   response.data[0].description;
+                    this.fillEditarProducto.nStock          =   response.data[0].stock;
+                    this.fillEditarProducto.fPrecio         =   response.data[0].price;
+                    this.fillEditarProducto.nIdCategoria    =   response.data[0].nidcategoria;
+                    // this.fullscreenLoading = false;
+                }).catch(error => {
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
                         this.fullscreenLoading = false;
                     }
-                });
+                })
             },
             setEditarProducto(){
-                if (this.validarEditarProductos()) {
+                if (this.validarEditarProducto()) {
                     this.modalShow = true;
                     return;
                 }
                 this.fullscreenLoading = true;
+
                 var url = '/configuracion/producto/setEditarProducto'
                 axios.post(url, {
-                    'nIdProducto'       :  this.fillEditarProducto.nIdProducto,
-                    'cNombre'       :  this.fillEditarProducto.cNombre,
-                    'cDescripcion'  :  this.fillEditarProducto.cDescripcion,
-                    'nStock'        :  this.fillEditarProducto.nStock,
-                    'fPrecio'       :  this.fillEditarProducto.fPrecio,
-                    'nIdCategoria'  :  this.fillEditarProducto.nIdCategoria,
+                    'nIdProducto'   :   this.fillEditarProducto.nIdProducto,
+                    'cNombre'       :   this.fillEditarProducto.cNombre,
+                    'cDescripcion'  :   this.fillEditarProducto.cDescripcion,
+                    'nStock'        :   this.fillEditarProducto.nStock,
+                    'fPrecio'       :   this.fillEditarProducto.fPrecio,
+                    'nIdCategoria'  :   this.fillEditarProducto.nIdCategoria
                 }).then(response => {
-                    this.fullscreenLoading = false;
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Se actualizó el producto correctamente',
-                        showConfirmButton: false,
-                        timer: 1500
+                    this.notificacion = this.$vs.notification({
+                        title: 'Notificación Punto de venta',
+                        text: 'Se actualizó el producto correctamente',
+                        color: 'success',
                     })
-                }).catch(error =>{
-                    console.log(error.response);
+                    setTimeout(() => {
+                        notificacion.toggleClass('new-class')
+                    }, 2000)
+                    this.$router.push('/producto');
+                }).catch(error => {
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
                         this.fullscreenLoading = false;
                     }
-                });
+                })
             },
-            validarEditarProductos(){
+            validarEditarProducto(){
                 this.error = 0;
                 this.mensajeError = [];
 
                 if (!this.fillEditarProducto.cNombre) {
-                    this.mensajeError.push("El Nombre es un campo obligatorio");
+                    this.mensajeError.push("El Nombre es un campo obligatorio")
                 }
-
                 if (!this.fillEditarProducto.nStock) {
-                    this.mensajeError.push("El Stock es un campo obligatorio");
+                    this.mensajeError.push("El Stock es un campo obligatorio")
                 }
-
                 if (!this.fillEditarProducto.fPrecio) {
-                    this.mensajeError.push("El Precio es un campo obligatorio");
+                    this.mensajeError.push("El Precio es un campo obligatorio")
                 }
-
                 if (!this.fillEditarProducto.nIdCategoria) {
-                    this.mensajeError.push("Debe seleccionar una Categoría, es un campo obligatorio");
+                    this.mensajeError.push("Debe seleccionar una Categoria, es un campo obligatorio")
                 }
 
-                if (this.mensajeError.length){
+                if (this.mensajeError.length) {
                     this.error = 1;
                 }
                 return this.error;
