@@ -601,12 +601,14 @@ import { nextTick } from 'vue';
                 });
             },
             setGuardarPedido(nIdCliente){
+                console.log(this.cComentario)
                 var url = '/operacion/pedido/setRegistrarPedido'
                 axios.post(url, {
-                    'nIdCliente'    : nIdCliente,
-                    'cComentario'   :  this.cComentario,
-                    'fTotalPedido'  :  this.fTotalPedido,
-                    'listPedido'     :  this.listPedidos,
+                    'nIdCliente'   :  nIdCliente,
+                    'nIdDoctor'    :  this.fillCrearDoctor.nIdDoctor,
+                    'cComentario'  :  this.cComentario,
+                    'fTotalPedido' :  this.fTotalPedido,
+                    'listPedido'   :  this.listPedidos,
                 }).then(response => {
                     // this.setGenerarEmail(response.data);
                     this.setGenerarDocumento(response.data);

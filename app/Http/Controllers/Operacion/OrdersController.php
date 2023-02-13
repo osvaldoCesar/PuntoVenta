@@ -38,11 +38,12 @@ class OrdersController extends Controller
     public function setRegistrarPedido(Request $request){
         if(!$request->ajax()) return redirect('/');
 
-        $nIdCliente     =      $request->nIdCliente;
-        $cComentario    =      $request->cComentario;
-        $fTotalPedido   =      $request->fTotalPedido;
-        $listPedido     =      $request->listPedido;
-        $nIdAuthUser    =      Auth::id();
+        $nIdCliente     =    $request->nIdCliente;
+        $nIdDoctor      =    $request->nIdDoctor;
+        $cComentario    =    $request->cComentario;
+        $fTotalPedido   =    $request->fTotalPedido;
+        $listPedido     =    $request->listPedido;
+        $nIdAuthUser    =    Auth::id();
 
         $cComentario     =      ($cComentario ==  NULL) ? ($cComentario    = ''): $cComentario;
 
@@ -50,9 +51,10 @@ class OrdersController extends Controller
             // Irá todo el código que deseamos realizar y se ejecuta el commit
             DB::beginTransaction();
 
-            $rpta        =      DB::select('call sp_Pedido_setRegistrarPedido(?, ?, ?, ?)',
+            $rpta        =      DB::select('call sp_Pedido_setRegistrarPedido(?, ?, ?, ?, ?)',
                                                                         [
                                                                             $nIdCliente,
+                                                                            $nIdDoctor,
                                                                             $cComentario,
                                                                             $fTotalPedido,
                                                                             $nIdAuthUser
