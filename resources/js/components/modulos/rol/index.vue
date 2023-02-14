@@ -121,7 +121,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Sistema Laravel y Vue</h5>
+                        <h5 class="modal-title">Punto de venta Welldent</h5>
                         <button class="close" @click="abrirModal"></button>
                     </div>
                     <div class="modal-body">
@@ -129,7 +129,7 @@
                             <div class="callout callout-danger" style="padding: 5px" v-for="(item, index) in mensajeError" :key="index" v-text="item"></div>
                         </template>
                         <template v-if="modalOption == 2">
-                            <div class="container-fluid">
+                            <!-- <div class="container-fluid">
                                 <div class="card card-info">
                                     <div class="card-header">
                                         <h3 class="card-title">información del Rol</h3>
@@ -140,7 +140,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group row">
                                                         <label class="col-md-12 col-form-label">Nombre</label>
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-12">
                                                             <span class="form-control" v-text="fillVerRol.cNombre"></span>
                                                         </div>
                                                     </div>
@@ -148,7 +148,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group row">
                                                         <label class="col-md-12 col-form-label">Url Amigable</label>
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-12">
                                                             <span class="form-control" v-text="fillVerRol.cSlug"></span>
                                                         </div>
                                                     </div>
@@ -157,7 +157,7 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="card card-info">
                                 <div class="card-header">
                                     <h3 class="card-title">Listado de Permisos</h3>

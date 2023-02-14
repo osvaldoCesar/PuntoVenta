@@ -41,7 +41,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">RFC</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqCliente.cDescripcion" @keyup.enter="getListarClientes">
+                                                    <input type="text" class="form-control" v-model="fillBsqCliente.cDocumento" @keyup.enter="getListarClientes">
                                                 </div>
                                             </div>
                                         </div>

@@ -12,14 +12,14 @@
                 <p class="login-box-msg">Ingresa tus credenciales para Iniciar Sesión</p>
                 <form method="post">
                     <div class="input-group mb-3">
-                        <vs-input :state="(error) ? 'danger' : ''" @keyup.enter="login" icon-after v-model="fillLogin.cEmail" placeholder="Correo electrónico">
+                        <vs-input :state="(error) ? 'danger' : ''" @keyup.enter="login" icon-after v-model="fillLogin.cEmail" label-placeholder="Correo electrónico">
                             <template #icon>
                             <i class='fas fa-envelope'></i>
                             </template>
                         </vs-input>
                     </div>
                     <div class="input-group mb-3">
-                        <vs-input :state="(error) ? 'danger' : ''" type="password" icon-after @keyup.enter="login" v-model="fillLogin.cContrasena" placeholder="Password">
+                        <vs-input :state="(error) ? 'danger' : ''" type="password" icon-after @keyup.enter="login" v-model="fillLogin.cContrasena" label-placeholder="Password">
                             <template #icon>
                             <i class='fas fa-lock'></i>
                             </template>
@@ -30,15 +30,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <span v-if="error">
-                            <div v-for="(e, index) in mensajeError" :key="index" v-text="e" class="callout callout-danger"></div>
+                            <vs-alert class="mb-2" border v-for="(e, index) in mensajeError" :key="index" danger flat>
+                               <div v-text="e"></div>
+                            </vs-alert>
+                            <!-- <div v-for="(e, index) in mensajeError" :key="index" v-text="e" class="callout callout-danger"></div> -->
                         </span>
                     </div>
                 </div>
 
                 <div class="social-auth-links text-center mt-2 mb-3">
-                    <button class="btn btn-flat btn-block btnIEE" @click.prevent="login">
-                        Iniciar Sesión
-                    </button>
+                    <vs-button class="col-12" circle success size="large" flat :active="active == 1" @click="active = 1" @click.prevent="login">Iniciar Sesión</vs-button>
                 </div>
                 <!-- /.social-auth-links -->
             </div>
