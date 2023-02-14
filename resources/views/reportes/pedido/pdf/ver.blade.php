@@ -89,6 +89,10 @@
                             <td>Doctor Asignado</td>
                             <td>{{$rpta1[0]->dDoctor}}</td>
                         </tr>
+                        <tr>
+                            <td>Fecha de Cita</td>
+                            <td>{{$rpta1[0]->dFechaCita}}</td>
+                        </tr>
                     </table>
                 </td>
             </tr>

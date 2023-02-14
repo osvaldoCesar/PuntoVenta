@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="content-header">
+        <!-- <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Crear Pedido</h1>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <div class="content container-fluid">
             <div class="card">
                 <div class="card-header">
@@ -24,16 +24,17 @@
                             <div class="col-md-12">
                                 <div class="card card-secondary">
                                     <div class="card-header">
-                                        <h3 class="card-title">Buscar Doctor</h3>
+                                        <h3 class="card-title">Parámetros del Pedido</h3>
                                     </div>
                                     <div class="card-body">
                                         <form role="form">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <div class="form-group row">
-                                                        <label class="col-md-12 col-form-label">RFC</label>
+                                                    <div class=" row">
+                                                        <label class="col-md-12 col-form-label">RFC Doctor</label>
                                                         <div class="col-md-12">
                                                             <el-autocomplete
+                                                            name="rfcDoc"
                                                                 class="inline-input"
                                                                 v-model="cBusquedaDoc"
                                                                 :fetch-suggestions="querySearchDoctor"
@@ -45,17 +46,39 @@
                                                                 </i>
                                                             </el-autocomplete>
                                                         </div>
+                                                        <template>
+                                                            <label class="ml-3" v-text="fillCrearDoctor.cNombreCompletoDoc" />
+                                                        </template>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-8">
+                                                <div class="col-md-4">
                                                     <div class="form-group row">
-                                                        <label class="col-md-12 col-form-label">Nombre</label>
-                                                        <input type="text" class="form-control"
-                                                            v-model="fillCrearDoctor.cNombreCompletoDoc"
-                                                            @keyup.enter="setRegistrarPedido"
-                                                            disabled=true>
+                                                        <label class="col-md-12 col-form-label">Fecha de cita</label>
+                                                        <div class="col-md-12">
+                                                            <el-date-picker
+                                                                v-model="dFechaCita"
+                                                                type="datetime"
+                                                                format="yyyy-MM-dd HH:mm:ss"
+                                                                value-format="yyyy-MM-dd HH:mm:ss"
+                                                                placeholder="Selecciona la fecha y la hora de la cita"
+                                                                default-time="12:00:00">
+                                                            </el-date-picker>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <!-- <div class="col-md-4">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-12 col-form-label">Fecha de cita</label>
+                                                        <div class="col-md-12">
+                                                            <el-date-picker
+                                                                v-model="dFechaCita"
+                                                                type="datetime"
+                                                                placeholder="Selecciona la fecha y la hora de la cita"
+                                                                default-time="12:00:00">
+                                                            </el-date-picker>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
                                             </div>
                                         </form>
                                     </div>
@@ -70,7 +93,7 @@
                                         <form role="form">
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <vs-switch square v-model="switchCliente" @change="limpiarCriterios">
+                                                    <vs-switch v-model="switchCliente" @change="limpiarCriterios">
                                                         <template #off>
                                                             <i class="fas fa-plus-square"></i>
                                                         </template>
@@ -80,7 +103,7 @@
                                                     </vs-switch>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <div class="form-group row">
+                                                    <div class=" row">
                                                         <label class="col-md-12 col-form-label">RFC</label>
                                                         <div class="col-md-12">
                                                             <template v-if="switchCliente">
@@ -103,7 +126,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <div class="form-group row">
+                                                    <div class=" row">
                                                         <label class="col-md-12 col-form-label">Nombre</label>
                                                         <div class="col-md-12">
                                                             <input type="text" class="form-control"
@@ -114,7 +137,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <div class="form-group row">
+                                                    <div class=" row">
                                                         <label class="col-md-12 col-form-label">Apellido</label>
                                                         <div class="col-md-12">
                                                             <input type="text" class="form-control"
@@ -125,7 +148,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <div class="form-group row">
+                                                    <div class=" row">
                                                         <label class="col-md-12 col-form-label">Email</label>
                                                         <div class="col-md-12">
                                                             <vs-input v-model="fillCrearCliente.cEmail"
@@ -139,7 +162,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <div class="form-group row">
+                                                    <div class=" row">
                                                         <label class="col-md-12 col-form-label">Teléfono</label>
                                                         <div class="col-md-12">
                                                             <input type="tel" class="form-control"
@@ -168,10 +191,8 @@
                                         <vs-tooltip not-arrow right>
                                             <vs-button
                                             @click.prevent="agregarProducto"
-                                                square
                                                 icon
-                                                color="rgb(59,222,200)"
-                                                gradient>
+                                                color="rgb(59,222,200)">
                                                 <i class="fas fa-plus-square"></i>
                                             </vs-button>
                                             <template #tooltip>
@@ -322,7 +343,8 @@ import { nextTick } from 'vue';
                     display: 'none',
                 },
                 error: 0,
-                mensajeError: []
+                mensajeError: [],
+                dFechaCita: ''
             }
         },
         computed: {
@@ -601,14 +623,15 @@ import { nextTick } from 'vue';
                 });
             },
             setGuardarPedido(nIdCliente){
-                console.log(this.cComentario)
                 var url = '/operacion/pedido/setRegistrarPedido'
+                console.log(this.dFechaCita)
                 axios.post(url, {
                     'nIdCliente'   :  nIdCliente,
                     'nIdDoctor'    :  this.fillCrearDoctor.nIdDoctor,
                     'cComentario'  :  this.cComentario,
                     'fTotalPedido' :  this.fTotalPedido,
                     'listPedido'   :  this.listPedidos,
+                    'dFechaCita'   :  this.dFechaCita,
                 }).then(response => {
                     // this.setGenerarEmail(response.data);
                     this.setGenerarDocumento(response.data);
@@ -669,6 +692,9 @@ import { nextTick } from 'vue';
                 if (!this.fillCrearDoctor.nIdDoctor) {
                     this.mensajeError.push("Se debe asignar un doctor");
                 }
+                if (!this.dFechaCita) {
+                    this.mensajeError.push("Se debe elegir la fecha de la cita");
+                }
                 if (this.switchCliente) {
                     if (!this.fillCrearCliente.cDocumento) {
                         this.mensajeError.push("El Documento es un campo obligatorio");
@@ -721,6 +747,9 @@ import { nextTick } from 'vue';
     .row-bg {
         padding: 10px 0;
         background-color: #f9fafc;
+    }
+    .el-date-editor.el-input, .el-date-editor.el-input__inner {
+        width: 100%;
     }
 
 </style>

@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="content-header">
+        <!-- <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Pedido</h1>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <div class="content container-fluid">
             <div class="card">
                 <div class="card-header">
@@ -50,6 +50,20 @@
                                                 <label class="col-md-3 col-form-label">#Pedido</label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control" v-model="fillBsqPedido.cPedido" @keyup.enter="getListarPedidos">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Fecha de cita</label>
+                                                <div class="col-md-9">
+                                                    <el-date-picker
+                                                        v-model="fillBsqPedido.dFechaCita"
+                                                        type="date"
+                                                        format="yyyy-MM-dd"
+                                                        value-format="yyyy-MM-dd"
+                                                        placeholder="Selecciona la fecha de la cita">
+                                                    </el-date-picker>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,7 +116,7 @@
                                     <th>Cliente</th>
                                     <th>Doctor</th>
                                     <th>Total</th>
-                                    <th>Vendedor</th>
+                                    <!-- <th>Vendedor</th> -->
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -114,7 +128,7 @@
                                     <td v-text="item.cliente"></td>
                                     <td v-text="item.doctor"></td>
                                     <td v-text="item.total"></td>
-                                    <td v-text="item.vendedor"></td>
+                                    <!-- <td v-text="item.vendedor"></td> -->
                                     <td>
                                         <span v-if="item.state == 'A'" class="badge badge-success" v-text="item.estado"></span>
                                         <span v-else class="badge badge-danger" v-text="item.estado"></span>
@@ -171,6 +185,7 @@
                     cDocumento: '',
                     cPedido: '',
                     cEstado: '',
+                    dFechaCita: ''
                 },
                 listPedidos: [],
                 listEstados: [
@@ -218,7 +233,8 @@
                 this.fillBsqPedido.cNombre      = '';
                 this.fillBsqPedido.cDocumento   = '';
                 this.fillBsqPedido.cPedido      = '';
-                this.fillBsqPedido.cEstado    = '';
+                this.fillBsqPedido.cEstado      = '';
+                this.fillBsqPedido.dFechaCita                 = '';
             },
             limpiarBandejaUsuarios(){
                 this.listPedidos = [];
@@ -233,10 +249,11 @@
                 var url = '/operacion/pedido/getListarPedidos'
                 axios.get(url, {
                     params: {
-                        'cNombre'       : this.fillBsqPedido.cNombre,
-                        'cDocumento'    : this.fillBsqPedido.cDocumento,
-                        'cPedido'       : this.fillBsqPedido.cPedido,
-                        'cEstado'     : this.fillBsqPedido.cEstado
+                        'cNombre'      :  this.fillBsqPedido.cNombre,
+                        'cDocumento'   :  this.fillBsqPedido.cDocumento,
+                        'cPedido'      :  this.fillBsqPedido.cPedido,
+                        'cEstado'      :  this.fillBsqPedido.cEstado,
+                        'dFechaCita'   :  this.fillBsqPedido.dFechaCita
                     }
                 }).then(response => {
                     this.inicializarPaginacion();

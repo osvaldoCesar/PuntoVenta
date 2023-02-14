@@ -232,6 +232,7 @@
                 this.fillBsqPedido.cDocumento   =   '';
                 this.fillBsqPedido.cPedido      =   '';
                 this.fillBsqPedido.cEstado    =   '';
+                this.fillBsqPedido.dfecharango    =   '';
             },
             getListarPedidos(){
                 const loading = this.$vs.loading({

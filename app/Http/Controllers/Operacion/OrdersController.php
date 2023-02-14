@@ -19,19 +19,21 @@ class OrdersController extends Controller
         $cDocumento     =      $request->cDocumento;
         $cPedido        =      $request->cPedido;
         $cEstado        =      $request->cEstado;
-
+        $dFechaCita      =   $request->dFechaCita;
 
         $cNombre        =    ($cNombre      ==  NULL)  ?  ($cNombre     =   '')  :  $cNombre;
         $cDocumento     =    ($cDocumento   ==  NULL)  ?  ($cDocumento  =   '')  :  $cDocumento;
         $cPedido        =    ($cPedido      ==  NULL)  ?  ($cPedido     =   '')  :  $cPedido;
         $cEstado        =    ($cEstado      ==  NULL)  ?  ($cEstado     =   '')  :  $cEstado;
+        $dFechaCita      =      ($dFechaCita   ==  NULL) ? ($dFechaCita   =  '')    : $dFechaCita;
 
-        $rpta        =      DB::select('call sp_Pedido_getListarPedidos(?, ?, ?, ?)',
+        $rpta        =      DB::select('call sp_Pedido_getListarPedidos(?, ?, ?, ?, ?)',
                                                                     [
                                                                         $cNombre,
                                                                         $cDocumento,
                                                                         $cPedido,
                                                                         $cEstado,
+                                                                        $dFechaCita
                                                                     ]);
         return $rpta;
     }
@@ -43,20 +45,23 @@ class OrdersController extends Controller
         $cComentario    =    $request->cComentario;
         $fTotalPedido   =    $request->fTotalPedido;
         $listPedido     =    $request->listPedido;
+        $dFechaCita      =   $request->dFechaCita;
         $nIdAuthUser    =    Auth::id();
 
-        $cComentario     =      ($cComentario ==  NULL) ? ($cComentario    = ''): $cComentario;
+        $cComentario     =      ($cComentario  ==  NULL) ? ($cComentario  =  '')    : $cComentario;
+        $dFechaCita      =      ($dFechaCita   ==  NULL) ? ($dFechaCita   =  '')    : $dFechaCita;
 
         try {
             // Irá todo el código que deseamos realizar y se ejecuta el commit
             DB::beginTransaction();
 
-            $rpta        =      DB::select('call sp_Pedido_setRegistrarPedido(?, ?, ?, ?, ?)',
+            $rpta        =      DB::select('call sp_Pedido_setRegistrarPedido(?, ?, ?, ?, ?, ?)',
                                                                         [
                                                                             $nIdCliente,
                                                                             $nIdDoctor,
                                                                             $cComentario,
                                                                             $fTotalPedido,
+                                                                            $dFechaCita,
                                                                             $nIdAuthUser
                                                                         ]);
 

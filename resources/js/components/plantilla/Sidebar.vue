@@ -166,14 +166,19 @@ import axios from 'axios';
         },
         methods: {
             logout(){
-                this.fullscreenLoading = true;
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Cerrando sesión...'
+                })
                 var url = '/authenticate/logout'
                 axios.post(url).then(response => {
                     if (response.data.code == 204) {
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close()
                     }
                 }).catch(error =>{
                     console.log(error.response);
@@ -181,7 +186,7 @@ import axios from 'axios';
                         this.$router.push({name: 'login'})
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close()
                     }
                 });
             }
