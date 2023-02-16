@@ -49,7 +49,8 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">#Pedido</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqPedido.cPedido" @keyup.enter="getListarPedidos">
+                                                    <!-- <el-input ref="num_pedido" placeholder="Número de pedido" type="text" v-model="fillBsqPedido.cPedido" @keyup.enter="getListarPedidos"/> -->
+                                                    <input ref="num_pedido" placeholder="Número de pedido" type="text" class="form-control" v-model="fillBsqPedido.cPedido" @keyup.enter="getListarPedidos">
                                                 </div>
                                             </div>
                                         </div>
@@ -131,7 +132,8 @@
                                     <!-- <td v-text="item.vendedor"></td> -->
                                     <td>
                                         <span v-if="item.state == 'A'" class="badge badge-success" v-text="item.estado"></span>
-                                        <span v-else class="badge badge-danger" v-text="item.estado"></span>
+                                        <span v-else-if="item.state == 'I'" class="badge badge-danger" v-text="item.estado"></span>
+                                        <span v-else class="badge badge-primary" v-text="item.estado"></span>
                                     </td>
                                     <td>
                                         <template v-if="listaRolPermisosByUsuario.includes('pedido.ver')">
@@ -143,6 +145,11 @@
                                             <button v-if="item.state == 'A'" class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoPedido(1, item.id)">
                                                 <i class="fas fa-trash"></i> Rechazar
                                             </button>
+                                        </template>
+                                        <template v-if="listaRolPermisosByUsuario.includes('pedido.abonar')">
+                                            <router-link v-if="item.state == 'A'" class="btn btn-flat btn-warning btn-sm" :to="{ name: 'cliente.editar', params: {id: item.id}}">
+                                                <i class="fa-solid fa-cash-register"></i> Abono/Pago
+                                            </router-link>
                                         </template>
                                     </td>
                                 </tr>
@@ -191,6 +198,7 @@
                 listEstados: [
                     {value: 'A', label: 'Activo'},
                     {value: 'I', label: 'Inactivo'},
+                    {value: 'L', label: 'Liquidado'},
                 ],
                 listaRolPermisosByUsuario: JSON.parse(sessionStorage.getItem('listRolPermisosByUsuario')),
                 pageNumber: 0,
@@ -200,6 +208,7 @@
         },
         mounted() {
             this.getListarPedidos();
+            this.$refs.num_pedido.focus()
         },
         computed: {
             // Obtener el número de páginas
@@ -234,7 +243,7 @@
                 this.fillBsqPedido.cDocumento   = '';
                 this.fillBsqPedido.cPedido      = '';
                 this.fillBsqPedido.cEstado      = '';
-                this.fillBsqPedido.dFechaCita                 = '';
+                this.fillBsqPedido.dFechaCita   = '';
             },
             limpiarBandejaUsuarios(){
                 this.listPedidos = [];
@@ -323,11 +332,12 @@
                         }).then(response =>{
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Se ' + ((op == 1) ? 'rechazo' : 'activo') + ' el pedido',
+                                title: 'Se ' + ((op == 1) ? 'rechazó' : 'activó') + ' el pedido',
                                 showConfirmButton: false,
                                 timer: 1500,
                             })
                             loading.close();
+                            this.getListarPedidos();
                         }).catch(error =>{
                             if (error.response.status == 401) {
                                 this.$router.push({name: 'login'})
