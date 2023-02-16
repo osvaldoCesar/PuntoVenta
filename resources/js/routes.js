@@ -63,6 +63,16 @@ export const rutas = [
             verificarAcceso(to, from ,next);
         }
     },
+    // Abonar a pedido
+    {
+        path: '/pedido/abonar/:id',
+        name: 'pedido.abonar',
+        component: require('./components/modulos/pedido/credit').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from ,next);
+        },
+        props: true,
+    },
 
     /* Clientes */
     // Index

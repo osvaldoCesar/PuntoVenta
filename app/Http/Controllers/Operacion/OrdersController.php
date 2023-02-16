@@ -87,6 +87,21 @@ class OrdersController extends Controller
             DB::rollBack();
         }
     }
+    // Listar Abonos del pedido
+    public function getListarAbonoPedidos(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdPedido       =      $request->nIdPedido;
+
+        $nIdPedido       =    ($nIdPedido   ==  NULL)  ?  ($nIdPedido   =   0)   :  $nIdPedido;
+
+        $rpta        =      DB::select('call sp_Pedido_getListarAbonoPedidos(?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+        return $rpta;
+    }
+
     public function setGenerarDocumento(Request $request)
     {
         if(!$request->ajax()) return redirect('/');

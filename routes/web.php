@@ -69,6 +69,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/operacion/pedido/getListarPedidos", "Operacion\OrdersController@getListarPedidos");
     // Crear
     Route::post("/operacion/pedido/setRegistrarPedido", "Operacion\OrdersController@setRegistrarPedido");
+    // Listar Abonos Pedidos
+    Route::get("/operacion/pedido/getListarAbonoPedidos", "Operacion\OrdersController@getListarAbonoPedidos");
+    // Abonar pago a pedidos
+    Route::post("/operacion/pedido/setAbonarPedido", "Operacion\OrdersController@setAbonarPedido");
     // Generar un Documento
     Route::post("/operacion/pedido/setGenerarDocumento", "Operacion\OrdersController@setGenerarDocumento");
     // Cambiar estado

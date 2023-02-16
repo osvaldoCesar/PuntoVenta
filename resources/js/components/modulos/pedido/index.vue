@@ -147,7 +147,7 @@
                                             </button>
                                         </template>
                                         <template v-if="listaRolPermisosByUsuario.includes('pedido.abonar')">
-                                            <router-link v-if="item.state == 'A'" class="btn btn-flat btn-warning btn-sm" :to="{ name: 'cliente.editar', params: {id: item.id}}">
+                                            <router-link v-if="item.state == 'A'" class="btn btn-flat btn-warning btn-sm" :to="{ name: 'pedido.abonar', params: {id: item.id}}">
                                                 <i class="fa-solid fa-cash-register"></i> Abono/Pago
                                             </router-link>
                                         </template>
