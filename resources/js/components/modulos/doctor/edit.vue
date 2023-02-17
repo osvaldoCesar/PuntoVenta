@@ -138,7 +138,8 @@ import { nextTick } from 'vue';
                     display: 'none',
                 },
                 error: 0,
-                mensajeError: []
+                mensajeError: [],
+                notificacion: '',
             }
         },
         computed: {

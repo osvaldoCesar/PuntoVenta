@@ -106,5 +106,7 @@
     font-size: 1.0em !important;
 }
 
-
-
+textarea{
+    width: 100% !important;
+    max-height: 100px !important;
+}

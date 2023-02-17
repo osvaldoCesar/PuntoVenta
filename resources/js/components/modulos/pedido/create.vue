@@ -240,7 +240,6 @@
                                                                 <el-tooltip class="item" effect="dark" content="Remover Producto" placement="left">
                                                                     <vs-button
                                                                         @click.prevent="removerProducto(index)"
-                                                                        square
                                                                         icon
                                                                         danger
                                                                         gradient>

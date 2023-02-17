@@ -96,8 +96,44 @@ class OrdersController extends Controller
         $nIdPedido       =    ($nIdPedido   ==  NULL)  ?  ($nIdPedido   =   0)   :  $nIdPedido;
 
         $rpta        =      DB::select('call sp_Pedido_getListarAbonoPedidos(?)',
+        [
+            $nIdPedido
+        ]);
+        return $rpta;
+    }
+
+    // Listar totales
+    public function getListarTotales(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdPedido       =      $request->nIdPedido;
+
+        $nIdPedido       =    ($nIdPedido   ==  NULL)  ?  ($nIdPedido   =   0)   :  $nIdPedido;
+
+        $rpta        =      DB::select('call sp_Pedido_getListarTotales(?)',
                                                                     [
                                                                         $nIdPedido
+                                                                    ]);
+        return $rpta;
+    }
+
+    public function setRegistrarAbono(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdPedido      =    $request->nIdPedido;
+        $fAbono         =    $request->fAbono;
+        $cComentario    =    $request->cComentario;
+
+        $nIdAuthUser    =    Auth::id();
+
+        $cComentario    =      ($cComentario  ==  NULL) ? ($cComentario  =  '')    : $cComentario;
+
+        $rpta           =      DB::select('call sp_Pedido_setRegistrarAbono(?, ?, ?, ?)',
+                                                                    [
+                                                                        $nIdPedido,
+                                                                        $fAbono,
+                                                                        $cComentario,
+                                                                        $nIdAuthUser
                                                                     ]);
         return $rpta;
     }

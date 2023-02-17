@@ -136,7 +136,8 @@
                     display: 'none',
                 },
                 error: 0,
-                mensajeError: []
+                mensajeError: [],
+                notificacion: '',
             }
         },
         mounted() {

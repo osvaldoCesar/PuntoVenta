@@ -27,12 +27,47 @@
                             <div class="card-body">
                                 <form role="form">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Cantidad a abonar</label>
                                                 <div class="col-md-9">
-                                                    <el-input-number ref="abono_total" v-model="fillAbonarPedido.fAbono" controls-position="right" @keyup.enter="setAbonarPedido" :min="1"></el-input-number>
+                                                    <el-input-number ref="abono_total" v-model="fillAbonarPedido.fAbono" controls-position="right" @keyup.enter="setRegistrarAbono" :min="1"></el-input-number>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Comentario</label>
+                                                <div class="col-md-9">
+                                                    <el-input
+                                                        type="textarea"
+                                                        :rows="3"
+                                                        :autosize="{ minRows: 2, maxRows: 3}"
+                                                        placeholder="Agrega un comentario al abono"
+                                                        @keyup.enter="setRegistrarAbono"
+                                                        v-model="fillAbonarPedido.cComentario">
+                                                    </el-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">Total Abonos</th>
+                                                            <td><label v-text="this.formatoMoneda(this.fTotalAbonos)"></label></td>
+                                                        </tr>
+                                                        <tr>
+                                                          <th scope="row">Restante</th>
+                                                          <td><label v-text="this.formatoMoneda(this.fTotalRestante)"></label></td>
+                                                        </tr>
+                                                        <tr>
+                                                          <th scope="row">Total</th>
+                                                          <td><label v-text="this.formatoMoneda(this.fTotal)"></label></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -44,10 +79,7 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-md-4 offset-4">
-                            <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarAbonoPedidos"
-                            element-loading-text="Cargando..."
-                            element-loading-background="rgba(0, 0, 0, 0.5)"
-                            v-loading.fullscreen.lock="fullscreenLoading">Buscar</button>
+                            <button class="btn btn-flat btn-info btnWidth" @click.prevent="setRegistrarAbono" v-loading.fullscreen.lock="fullscreenLoading">Registrar</button>
                             <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarCriteriosBsq">Limpiar</button>
                         </div>
                     </div>
@@ -62,17 +94,20 @@
                         <table class="table table-hover table-head-fixed text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Total</th>
+                                    <th>#</th>
                                     <th>Abono</th>
                                     <th>Fecha de abono</th>
+                                    <th>Comentario</th>
+                                    <th>Usuario</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in listarPedidosPaginated" :key="index">
-                                    <td v-text="item.total"></td>
+                                    <td v-text="index+1"></td>
                                     <td v-text="item.abonos"></td>
                                     <td v-text="item.fecha"></td>
-
+                                    <td v-text="item.comentario"></td>
+                                    <td v-text="item.vendedor"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -99,20 +134,38 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" :class="{ show: modalShow }" :style=" modalShow ? mostrarModal : ocultarModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Sistema Laravel y Vue</h5>
+                        <button class="close" @click="abrirModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="callout callout-danger" style="padding: 5px" v-for="(item, index) in mensajeError" :key="index" v-text="item"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" @click="abrirModal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
     export default {
         data() {
             return {
                 fillAbonarPedido: {
                     nIdPedido: this.$attrs.id,
-                    fAbono: '',
+                    fAbono         :   '',
+                    cComentario    :   '',
                 },
                 listAbonoPedidos: [],
+                listTotales: [],
                 listEstados: [
                     {value: 'A', label: 'Activo'},
                     {value: 'I', label: 'Inactivo'},
@@ -122,13 +175,32 @@
                 pageNumber: 0,
                 perPage: 5,
                 fullscreenLoading: false,
+                modalShow: false,
+                mostrarModal: {
+                    display: 'block',
+                    background: '#0000006b',
+                },
+                ocultarModal: {
+                    display: 'none',
+                },
+                error: 0,
+                mensajeError: [],
+                notificacion: '',
+                fTotalAbonos: 0.00,
+                fTotalRestante: 0.00,
+                fTotal: 0.00,
             }
         },
         mounted() {
             this.getListarAbonoPedidos();
-            this.$refs.abono_total.focus()
+            this.$refs.abono_total.focus();
         },
         computed: {
+            totalPedido(){
+                return this.listAbonoPedidos.reduce(function(valorAnterior, valorActual){
+                    return valorAnterior + parseFloat(valorActual.fSubTotal)
+                },0)
+            },
             // Obtener el número de páginas
             pageCount(){
                 let a = this.listAbonoPedidos.length,
@@ -156,11 +228,12 @@
             }
         },
         methods: {
-            limpiarCriteriosBsq(){
-                this.fillAbonarPedido.fAbono   = '';
+            abrirModal(){
+                this.modalShow = !this.modalShow;
             },
-            limpiarBandejaUsuarios(){
-                this.listAbonoPedidos = [];
+            limpiarCriteriosBsq(){
+                this.fillAbonarPedido.fAbono        = '';
+                this.fillAbonarPedido.cComentario   = '';
             },
             getListarAbonoPedidos(){
                 const loading = this.$vs.loading({
@@ -176,8 +249,8 @@
                     }
                 }).then(response => {
                     this.inicializarPaginacion();
-                    console.log(response.data)
                     this.listAbonoPedidos =  response.data;
+                    this.getListarTotales();
                     loading.close();
                 }).catch(error =>{
                     console.log(error.response);
@@ -259,6 +332,87 @@
                         });
                     }
                 })
+            },
+            getListarTotales(){
+                var url = '/operacion/pedido/getListarTotales'
+                axios.get(url, {
+                    params: {
+                        'nIdPedido'  :  this.fillAbonarPedido.nIdPedido
+                    }
+                }).then(response => {
+                    this.listTotales =  response.data;
+                    this.fTotalAbonos      =  0
+                    this.fTotal            =  0
+                    this.fTotalRestante    =  0
+                    for(let i of this.listTotales){
+                        this.fTotalAbonos       +=  i.totalAbonos
+                        this.fTotal             =   i.totalPedido
+                        this.fTotalRestante     =   i.restante
+                    }
+                }).catch(error =>{
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        sessionStorage.clear();
+                    }
+                });
+            },
+            setRegistrarAbono(){
+                if (this.validarRegistroAbono()) {
+                    this.modalShow = true;
+                    return;
+                }
+                this.loading = this.$vs.loading({
+                    type: 'circles',
+                    color: '#AC8600',
+                    background: '#E5D9AF',
+                    text: 'Registrando abono...'
+                })
+                var url = '/operacion/pedido/setRegistrarAbono'
+                axios.post(url, {
+                    'nIdPedido'    :  this.fillAbonarPedido.nIdPedido,
+                    'fAbono'    :  this.fillAbonarPedido.fAbono,
+                    'cComentario'    :  this.fillAbonarPedido.cComentario,
+                }).then(response => {
+                    this.notificacion = this.$vs.notification({
+                        title: 'Notificación Punto de venta',
+                        text: 'Se agregó el abono correctamente',
+                        color: 'success',
+                    })
+                    setTimeout(() => {
+                        notificacion.toggleClass('new-class')
+                    }, 2000)
+                    this.getListarAbonoPedidos();
+                    this.limpiarCriteriosBsq();
+                    this.loading.close();
+                }).catch(error =>{
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.loading.close();
+                    }
+                });
+            },
+            validarRegistroAbono(){
+                this.error = 0;
+                this.mensajeError = [];
+
+                if (!this.fillAbonarPedido.fAbono) {
+                    this.mensajeError.push("Introduzca una cantidad válida");
+                }
+
+                if (this.mensajeError.length){
+                    this.error = 1;
+                }
+                return this.error;
+            },
+            formatoMoneda(numero){
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                }).format(numero)
             },
             nextPage() {
                 this.pageNumber++;

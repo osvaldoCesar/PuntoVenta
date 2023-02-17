@@ -98,7 +98,8 @@ import axios from 'axios';
                     display: 'none',
                 },
                 error: 0,
-                mensajeError: []
+                mensajeError: [],
+                notificacion: '',
             }
         },
         mounted() {
