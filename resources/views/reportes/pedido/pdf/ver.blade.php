@@ -142,8 +142,8 @@
                     <td align="center"><span>{{$key + 1}}</span></td>
                     <td align="center"><span>{{$value->cProducto}}</span></td>
                     <td align="center"><span>{{$value->nCantidad}}</span></td>
-                    <td align="center"><span>{{number_format($value->fPrecio, 2)}}</span></td>
-                    <td align="center"><span>{{number_format($value->fSubTotal, 2)}}</span></td>
+                    <td align="center"><span>${{number_format($value->fPrecio, 2)}}</span></td>
+                    <td align="center"><span>${{number_format($value->fSubTotal, 2)}}</span></td>
                 </tr>
                 @endforeach
             </tbody>
@@ -157,7 +157,7 @@
                     <h3><strong>Total del Pedido</strong></h3>
                 </td>
                 <td align="center">
-                    <h3>{{number_format($rpta1[0]->fTotalPedido, 2)}}</h3>
+                    <h3>${{number_format($rpta1[0]->fTotalPedido, 2)}}</h3>
                 </td>
             </tr>
         </table>

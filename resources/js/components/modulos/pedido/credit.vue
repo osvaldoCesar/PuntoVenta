@@ -31,7 +31,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Cantidad a abonar</label>
                                                 <div class="col-md-9">
-                                                    <el-input-number ref="abono_total" v-model="fillAbonarPedido.fAbono" controls-position="right" @keyup.enter="setRegistrarAbono" :min="1"></el-input-number>
+                                                    <el-input-number ref="abono_total" v-model="fillAbonarPedido.fAbono" controls-position="right" @keyup.enter="setRegistrarAbono" :min="1" :max="this.fTotalRestante"></el-input-number>
                                                 </div>
                                             </div>
                                         </div>
@@ -380,11 +380,17 @@ import axios from 'axios';
                         color: 'success',
                     })
                     setTimeout(() => {
-                        notificacion.toggleClass('new-class')
+                        this.notificacion.toggleClass('new-class')
                     }, 2000)
-                    this.getListarAbonoPedidos();
-                    this.limpiarCriteriosBsq();
-                    this.loading.close();
+                    let resultado = response.data[0].resultado;
+                    if(resultado<=0){
+                        this.loading.close();
+                        this.$router.push('/pedido');
+                    }else{
+                        this.getListarAbonoPedidos();
+                        this.limpiarCriteriosBsq();
+                        this.loading.close();
+                    }
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
