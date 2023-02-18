@@ -122,7 +122,8 @@
                                                 <td v-text="item.vendedor"></td>
                                                 <td>
                                                     <span v-if="item.state == 'A'" class="badge badge-success" v-text="item.estado"></span>
-                                                    <span v-else class="badge badge-danger" v-text="item.estado"></span>
+                                                    <span v-else-if="item.state == 'I'" class="badge badge-danger" v-text="item.estado"></span>
+                                                    <span v-else class="badge badge-primary" v-text="item.estado"></span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -170,7 +171,8 @@
                 listPedidos: [],
                 listEstados: [
                     {value: 'A', label: 'Activo'},
-                    {value: 'I', label: 'Inactivo'}
+                    {value: 'I', label: 'Inactivo'},
+                    {value: 'L', label: 'Liquidado'}
                 ],
                 listRolPermisosByUsuario: JSON.parse(sessionStorage.getItem('listRolPermisosByUsuario')),
                 fullscreenLoading: false,
@@ -179,7 +181,7 @@
             }
         },
         mounted(){
-            this.getListarPedidos()
+            this.getListarPedidos();
         },
         computed: {
             // Obtener el número de páginas
