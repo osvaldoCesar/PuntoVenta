@@ -12,10 +12,11 @@
             <tr>
                 <th>#</th>
                 <th>Pedido</th>
-                <th>#Documento</th>
+                <th>RFC Cliente</th>
                 <th>Cliente</th>
                 <th>Total</th>
                 <th>Vendedor</th>
+                <th>Estatus</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
                     <td>{{ $value->cliente }}</td>
                     <td>{{ number_format($value->total, 2) }}</td>
                     <td>{{ $value->vendedor }}</td>
+                    <td>{{ $value->state == 'A' ? 'Activo' : ($value->state == 'I' ? 'Rechazado' : 'Liquidado') }}</td>
                 </tr>
             @endforeach
         </tbody>

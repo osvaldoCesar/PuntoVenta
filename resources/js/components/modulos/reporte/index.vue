@@ -257,6 +257,7 @@
                 }).then(response => {
                     this.inicializarPaginacion();
                     this.listPedidos   =   response.data;
+                    console.log(this.listPedidos)
                     loading.close()
                 }).catch(error => {
                     if (error.response.status == 401) {
@@ -284,7 +285,7 @@
                     var oMyBlob = new Blob([response.data], {type : 'application/vnd.ms-excel'}); // the blob
                     var url = document.createElement('a')
                     url.href = URL.createObjectURL(oMyBlob);
-                    url.download = 'usuarios.xlsx'
+                    url.download = 'reporte.xlsx'
                     url.click()
                     loading.close()
                 }).catch(error => {
