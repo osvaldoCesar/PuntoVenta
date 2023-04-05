@@ -64,18 +64,17 @@ import axios from 'axios';
                             </template>
                         </li>
                         <li class="nav-item">
-                            <template v-if="listPermisos.includes('cliente.index')">
-                                <router-link :to="'/cliente'" class="nav-link">
-                                    <i class="nav-icon fas fa-user-friends"></i>
-                                    <p>Clientes</p>
+                            <template v-if="listPermisos.includes('tecnico.index')">
+                                <router-link :to="'/tecnico'" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-tooth"></i>
+                                    <p>Técnicos</p>
                                 </router-link>
                             </template>
                         </li>
-
                         <li class="nav-item">
                             <template v-if="listPermisos.includes('doctor.index')">
                                 <router-link :to="'/doctor'" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-user-doctor"></i>
+                                    <i class="nav-icon fas fa-user-friends"></i>
                                     <p>Doctores</p>
                                 </router-link>
                             </template>

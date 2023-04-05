@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Doctor</h1>
+                        <h1 class="m-0">Técnicos</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -13,9 +13,9 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <template v-if="listaRolPermisosByUsuario.includes('doctor.crear')">
-                            <router-link class="btn btn-info btn-sm" :to="{name: 'doctor.crear'}">
-                                <i class="fas fa-plus-square"></i> Nuevo Doctor
+                        <template v-if="listaRolPermisosByUsuario.includes('tecnico.crear')">
+                            <router-link class="btn btn-info btn-sm" :to="{name: 'tecnico.crear'}">
+                                <i class="fas fa-plus-square"></i> Nuevo Técnico
                             </router-link>
                         </template>
                     </div>
@@ -33,7 +33,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Nombre</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqDoctor.dNombre" @keyup.enter="getListarDoctores">
+                                                    <input type="text" class="form-control" v-model="fillBsqTecnico.dNombre" @keyup.enter="getListarTecnicos">
                                                 </div>
                                             </div>
                                         </div>
@@ -41,7 +41,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">RFC</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqDoctor.dRfc" @keyup.enter="getListarDoctores">
+                                                    <input type="text" class="form-control" v-model="fillBsqTecnico.dRfc" @keyup.enter="getListarTecnicos">
                                                 </div>
                                             </div>
                                         </div>
@@ -54,7 +54,7 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-md-4 offset-4">
-                            <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarDoctores"
+                            <button class="btn btn-flat btn-info btnWidth" @click.prevent="getListarTecnicos"
                             element-loading-text="Cargando..."
                             element-loading-background="rgba(0, 0, 0, 0.5)"
                             v-loading.fullscreen.lock="fullscreenLoading">Buscar</button>
@@ -68,7 +68,7 @@
                     <h3 class="card-title">Bandeja de Resultados</h3>
                 </div>
                 <div class="card-body table-responsive">
-                    <template v-if="listarDoctoresPaginated.length">
+                    <template v-if="listarTecnicosPaginated.length">
                         <table class="table table-hover table-head-fixed text-nowrap">
                             <thead>
                                 <tr>
@@ -80,14 +80,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in listarDoctoresPaginated" :key="index">
+                                <tr v-for="(item, index) in listarTecnicosPaginated" :key="index">
                                     <td v-text="item.fullname"></td>
                                     <td v-text="item.rfc"></td>
                                     <td v-text="item.email"></td>
                                     <td v-text="item.phone"></td>
                                     <td>
-                                        <template v-if="listaRolPermisosByUsuario.includes('doctor.editar')">
-                                            <router-link  class="btn btn-flat btn-info btn-sm" :to="{ name: 'doctor.editar', params: {id: item.id}}">
+                                        <template v-if="listaRolPermisosByUsuario.includes('tecnico.editar')">
+                                            <router-link  class="btn btn-flat btn-info btn-sm" :to="{ name: 'tecnico.editar', params: {id: item.id}}">
                                                 <i class="fas fa-pencil-alt"></i> Editar
                                             </router-link>
                                         </template>
@@ -127,11 +127,11 @@
     export default {
         data() {
             return {
-                fillBsqDoctor: {
+                fillBsqTecnico: {
                     dNombre: '',
                     dRfc: '',
                 },
-                listDoctores: [],
+                listTecnicos: [],
                 listaRolPermisosByUsuario: JSON.parse(sessionStorage.getItem('listRolPermisosByUsuario')),
                 pageNumber: 0,
                 perPage: 5,
@@ -139,24 +139,24 @@
             }
         },
         mounted() {
-            this.getListarDoctores();
+            this.getListarTecnicos();
         },
         computed: {
             // Obtener el número de páginas
             pageCount(){
-                let a = this.listDoctores.length,
+                let a = this.listTecnicos.length,
                     b = this.perPage;
                 return Math.ceil(a / b);
             },
             // Obtener registros paginados
-            listarDoctoresPaginated(){
+            listarTecnicosPaginated(){
                 let inicio = this.pageNumber * this.perPage,
                     fin    = inicio + this.perPage;
-                return this.listDoctores.slice(inicio, fin);
+                return this.listTecnicos.slice(inicio, fin);
             },
             //
             pagesList() {
-                let a = this.listDoctores.length,
+                let a = this.listTecnicos.length,
                     b = this.perPage;
                 let pageCount = Math.ceil(a / b);
                 let count = 0,
@@ -170,25 +170,25 @@
         },
         methods: {
             limpiarCriteriosBsq(){
-                this.fillBsqDoctor.dNombre      = '';
-                this.fillBsqDoctor.dRfc   = '';
+                this.fillBsqTecnico.dNombre      = '';
+                this.fillBsqTecnico.dRfc   = '';
             },
-            getListarDoctores(){
+            getListarTecnicos(){
                 const loading = this.$vs.loading({
                     type: 'points',
                     color: '#90A637',
                     background: '#DBE6B1',
-                    text: 'Listando doctores...'
+                    text: 'Listando técnicos...'
                 })
-                var url = '/operacion/doctor/getListarDoctores'
+                var url = '/operacion/tecnico/getListarTecnicos'
                 axios.get(url, {
                     params: {
-                        'dNombre'   : this.fillBsqDoctor.dNombre,
-                        'dRfc'      : this.fillBsqDoctor.dRfc
+                        'dNombre'   : this.fillBsqTecnico.dNombre,
+                        'dRfc'      : this.fillBsqTecnico.dRfc
                     }
                 }).then(response => {
                     this.inicializarPaginacion();
-                    this.listDoctores =  response.data;
+                    this.listTecnicos =  response.data;
                     loading.close();
                 }).catch(error =>{
                     console.log(error.response);

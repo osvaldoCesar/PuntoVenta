@@ -234,24 +234,24 @@ export const rutas = [
         }
     },
 
-    /* Doctores */
+    /* Técnicos */
     // Index
-    {path: '/doctor', name: 'doctor.index', component: require('./components/modulos/doctor/index').default,
+    {path: '/tecnico', name: 'tecnico.index', component: require('./components/modulos/tecnico/index').default,
         beforeEnter: (to, from, next) => {
             verificarAcceso(to, from ,next);
         }
     },
     // Crear
-    {path: '/doctor/crear', name: 'doctor.crear', component: require('./components/modulos/doctor/create').default,
+    {path: '/tecnico/crear', name: 'tecnico.crear', component: require('./components/modulos/tecnico/create').default,
         beforeEnter: (to, from, next) => {
             verificarAcceso(to, from ,next);
         }
     },
     // Editar
     {
-        path: '/doctor/editar/:id',
-        name: 'doctor.editar',
-        component: require('./components/modulos/doctor/edit').default,
+        path: '/tecnico/editar/:id',
+        name: 'tecnico.editar',
+        component: require('./components/modulos/tecnico/edit').default,
         beforeEnter: (to, from, next) => {
             verificarAcceso(to, from ,next);
         },

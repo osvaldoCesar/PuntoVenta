@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Crear Doctor</h1>
+                        <h1 class="m-0">Editar Técnico</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -22,7 +22,7 @@
                     <div class="container-fluid">
                         <div class="card card-info" >
                             <div class="card-header">
-                                <h3 class="card-title">Formulario Registrar Doctores</h3>
+                                <h3 class="card-title">Formulario Editar Tecnico</h3>
                             </div>
                             <div class="card-body">
                                 <form role="form">
@@ -31,7 +31,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">RFC</label>
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control" v-model="fillCrearDoctor.dRfc" @keyup.enter="setRegistrarDoctor">
+                                                    <input type="text" class="form-control" v-model="fillEditarTecnico.dRfc" @keyup.enter="setEditarTecnico">
                                                 </div>
                                             </div>
                                         </div>
@@ -40,8 +40,8 @@
                                                 <label class="col-md-12 col-form-label">Nombre</label>
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control"
-                                                    v-model="fillCrearDoctor.dNombre"
-                                                    @keyup.enter="setRegistrarDoctor">
+                                                    v-model="fillEditarTecnico.dNombre"
+                                                    @keyup.enter="setEditarTecnico">
                                                 </div>
                                             </div>
                                         </div>
@@ -50,8 +50,8 @@
                                                 <label class="col-md-12 col-form-label">Apellido</label>
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control"
-                                                    v-model="fillCrearDoctor.dApellido"
-                                                    @keyup.enter="setRegistrarDoctor">
+                                                    v-model="fillEditarTecnico.dApellido"
+                                                    @keyup.enter="setEditarTecnico">
                                                 </div>
                                             </div>
                                         </div>
@@ -59,11 +59,11 @@
                                             <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">Email</label>
                                                 <div class="col-md-12">
-                                                    <vs-input v-model="fillCrearDoctor.dEmail"
+                                                    <vs-input v-model="fillEditarTecnico.dEmail"
                                                             placeholder="correo@gmail.com"
-                                                            @keyup.enter="setRegistrarDoctor">
+                                                            @keyup.enter="setEditarTecnico">
                                                         <template v-if="validEmail" #message-success>Correo Electrónico válido</template>
-                                                        <template v-if="!validEmail && fillCrearDoctor.dEmail !== ''" #message-danger>Correo Electrónico inválido</template>
+                                                        <template v-if="!validEmail && fillEditarTecnico.dEmail !== ''" #message-danger>Correo Electrónico inválido</template>
                                                     </vs-input>
                                                 </div>
                                             </div>
@@ -73,8 +73,8 @@
                                                 <label class="col-md-12 col-form-label">Teléfono</label>
                                                 <div class="col-md-12">
                                                     <input type="tel" class="form-control"
-                                                    v-model="fillCrearDoctor.dTelefono"
-                                                    @keyup.enter="setRegistrarDoctor">
+                                                    v-model="fillEditarTecnico.dTelefono"
+                                                    @keyup.enter="setEditarTecnico">
                                                 </div>
                                             </div>
                                         </div>
@@ -84,10 +84,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-md-4 offset-4">
-                                        <button class="btn btn-flat btn-info btnWidth" @click.prevent="setRegistrarDoctor"
-                                        element-loading-text="Cargando..."
-                                        element-loading-background="rgba(0, 0, 0, 0.5)"
-                                        v-loading.fullscreen.lock="fullscreenLoading">Registrar</button>
+                                        <button class="btn btn-flat btn-info btnWidth" @click.prevent="setEditarTecnico" v-loading.fullscreen.lock="fullscreenLoading">Editar</button>
                                         <button class="btn btn-flat btn-default btnWidth" @click.prevent="limpiarCriterios">Limpiar</button>
                                     </div>
                                 </div>
@@ -122,7 +119,8 @@ import { nextTick } from 'vue';
     export default {
         data() {
             return {
-                fillCrearDoctor: {
+                fillEditarTecnico: {
+                    nIdTecnico: this.$attrs.id,
                     dRfc: '',
                     dNombre: '',
                     dApellido: '',
@@ -140,46 +138,45 @@ import { nextTick } from 'vue';
                     display: 'none',
                 },
                 error: 0,
-                mensajeError: []
+                mensajeError: [],
+                notificacion: '',
             }
         },
         computed: {
             validEmail() {
-                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillCrearDoctor.dEmail)
+                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillEditarTecnico.dEmail)
             }
+        },
+        mounted(){
+            this.getListarTecnicos
+            s();
         },
         methods: {
             limpiarCriterios(){
-                this.fillCrearDoctor.dRfc    = '';
-                this.fillCrearDoctor.dNombre       = '';
-                this.fillCrearDoctor.dApellido     = '';
-                this.fillCrearDoctor.dEmail        = '';
-                this.fillCrearDoctor.dTelefono     = '';
+                this.fillEditarTecnico.dRfc          = '';
+                this.fillEditarTecnico.dNombre       = '';
+                this.fillEditarTecnico.dApellido     = '';
+                this.fillEditarTecnico.dEmail        = '';
+                this.fillEditarTecnico.dTelefono     = '';
             },
             abrirModal(){
                 this.modalShow = !this.modalShow;
             },
-            setRegistrarDoctor(){
-                if (this.validarRegistrarCliente()) {
-                    this.modalShow = true;
-                    return;
-                }
-                this.loading = this.$vs.loading({
-                    type: 'points',
-                    color: '#90A637',
-                    background: '#DBE6B1',
-                    text: 'Registrando Doctor...'
-                })
-                var url = '/operacion/doctor/setRegistrarDoctor'
-                axios.post(url, {
-                    'dRfc'    :  this.fillCrearDoctor.dRfc,
-                    'dNombre'       :  this.fillCrearDoctor.dNombre,
-                    'dApellido'     :  this.fillCrearDoctor.dApellido,
-                    'dEmail'        :  this.fillCrearDoctor.dEmail,
-                    'dTelefono'     :  this.fillCrearDoctor.dTelefono,
+            getListarTecnicos(){
+                this.fullscreenLoading = true;
+                var url = '/operacion/tecnico/getListarTecnicos'
+                axios.get(url, {
+                    params: {
+                        'nIdTecnico'  : this.fillEditarTecnico.nIdTecnico
+                    }
                 }).then(response => {
-                    this.loading.close();
-                    this.$router.push('/doctor');
+                    console.log(response.data[0].rfc);
+                    this.fillEditarTecnico.dRfc          = response.data[0].rfc;
+                    this.fillEditarTecnico.dNombre       = response.data[0].name;
+                    this.fillEditarTecnico.dApellido     = response.data[0].lastname;
+                    this.fillEditarTecnico.dEmail        = response.data[0].email;
+                    this.fillEditarTecnico.dTelefono     = response.data[0].phone;
+                    this.fullscreenLoading = false;
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
@@ -190,24 +187,57 @@ import { nextTick } from 'vue';
                     }
                 });
             },
-            validarRegistrarCliente(){
+            setEditarTecnico(){
+                if (this.validarEditarTecnico()) {
+                    this.modalShow = true;
+                    return;
+                }
+                var url = '/operacion/tecnico/setEditarTecnico'
+                axios.post(url, {
+                    'nIdTecnico'  :   this.fillEditarTecnico.nIdTecnico,
+                    'dRfc'       :   this.fillEditarTecnico.dRfc,
+                    'dNombre'    :   this.fillEditarTecnico.dNombre,
+                    'dApellido'  :   this.fillEditarTecnico.dApellido,
+                    'dEmail'     :   this.fillEditarTecnico.dEmail,
+                    'dTelefono'  :   this.fillEditarTecnico.dTelefono,
+                }).then(response => {
+                    this.notificacion = this.$vs.notification({
+                        title: 'Notificación Punto de venta',
+                        text: 'Se actualizó el Técnico correctamente',
+                        color: 'success',
+                    })
+                    setTimeout(() => {
+                        notificacion.toggleClass('new-class')
+                    }, 2000)
+                    this.$router.push('/tecnico');
+                }).catch(error =>{
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
+                });
+            },
+            validarEditarTecnico(){
                 this.error = 0;
                 this.mensajeError = [];
 
-                if (!this.fillCrearDoctor.dRfc) {
+                if (!this.fillEditarTecnico.dRfc) {
                     this.mensajeError.push("El RFC es un campo obligatorio");
                 }else{
-                    if (this.fillCrearDoctor.dRfc.length != 8) {
+                    if (this.fillEditarTecnico.dRfc.length != 8) {
                         this.mensajeError.push("El RFC requiere 8 caracteres");
                     }
                 }
-                if (!this.fillCrearDoctor.dNombre) {
+                if (!this.fillEditarTecnico.dNombre) {
                     this.mensajeError.push("El Nombre es un campo obligatorio");
                 }
-                if (!this.fillCrearDoctor.dApellido) {
+                if (!this.fillEditarTecnico.dApellido) {
                     this.mensajeError.push("El apellido es un campo obligatorio");
                 }
-                if (this.fillCrearDoctor.dEmail) {
+                if (this.fillEditarTecnico.dEmail) {
                     if (!this.validEmail) {
                         this.mensajeError.push("El correo electrónico tiene un formato inválido");
                     }
