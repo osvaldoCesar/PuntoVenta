@@ -98,6 +98,14 @@ Route::group(['middleware' => ['auth']], function () {
     // Editar
     Route::post("/operacion/tecnico/setEditarTecnico", "Operacion\TechnicalsController@setEditarTecnico");
 
+    /* Doctores */
+    // Listar
+    Route::get("/operacion/doctor/getListarDoctores", "Operacion\DoctorsController@getListarDoctores");
+    // Crear
+    Route::post("/operacion/doctor/setRegistrarDoctor", "Operacion\DoctorsController@setRegistrarDoctor");
+    // Editar
+    Route::post("/operacion/doctor/setEditarDoctor", "Operacion\DoctorsController@setEditarDoctor");
+
     /* Dashboard */
     // Productos más vendidos
     Route::get("/dashboard/getProductosMasVendidos", "DashboardController@getProductosMasVendidos");

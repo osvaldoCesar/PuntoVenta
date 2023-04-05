@@ -258,6 +258,30 @@ export const rutas = [
         props: true,
     },
 
+    /* Doctores */
+    // Index
+    {path: '/doctor', name: 'doctor.index', component: require('./components/modulos/doctor/index').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from ,next);
+        }
+    },
+    // Crear
+    {path: '/doctor/crear', name: 'doctor.crear', component: require('./components/modulos/doctor/create').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from ,next);
+        }
+    },
+    // Editar
+    {
+        path: '/doctor/editar/:id',
+        name: 'doctor.editar',
+        component: require('./components/modulos/doctor/edit').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from ,next);
+        },
+        props: true,
+    },
+
     // Reportes
     {
         path: '/reporte',
