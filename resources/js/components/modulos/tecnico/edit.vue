@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <router-link class="btn btn-info btn-sm" :to="'/doctor'">
+                        <router-link class="btn btn-info btn-sm" :to="'/tecnico'">
                             <i class="fas fa-arrow-left"></i> Regresar
                         </router-link>
                     </div>

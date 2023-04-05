@@ -160,7 +160,7 @@ import { nextTick } from 'vue';
                 this.modalShow = !this.modalShow;
             },
             setRegistrarTecnico(){
-                if (this.validarRegistrarCliente()) {
+                if (this.validarRegistrarTecnico()) {
                     this.modalShow = true;
                     return;
                 }
@@ -190,7 +190,7 @@ import { nextTick } from 'vue';
                     }
                 });
             },
-            validarRegistrarCliente(){
+            validarRegistrarTecnico(){
                 this.error = 0;
                 this.mensajeError = [];
 
