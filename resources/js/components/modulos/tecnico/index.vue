@@ -31,17 +31,17 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Nombre</label>
+                                                <label class="col-md-3 col-form-label">DNI</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqTecnico.dNombre" @keyup.enter="getListarTecnicos">
+                                                    <input type="text" class="form-control" v-model="fillBsqTecnico.tDni" @keyup.enter="getListarTecnicos">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">RFC</label>
+                                                <label class="col-md-3 col-form-label">Nombre</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqTecnico.dRfc" @keyup.enter="getListarTecnicos">
+                                                    <input type="text" class="form-control" v-model="fillBsqTecnico.tNombre" @keyup.enter="getListarTecnicos">
                                                 </div>
                                             </div>
                                         </div>
@@ -72,6 +72,7 @@
                         <table class="table table-hover table-head-fixed text-nowrap">
                             <thead>
                                 <tr>
+                                    <th>DNI</th>
                                     <th>Nombre</th>
                                     <th>RFC</th>
                                     <th>Correo</th>
@@ -81,6 +82,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in listarTecnicosPaginated" :key="index">
+                                    <td v-text="item.dni"></td>
                                     <td v-text="item.fullname"></td>
                                     <td v-text="item.rfc"></td>
                                     <td v-text="item.email"></td>
@@ -128,8 +130,9 @@
         data() {
             return {
                 fillBsqTecnico: {
-                    dNombre: '',
-                    dRfc: '',
+                    tDni: '',
+                    tNombre: '',
+                    tRfc: '',
                 },
                 listTecnicos: [],
                 listaRolPermisosByUsuario: JSON.parse(sessionStorage.getItem('listRolPermisosByUsuario')),
@@ -170,8 +173,9 @@
         },
         methods: {
             limpiarCriteriosBsq(){
-                this.fillBsqTecnico.dNombre      = '';
-                this.fillBsqTecnico.dRfc   = '';
+                this.fillBsqTecnico.tDni     = '';
+                this.fillBsqTecnico.tNombre  = '';
+                this.fillBsqTecnico.tRfc     = '';
             },
             getListarTecnicos(){
                 const loading = this.$vs.loading({
@@ -183,8 +187,9 @@
                 var url = '/operacion/tecnico/getListarTecnicos'
                 axios.get(url, {
                     params: {
-                        'dNombre'   : this.fillBsqTecnico.dNombre,
-                        'dRfc'      : this.fillBsqTecnico.dRfc
+                        'tDni'   : this.fillBsqTecnico.tDni,
+                        'tNombre'   : this.fillBsqTecnico.tNombre,
+                        'tRfc'      : this.fillBsqTecnico.tRfc
                     }
                 }).then(response => {
                     this.inicializarPaginacion();

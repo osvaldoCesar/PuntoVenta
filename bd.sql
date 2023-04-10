@@ -149,10 +149,10 @@ CREATE TABLE IF NOT EXISTS `technicals` (
 
 -- Volcando datos para la tabla punto_venta.technicals: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `technicals` DISABLE KEYS */;
-INSERT INTO `technicals` (`id`, `name`, `lastname`, `rfc`, `phone`, `email`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 'Técnico Yahir', 'Piña', 'PIRY1212', '1111111111', 'yahir@gmail.com', 21, 21, '2020-05-28 01:00:01', '2020-05-28 01:00:01'),
-	(2, 'Técnico Gaby', 'López', 'GABY1212', '2222222222', 'gaby@gmail.com', 29, 1, '2022-11-19 02:28:14', '2023-02-11 01:24:41'),
-	(3, 'Técnico osvaldo', 'cesar', 'CEGO9405', '1212121212', '', 1, 1, '2023-02-11 01:42:35', '2023-02-12 23:27:26');
+INSERT INTO `technicals` (`id`, `dni`, `name`, `lastname`, `rfc`, `phone`, `email`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+	(1, 'T00001', 'Técnico Yahir', 'Piña', 'PIRY1212', '1111111111', 'yahir@gmail.com', 21, 21, '2020-05-28 01:00:01', '2020-05-28 01:00:01'),
+	(2, 'T00002', 'Técnico Gaby', 'López', 'GABY1212', '2222222222', 'gaby@gmail.com', 29, 1, '2022-11-19 02:28:14', '2023-02-11 01:24:41'),
+	(3, 'T00003', 'Técnico osvaldo', 'cesar', 'CEGO9405', '1212121212', '', 1, 1, '2023-02-11 01:42:35', '2023-02-12 23:27:26');
 /*!40000 ALTER TABLE `technicals` ENABLE KEYS */;
 
 -- Volcando estructura para tabla punto_venta.files
@@ -849,10 +849,10 @@ BEGIN
 END//
 DELIMITER ;
 
--- Volcando estructura para procedimiento punto_venta.sp_Doctor_getNuevoDniTecnico
-DROP PROCEDURE IF EXISTS `sp_Doctor_getNuevoDniTecnico`;
+-- Volcando estructura para procedimiento punto_venta.sp_Tecnico_getNuevoDniTecnico
+DROP PROCEDURE IF EXISTS `sp_Tecnico_getNuevoDniTecnico`;
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Doctor_getNuevoDniTecnico`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Tecnico_getNuevoDniTecnico`(
 )
 BEGIN
 	SET @nDniTecnico := (SELECT IF(ISNULL(id), 'T00001', CONCAT('T', LPAD(cast(substring(max(dni), 5, 5) AS UNSIGNED INTEGER) + 1,5,'0'))) FROM technicals);
@@ -894,21 +894,21 @@ DROP PROCEDURE IF EXISTS `sp_Tecnico_setEditarTecnico`;
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Tecnico_setEditarTecnico`(
 	IN `nidtechnical` INT,
-	IN `drfc` VARCHAR(50),
-	IN `dnombre` VARCHAR(50),
-	IN `dapellido` VARCHAR(50),
-	IN `demail` VARCHAR(50),
-	IN `dtelefono` VARCHAR(50),
+	IN `trfc` VARCHAR(50),
+	IN `tnombre` VARCHAR(50),
+	IN `tapellido` VARCHAR(50),
+	IN `temail` VARCHAR(50),
+	IN `ttelefono` VARCHAR(50),
 	IN `nidauthuser` INT
 
 )
 BEGIN
 	UPDATE	technicals
-	SET		rfc			=	drfc,
-				name			=	dnombre,
-				lastname		=	dapellido,
-				email			=	demail,
-				phone			=	dtelefono,
+	SET		rfc			=	trfc,
+				name			=	tnombre,
+				lastname		=	tapellido,
+				email			=	temail,
+				phone			=	ttelefono,
 				updated_by	=	nidauthuser,
 				updated_at	=	NOW()
 	WHERE		id				=	nidtechnical;
@@ -919,16 +919,17 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `sp_Tecnico_setRegistrarTecnico`;
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Tecnico_setRegistrarTecnico`(
-	IN `drfc` VARCHAR(50),
-	IN `dnombre` VARCHAR(50),
-	IN `dapellido` VARCHAR(50),
-	IN `demail` VARCHAR(50),
-	IN `dtelefono` VARCHAR(50),
+	IN `trfc` VARCHAR(50),
+	IN `tnombre` VARCHAR(50),
+	IN `tapellido` VARCHAR(50),
+	IN `temail` VARCHAR(50),
+	IN `ttelefono` VARCHAR(50),
 	IN `nidauthuser` INT
 )
 BEGIN
-	INSERT	INTO	technicals	(rfc, name, lastname, email, phone, created_by, updated_by, created_at, updated_at)
-							VALUES	(drfc, dnombre, dapellido, demail, dtelefono, nidauthuser, nidauthuser, NOW(), NOW());
+    SET @nDniTecnico := (SELECT IF(ISNULL(id), 'T00001', CONCAT('T', LPAD(cast(substring(max(dni), 5, 5) AS UNSIGNED INTEGER) + 1,5,'0'))) FROM technicals);
+	INSERT	INTO	technicals	(dni, rfc, name, lastname, email, phone, created_by, updated_by, created_at, updated_at)
+							VALUES	(@nDniTecnico, trfc, tnombre, tapellido, temail, ttelefono, nidauthuser, nidauthuser, NOW(), NOW());
 
 	/*OBTENER EL ULTIMO ID REGISTRADO*/
 	SET @nIdTechnical := (SELECT	((IFNULL(MAX(technical.id), 1)))

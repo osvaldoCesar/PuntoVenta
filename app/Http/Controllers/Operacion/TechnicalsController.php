@@ -9,23 +9,33 @@ use Illuminate\Support\Facades\Auth;
 
 class TechnicalsController extends Controller
 {
+    public function getNuevoDniTecnico(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $rpta        =      DB::select('call sp_Tecnico_getNuevoDniTecnico()');
+        return $rpta;
+    }
+
     public function getListarTecnicos(Request $request){
         if(!$request->ajax()) return redirect('/');
 
         $nIdTecnico   =   $request->nIdTecnico;
-        $dRfc        =   $request->dRfc;
-        $dNombre     =   $request->dNombre;
+        $tDni        =   $request->tDni;
+        $tRfc        =   $request->tRfc;
+        $tNombre     =   $request->tNombre;
 
 
         $nIdTecnico   =    ($nIdTecnico   ==  NULL)  ?  ($nIdTecnico  =    0)  :  $nIdTecnico;
-        $dRfc        =    ($dRfc        ==  NULL)  ?  ($dRfc       =   '')  :  $dRfc;
-        $dNombre     =    ($dNombre     ==  NULL)  ?  ($dNombre    =   '')  :  $dNombre;
+        $tDni        =    ($tDni        ==  NULL)  ?  ($tDni       =   '')  :  $tDni;
+        $tRfc        =    ($tRfc        ==  NULL)  ?  ($tRfc       =   '')  :  $tRfc;
+        $tNombre     =    ($tNombre     ==  NULL)  ?  ($tNombre    =   '')  :  $tNombre;
 
-        $rpta        =      DB::select('call sp_Tecnico_getListarTecnicos(?, ?, ?)',
+        $rpta        =      DB::select('call sp_Tecnico_getListarTecnicos(?, ?, ?, ?)',
                                                                             [
                                                                                 $nIdTecnico,
-                                                                                $dNombre,
-                                                                                $dRfc,
+                                                                                $tDni,
+                                                                                $tNombre,
+                                                                                $tRfc,
                                                                             ]);
         return $rpta;
     }
@@ -33,26 +43,26 @@ class TechnicalsController extends Controller
     public function setRegistrarTecnico(Request $request){
         if(!$request->ajax()) return redirect('/');
 
-        $dRfc           =      $request->dRfc;
-        $dNombre        =      $request->dNombre;
-        $dApellido      =      $request->dApellido;
-        $dEmail         =      $request->dEmail;
-        $dTelefono      =      $request->dTelefono;
+        $tRfc           =      $request->tRfc;
+        $tNombre        =      $request->tNombre;
+        $tApellido      =      $request->tApellido;
+        $tEmail         =      $request->tEmail;
+        $tTelefono      =      $request->tTelefono;
         $nIdAuthUser    =      Auth::id();
 
-        $dRfc     =    ($dRfc   ==  NULL)  ?  ($dRfc  =   '')  :  $dRfc;
-        $dNombre        =    ($dNombre      ==  NULL)  ?  ($dNombre     =   '')  :  $dNombre;
-        $dApellido      =    ($dApellido    ==  NULL)  ?  ($dApellido   =   '')  :  $dApellido;
-        $dEmail         =    ($dEmail       ==  NULL)  ?  ($dEmail      =   '')  :  $dEmail;
-        $dTelefono      =    ($dTelefono    ==  NULL)  ?  ($dTelefono   =   '')  :  $dTelefono;
+        $tRfc     =    ($tRfc   ==  NULL)  ?  ($tRfc  =   '')  :  $tRfc;
+        $tNombre        =    ($tNombre      ==  NULL)  ?  ($tNombre     =   '')  :  $tNombre;
+        $tApellido      =    ($tApellido    ==  NULL)  ?  ($tApellido   =   '')  :  $tApellido;
+        $tEmail         =    ($tEmail       ==  NULL)  ?  ($tEmail      =   '')  :  $tEmail;
+        $tTelefono      =    ($tTelefono    ==  NULL)  ?  ($tTelefono   =   '')  :  $tTelefono;
 
         $rpta        =      DB::select('call sp_Tecnico_setRegistrarTecnico(?, ?, ?, ?, ?, ?)',
                                                                     [
-                                                                        $dRfc,
-                                                                        $dNombre,
-                                                                        $dApellido,
-                                                                        $dEmail,
-                                                                        $dTelefono,
+                                                                        $tRfc,
+                                                                        $tNombre,
+                                                                        $tApellido,
+                                                                        $tEmail,
+                                                                        $tTelefono,
                                                                         $nIdAuthUser
                                                                     ]);
         return $rpta;
@@ -61,29 +71,29 @@ class TechnicalsController extends Controller
         if(!$request->ajax()) return redirect('/');
 
         $nIdTecnico      =       $request->nIdTecnico;
-        $dRfc     =       $request->dRfc;
-        $dNombre        =       $request->dNombre;
-        $dApellido      =       $request->dApellido;
-        $dEmail         =       $request->dEmail;
-        $dTelefono      =       $request->dTelefono;
+        $tRfc     =       $request->tRfc;
+        $tNombre        =       $request->tNombre;
+        $tApellido      =       $request->tApellido;
+        $tEmail         =       $request->tEmail;
+        $tTelefono      =       $request->tTelefono;
         $nIdAuthUser    =       Auth::id();
 
 
         $nIdTecnico     =    ($nIdTecnico   ==  NULL)  ?  ($nIdTecnico  =   0)   :  $nIdTecnico;
-        $dRfc     =    ($dRfc   ==  NULL)  ?  ($dRfc  =   '')  :  $dRfc;
-        $dNombre        =    ($dNombre      ==  NULL)  ?  ($dNombre     =   '')  :  $dNombre;
-        $dApellido      =    ($dApellido    ==  NULL)  ?  ($dApellido   =   '')  :  $dApellido;
-        $dEmail         =    ($dEmail       ==  NULL)  ?  ($dEmail      =   '')  :  $dEmail;
-        $dTelefono      =    ($dTelefono    ==  NULL)  ?  ($dTelefono   =   '')  :  $dTelefono;
+        $tRfc     =    ($tRfc   ==  NULL)  ?  ($tRfc  =   '')  :  $tRfc;
+        $tNombre        =    ($tNombre      ==  NULL)  ?  ($tNombre     =   '')  :  $tNombre;
+        $tApellido      =    ($tApellido    ==  NULL)  ?  ($tApellido   =   '')  :  $tApellido;
+        $tEmail         =    ($tEmail       ==  NULL)  ?  ($tEmail      =   '')  :  $tEmail;
+        $tTelefono      =    ($tTelefono    ==  NULL)  ?  ($tTelefono   =   '')  :  $tTelefono;
 
         $rpta        =      DB::select('call sp_Tecnico_setEditarTecnico(?, ?, ?, ?, ?, ?, ?)',
                                                                     [
                                                                         $nIdTecnico,
-                                                                        $dRfc,
-                                                                        $dNombre,
-                                                                        $dApellido,
-                                                                        $dEmail,
-                                                                        $dTelefono,
+                                                                        $tRfc,
+                                                                        $tNombre,
+                                                                        $tApellido,
+                                                                        $tEmail,
+                                                                        $tTelefono,
                                                                         $nIdAuthUser
                                                                     ]);
         return $rpta;

@@ -72,7 +72,7 @@
                         <table class="table table-hover table-head-fixed text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>DNI</th>
                                     <th>Nombre</th>
                                     <th>RFC</th>
                                     <th>Correo</th>

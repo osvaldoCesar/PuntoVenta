@@ -91,6 +91,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post("/operacion/cliente/setEditarCliente", "Operacion\CustomersController@setEditarCliente");
 
     /* Tecnicos */
+    // Obtener nuevo ID
+    Route::get("/operacion/tecnico/getNuevoDniTecnico", "Operacion\TechnicalsController@getNuevoDniTecnico");
     // Listar
     Route::get("/operacion/tecnico/getListarTecnicos", "Operacion\TechnicalsController@getListarTecnicos");
     // Crear

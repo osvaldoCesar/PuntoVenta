@@ -29,9 +29,18 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
+                                                <label class="col-md-12 col-form-label">DNI Técnico</label>
+                                                <div class="col-md-12">
+                                                    <label class="form-control" v-text="this.nDniTecnico"></label>
+                                                    <!-- <input type="text" class="form-control" v-text="fillCrearDoctor.nDniTecnico" v-model="fillCrearDoctor.nDniTecnico" @keyup.enter="setRegistrarDoctor"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">RFC</label>
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control" v-model="fillCrearTecnico.dRfc" @keyup.enter="setRegistrarTecnico">
+                                                    <input type="text" class="form-control" v-model="fillCrearTecnico.tRfc" @keyup.enter="setRegistrarTecnico">
                                                 </div>
                                             </div>
                                         </div>
@@ -40,7 +49,7 @@
                                                 <label class="col-md-12 col-form-label">Nombre</label>
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control"
-                                                    v-model="fillCrearTecnico.dNombre"
+                                                    v-model="fillCrearTecnico.tNombre"
                                                     @keyup.enter="setRegistrarTecnico">
                                                 </div>
                                             </div>
@@ -50,7 +59,7 @@
                                                 <label class="col-md-12 col-form-label">Apellido</label>
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control"
-                                                    v-model="fillCrearTecnico.dApellido"
+                                                    v-model="fillCrearTecnico.tApellido"
                                                     @keyup.enter="setRegistrarTecnico">
                                                 </div>
                                             </div>
@@ -59,11 +68,11 @@
                                             <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">Email</label>
                                                 <div class="col-md-12">
-                                                    <vs-input v-model="fillCrearTecnico.dEmail"
+                                                    <vs-input v-model="fillCrearTecnico.tEmail"
                                                             placeholder="correo@gmail.com"
                                                             @keyup.enter="setRegistrarTecnico">
-                                                        <template v-if="validEmail" #message-success>Correo Electrónico válido</template>
-                                                        <template v-if="!validEmail && fillCrearTecnico.dEmail !== ''" #message-danger>Correo Electrónico inválido</template>
+                                                        <template v-if="valitEmail" #message-success>Correo Electrónico válido</template>
+                                                        <template v-if="!valitEmail && fillCrearTecnico.tEmail !== ''" #message-danger>Correo Electrónico inválido</template>
                                                     </vs-input>
                                                 </div>
                                             </div>
@@ -73,7 +82,7 @@
                                                 <label class="col-md-12 col-form-label">Teléfono</label>
                                                 <div class="col-md-12">
                                                     <input type="tel" class="form-control"
-                                                    v-model="fillCrearTecnico.dTelefono"
+                                                    v-model="fillCrearTecnico.tTelefono"
                                                     @keyup.enter="setRegistrarTecnico">
                                                 </div>
                                             </div>
@@ -123,12 +132,13 @@ import { nextTick } from 'vue';
         data() {
             return {
                 fillCrearTecnico: {
-                    dRfc: '',
-                    dNombre: '',
-                    dApellido: '',
-                    dEmail: '',
-                    dTelefono: '',
+                    tRfc: '',
+                    tNombre: '',
+                    tApellido: '',
+                    tEmail: '',
+                    tTelefono: '',
                 },
+                nDniTecnico: '',
                 fullscreenLoading: false,
                 loading: '',
                 modalShow: false,
@@ -143,21 +153,39 @@ import { nextTick } from 'vue';
                 mensajeError: []
             }
         },
+        mounted() {
+            this.getNuevoDniTecnico();
+        },
         computed: {
-            validEmail() {
-                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillCrearTecnico.dEmail)
+            valitEmail() {
+                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillCrearTecnico.tEmail)
             }
         },
         methods: {
             limpiarCriterios(){
-                this.fillCrearTecnico.dRfc    = '';
-                this.fillCrearTecnico.dNombre       = '';
-                this.fillCrearTecnico.dApellido     = '';
-                this.fillCrearTecnico.dEmail        = '';
-                this.fillCrearTecnico.dTelefono     = '';
+                this.fillCrearTecnico.tRfc    = '';
+                this.fillCrearTecnico.tNombre       = '';
+                this.fillCrearTecnico.tApellido     = '';
+                this.fillCrearTecnico.tEmail        = '';
+                this.fillCrearTecnico.tTelefono     = '';
             },
             abrirModal(){
                 this.modalShow = !this.modalShow;
+            },
+            getNuevoDniTecnico(){
+                var url = '/operacion/tecnico/getNuevoDniTecnico'
+                axios.get(url).then(response => {
+                    this.nDniTecnico =  response.data[0].nDniTecnico;
+                    console.log(response.data[0].nDniTecnico);
+                }).catch(error =>{
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        loading.close();
+                    }
+                });
             },
             setRegistrarTecnico(){
                 if (this.validarRegistrarTecnico()) {
@@ -172,11 +200,11 @@ import { nextTick } from 'vue';
                 })
                 var url = '/operacion/tecnico/setRegistrarTecnico'
                 axios.post(url, {
-                    'dRfc'    :  this.fillCrearTecnico.dRfc,
-                    'dNombre'       :  this.fillCrearTecnico.dNombre,
-                    'dApellido'     :  this.fillCrearTecnico.dApellido,
-                    'dEmail'        :  this.fillCrearTecnico.dEmail,
-                    'dTelefono'     :  this.fillCrearTecnico.dTelefono,
+                    'tRfc'    :  this.fillCrearTecnico.tRfc,
+                    'tNombre'       :  this.fillCrearTecnico.tNombre,
+                    'tApellido'     :  this.fillCrearTecnico.tApellido,
+                    'tEmail'        :  this.fillCrearTecnico.tEmail,
+                    'tTelefono'     :  this.fillCrearTecnico.tTelefono,
                 }).then(response => {
                     this.loading.close();
                     this.$router.push('/tecnico');
@@ -194,21 +222,21 @@ import { nextTick } from 'vue';
                 this.error = 0;
                 this.mensajeError = [];
 
-                if (!this.fillCrearTecnico.dRfc) {
+                if (!this.fillCrearTecnico.tRfc) {
                     this.mensajeError.push("El RFC es un campo obligatorio");
                 }else{
-                    if (this.fillCrearTecnico.dRfc.length != 8) {
+                    if (this.fillCrearTecnico.tRfc.length != 8) {
                         this.mensajeError.push("El RFC requiere 8 caracteres");
                     }
                 }
-                if (!this.fillCrearTecnico.dNombre) {
+                if (!this.fillCrearTecnico.tNombre) {
                     this.mensajeError.push("El Nombre es un campo obligatorio");
                 }
-                if (!this.fillCrearTecnico.dApellido) {
+                if (!this.fillCrearTecnico.tApellido) {
                     this.mensajeError.push("El apellido es un campo obligatorio");
                 }
-                if (this.fillCrearTecnico.dEmail) {
-                    if (!this.validEmail) {
+                if (this.fillCrearTecnico.tEmail) {
+                    if (!this.valitEmail) {
                         this.mensajeError.push("El correo electrónico tiene un formato inválido");
                     }
                 }

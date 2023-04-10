@@ -31,7 +31,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">RFC</label>
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control" v-model="fillEditarTecnico.dRfc" @keyup.enter="setEditarTecnico">
+                                                    <input type="text" class="form-control" v-model="fillEditarTecnico.tRfc" @keyup.enter="setEditarTecnico">
                                                 </div>
                                             </div>
                                         </div>
@@ -40,7 +40,7 @@
                                                 <label class="col-md-12 col-form-label">Nombre</label>
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control"
-                                                    v-model="fillEditarTecnico.dNombre"
+                                                    v-model="fillEditarTecnico.tNombre"
                                                     @keyup.enter="setEditarTecnico">
                                                 </div>
                                             </div>
@@ -50,7 +50,7 @@
                                                 <label class="col-md-12 col-form-label">Apellido</label>
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control"
-                                                    v-model="fillEditarTecnico.dApellido"
+                                                    v-model="fillEditarTecnico.tApellido"
                                                     @keyup.enter="setEditarTecnico">
                                                 </div>
                                             </div>
@@ -59,11 +59,11 @@
                                             <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">Email</label>
                                                 <div class="col-md-12">
-                                                    <vs-input v-model="fillEditarTecnico.dEmail"
+                                                    <vs-input v-model="fillEditarTecnico.tEmail"
                                                             placeholder="correo@gmail.com"
                                                             @keyup.enter="setEditarTecnico">
-                                                        <template v-if="validEmail" #message-success>Correo Electrónico válido</template>
-                                                        <template v-if="!validEmail && fillEditarTecnico.dEmail !== ''" #message-danger>Correo Electrónico inválido</template>
+                                                        <template v-if="valitEmail" #message-success>Correo Electrónico válido</template>
+                                                        <template v-if="!valitEmail && fillEditarTecnico.tEmail !== ''" #message-danger>Correo Electrónico inválido</template>
                                                     </vs-input>
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@
                                                 <label class="col-md-12 col-form-label">Teléfono</label>
                                                 <div class="col-md-12">
                                                     <input type="tel" class="form-control"
-                                                    v-model="fillEditarTecnico.dTelefono"
+                                                    v-model="fillEditarTecnico.tTelefono"
                                                     @keyup.enter="setEditarTecnico">
                                                 </div>
                                             </div>
@@ -121,11 +121,11 @@ import { nextTick } from 'vue';
             return {
                 fillEditarTecnico: {
                     nIdTecnico: this.$attrs.id,
-                    dRfc: '',
-                    dNombre: '',
-                    dApellido: '',
-                    dEmail: '',
-                    dTelefono: '',
+                    tRfc: '',
+                    tNombre: '',
+                    tApellido: '',
+                    tEmail: '',
+                    tTelefono: '',
                 },
                 fullscreenLoading: false,
                 loading: '',
@@ -143,8 +143,8 @@ import { nextTick } from 'vue';
             }
         },
         computed: {
-            validEmail() {
-                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillEditarTecnico.dEmail)
+            valitEmail() {
+                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillEditarTecnico.tEmail)
             }
         },
         mounted(){
@@ -152,11 +152,11 @@ import { nextTick } from 'vue';
         },
         methods: {
             limpiarCriterios(){
-                this.fillEditarTecnico.dRfc          = '';
-                this.fillEditarTecnico.dNombre       = '';
-                this.fillEditarTecnico.dApellido     = '';
-                this.fillEditarTecnico.dEmail        = '';
-                this.fillEditarTecnico.dTelefono     = '';
+                this.fillEditarTecnico.tRfc          = '';
+                this.fillEditarTecnico.tNombre       = '';
+                this.fillEditarTecnico.tApellido     = '';
+                this.fillEditarTecnico.tEmail        = '';
+                this.fillEditarTecnico.tTelefono     = '';
             },
             abrirModal(){
                 this.modalShow = !this.modalShow;
@@ -170,11 +170,11 @@ import { nextTick } from 'vue';
                     }
                 }).then(response => {
                     console.log(response.data[0].rfc);
-                    this.fillEditarTecnico.dRfc          = response.data[0].rfc;
-                    this.fillEditarTecnico.dNombre       = response.data[0].name;
-                    this.fillEditarTecnico.dApellido     = response.data[0].lastname;
-                    this.fillEditarTecnico.dEmail        = response.data[0].email;
-                    this.fillEditarTecnico.dTelefono     = response.data[0].phone;
+                    this.fillEditarTecnico.tRfc          = response.data[0].rfc;
+                    this.fillEditarTecnico.tNombre       = response.data[0].name;
+                    this.fillEditarTecnico.tApellido     = response.data[0].lastname;
+                    this.fillEditarTecnico.tEmail        = response.data[0].email;
+                    this.fillEditarTecnico.tTelefono     = response.data[0].phone;
                     this.fullscreenLoading = false;
                 }).catch(error =>{
                     console.log(error.response);
@@ -194,11 +194,11 @@ import { nextTick } from 'vue';
                 var url = '/operacion/tecnico/setEditarTecnico'
                 axios.post(url, {
                     'nIdTecnico'  :   this.fillEditarTecnico.nIdTecnico,
-                    'dRfc'       :   this.fillEditarTecnico.dRfc,
-                    'dNombre'    :   this.fillEditarTecnico.dNombre,
-                    'dApellido'  :   this.fillEditarTecnico.dApellido,
-                    'dEmail'     :   this.fillEditarTecnico.dEmail,
-                    'dTelefono'  :   this.fillEditarTecnico.dTelefono,
+                    'tRfc'       :   this.fillEditarTecnico.tRfc,
+                    'tNombre'    :   this.fillEditarTecnico.tNombre,
+                    'tApellido'  :   this.fillEditarTecnico.tApellido,
+                    'tEmail'     :   this.fillEditarTecnico.tEmail,
+                    'tTelefono'  :   this.fillEditarTecnico.tTelefono,
                 }).then(response => {
                     this.notificacion = this.$vs.notification({
                         title: 'Notificación Punto de venta',
@@ -220,21 +220,21 @@ import { nextTick } from 'vue';
                 this.error = 0;
                 this.mensajeError = [];
 
-                if (!this.fillEditarTecnico.dRfc) {
+                if (!this.fillEditarTecnico.tRfc) {
                     this.mensajeError.push("El RFC es un campo obligatorio");
                 }else{
-                    if (this.fillEditarTecnico.dRfc.length != 8) {
+                    if (this.fillEditarTecnico.tRfc.length != 8) {
                         this.mensajeError.push("El RFC requiere 8 caracteres");
                     }
                 }
-                if (!this.fillEditarTecnico.dNombre) {
+                if (!this.fillEditarTecnico.tNombre) {
                     this.mensajeError.push("El Nombre es un campo obligatorio");
                 }
-                if (!this.fillEditarTecnico.dApellido) {
+                if (!this.fillEditarTecnico.tApellido) {
                     this.mensajeError.push("El apellido es un campo obligatorio");
                 }
-                if (this.fillEditarTecnico.dEmail) {
-                    if (!this.validEmail) {
+                if (this.fillEditarTecnico.tEmail) {
+                    if (!this.valitEmail) {
                         this.mensajeError.push("El correo electrónico tiene un formato inválido");
                     }
                 }
