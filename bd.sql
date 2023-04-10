@@ -150,9 +150,8 @@ CREATE TABLE IF NOT EXISTS `technicals` (
 -- Volcando datos para la tabla punto_venta.technicals: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `technicals` DISABLE KEYS */;
 INSERT INTO `technicals` (`id`, `dni`, `name`, `lastname`, `rfc`, `phone`, `email`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-	(1, 'T00001', 'Técnico Yahir', 'Piña', 'PIRY1212', '1111111111', 'yahir@gmail.com', 21, 21, '2020-05-28 01:00:01', '2020-05-28 01:00:01'),
-	(2, 'T00002', 'Técnico Gaby', 'López', 'GABY1212', '2222222222', 'gaby@gmail.com', 29, 1, '2022-11-19 02:28:14', '2023-02-11 01:24:41'),
-	(3, 'T00003', 'Técnico osvaldo', 'cesar', 'CEGO9405', '1212121212', '', 1, 1, '2023-02-11 01:42:35', '2023-02-12 23:27:26');
+	(1, 'T00002', 'Técnico Gaby', 'López', 'GABY1212', '2222222222', 'gaby@gmail.com', 29, 1, '2022-11-19 02:28:14', '2023-02-11 01:24:41'),
+	(2, 'T00001', 'Técnico Yahir', 'Piña', 'PIRY1212', '1111111111', 'yahir@gmail.com', 21, 21, '2020-05-28 01:00:01', '2020-05-28 01:00:01');
 /*!40000 ALTER TABLE `technicals` ENABLE KEYS */;
 
 -- Volcando estructura para tabla punto_venta.files
@@ -215,47 +214,6 @@ CREATE TABLE IF NOT EXISTS `messages` (
 
 -- Volcando datos para la tabla punto_venta.messages: ~40 rows (aproximadamente)
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` (`id`, `from`, `to`, `read`, `text`, `created_at`, `updated_at`) VALUES
-	(1, 21, 24, 1, 'Hola', '2020-06-04 15:29:07', '2020-06-05 16:31:27'),
-	(2, 21, 24, 1, 'Como estas?', '2020-06-04 15:29:11', '2020-06-05 16:31:27'),
-	(3, 24, 21, 1, 'Bien y tu?', '2020-06-04 15:29:12', '2020-06-08 20:12:17'),
-	(4, 21, 24, 1, 'Hola', '2020-06-04 17:29:05', '2020-06-05 16:31:27'),
-	(5, 21, 24, 1, 'Como estas?', '2020-06-04 17:37:13', '2020-06-05 16:31:27'),
-	(6, 21, 24, 1, 'Todo bien?', '2020-06-04 17:37:18', '2020-06-05 16:31:27'),
-	(64, 21, 24, 1, 'Hola', '2020-06-04 23:11:33', '2020-06-05 16:31:27'),
-	(65, 21, 24, 1, 'Mensaje de Prueba', '2020-06-04 23:13:11', '2020-06-05 16:31:27'),
-	(66, 24, 21, 1, 'Respuesta de Prueba', '2020-06-04 23:13:29', '2020-06-08 20:12:17'),
-	(67, 21, 24, 1, 'Hola', '2020-06-05 00:11:11', '2020-06-05 16:31:27'),
-	(68, 24, 21, 1, 'Como estas?', '2020-06-05 00:11:16', '2020-06-08 20:12:17'),
-	(69, 24, 20, 0, 'Hola?', '2020-06-05 00:15:19', '2020-06-05 00:15:19'),
-	(70, 24, 22, 0, 'Hola', '2020-06-05 00:15:42', '2020-06-05 00:15:42'),
-	(71, 24, 21, 1, 'Hola', '2020-06-05 00:18:27', '2020-06-08 20:12:17'),
-	(72, 24, 21, 1, 'Hola mundo', '2020-06-05 00:34:27', '2020-06-08 20:12:17'),
-	(73, 24, 21, 1, 'Hola de prueba', '2020-06-05 00:34:57', '2020-06-08 20:12:17'),
-	(74, 24, 21, 1, 'Hola de prueba 2', '2020-06-05 00:35:10', '2020-06-08 20:12:17'),
-	(75, 24, 21, 1, 'Hola Juan', '2020-06-05 11:26:17', '2020-06-08 20:12:17'),
-	(76, 24, 21, 1, 'Hola Anton', '2020-06-05 11:27:14', '2020-06-08 20:12:17'),
-	(77, 24, 21, 1, 'Otro mensaje de Prueba', '2020-06-05 11:55:50', '2020-06-08 20:12:17'),
-	(78, 24, 21, 1, 'Hola', '2020-06-05 13:48:05', '2020-06-08 20:12:17'),
-	(79, 24, 21, 1, 'EScribiendo', '2020-06-05 13:54:16', '2020-06-08 20:12:17'),
-	(80, 24, 21, 1, 'Hola', '2020-06-05 15:26:31', '2020-06-08 20:12:17'),
-	(81, 24, 21, 1, 'Prueba', '2020-06-05 15:26:45', '2020-06-08 20:12:17'),
-	(82, 24, 21, 1, 'Hola', '2020-06-05 16:08:02', '2020-06-08 20:12:17'),
-	(97, 21, 1, 0, 'Hola', '2020-06-05 22:30:24', '2020-06-05 22:30:24'),
-	(98, 25, 21, 1, 'Hola', '2020-06-05 22:56:07', '2020-08-14 16:48:34'),
-	(99, 25, 21, 1, 'Hola como estas', '2020-06-05 22:56:29', '2020-08-14 16:48:34'),
-	(100, 25, 21, 1, 'Prueba', '2020-06-05 22:56:45', '2020-08-14 16:48:34'),
-	(101, 25, 21, 1, 'Prueba 3', '2020-06-05 22:56:54', '2020-08-14 16:48:34'),
-	(102, 25, 21, 1, 'Prueba 4', '2020-06-05 22:56:58', '2020-08-14 16:48:34'),
-	(103, 21, 25, 1, 'Respuesta', '2020-06-05 22:57:13', '2020-07-18 20:09:45'),
-	(104, 25, 21, 1, 'Prueba', '2020-06-05 22:57:46', '2020-08-14 16:48:34'),
-	(105, 25, 21, 1, 'Bueno podemos agregar otra validaciòn, que pasa si escribimos un mensaje con varios caracteres, como estamos escribiendo ahora', '2020-06-05 23:06:12', '2020-08-14 16:48:34'),
-	(106, 25, 21, 1, 'Mensaje de Prueba', '2020-06-06 22:51:03', '2020-08-14 16:48:34'),
-	(107, 25, 21, 1, 'Mensaje de Prueba', '2020-06-06 22:51:21', '2020-08-14 16:48:34'),
-	(108, 25, 21, 1, 'HOla pieritos', '2020-06-08 03:10:12', '2020-08-14 16:48:34'),
-	(109, 21, 25, 1, 'que paso', '2020-06-08 03:10:29', '2020-07-18 20:09:45'),
-	(110, 21, 1, 0, 'adasd', '2020-07-18 19:31:48', '2020-07-18 19:31:48'),
-	(120, 21, 25, 0, 'Mensaje de Prueba con Emoji 😀', '2020-08-14 16:39:18', '2020-08-14 16:39:18');
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 
 -- Volcando estructura para tabla punto_venta.migrations
@@ -315,13 +273,13 @@ CREATE TABLE IF NOT EXISTS `orders` (
 
 -- Volcando datos para la tabla punto_venta.orders: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` (`id`, `order_number`, `comments`, `patient_id`, `user_id`, `technical_id`, `total`, `created_by`, `updated_by`, `state`, `created_at`, `updated_at`, `fecha_cita`) VALUES
-	(1, '20232111', 'Prueba', 1, 1, 1, 15.00, 1, 1, 'A', '2023-02-11 15:30:33', '2023-02-11 15:30:33', NULL),
-	(2, '20232132', '', 1, 1, 3, 15.00, 1, 1, 'A', '2023-02-13 01:16:02', '2023-02-13 01:16:02', NULL),
-	(3, '20232133', '', 1, 1, 3, 15.00, 1, 1, 'A', '2023-02-13 01:44:31', '2023-02-13 01:44:31', NULL),
-	(4, '20232134', '', 2, 1, 1, 15.00, 1, 1, 'L', '2023-02-13 20:56:34', '2023-02-13 22:25:58', NULL),
-	(5, '20232135', '', 2, 1, 3, 15.00, 1, 1, 'L', '2023-02-13 23:50:07', '2023-02-15 22:23:20', '2023-02-13 23:50:02'),
-	(6, '20232146', '', 2, 1, 2, 15.00, 1, 1, 'L', '2023-02-14 00:25:49', '2023-02-14 00:25:49', '2023-02-14 00:25:46');
+-- INSERT INTO `orders` (`id`, `order_number`, `comments`, `patient_id`, `user_id`, `technical_id`, `total`, `created_by`, `updated_by`, `state`, `created_at`, `updated_at`, `fecha_cita`) VALUES
+-- 	(1, '20232111', 'Prueba', 1, 1, 1, 15.00, 1, 1, 'A', '2023-02-11 15:30:33', '2023-02-11 15:30:33', NULL),
+-- 	(2, '20232132', '', 1, 1, 3, 15.00, 1, 1, 'A', '2023-02-13 01:16:02', '2023-02-13 01:16:02', NULL),
+-- 	(3, '20232133', '', 1, 1, 3, 15.00, 1, 1, 'A', '2023-02-13 01:44:31', '2023-02-13 01:44:31', NULL),
+-- 	(4, '20232134', '', 2, 1, 1, 15.00, 1, 1, 'L', '2023-02-13 20:56:34', '2023-02-13 22:25:58', NULL),
+-- 	(5, '20232135', '', 2, 1, 3, 15.00, 1, 1, 'L', '2023-02-13 23:50:07', '2023-02-15 22:23:20', '2023-02-13 23:50:02'),
+-- 	(6, '20232146', '', 2, 1, 2, 15.00, 1, 1, 'L', '2023-02-14 00:25:49', '2023-02-14 00:25:49', '2023-02-14 00:25:46');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Volcando estructura para tabla punto_venta.payments
@@ -342,11 +300,11 @@ CREATE TABLE IF NOT EXISTS `payments` (
 
 -- Volcando datos para la tabla punto_venta.payments: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `payments` DISABLE KEYS */;
-INSERT INTO `payments` (`id`, `comments`, `credit`, `order_id`, `created_by`, `created_at`) VALUES
-	(14, '', 15.00, 6, 1, '2023-02-18 00:26:17'),
-	(15, '', 15.00, 5, 1, '2023-02-18 00:27:01'),
-	(16, '', 1.00, 4, 1, '2023-02-18 11:40:36'),
-	(17, '', 14.00, 4, 1, '2023-02-18 11:40:45');
+-- INSERT INTO `payments` (`id`, `comments`, `credit`, `order_id`, `created_by`, `created_at`) VALUES
+-- 	(14, '', 15.00, 6, 1, '2023-02-18 00:26:17'),
+-- 	(15, '', 15.00, 5, 1, '2023-02-18 00:27:01'),
+-- 	(16, '', 1.00, 4, 1, '2023-02-18 11:40:36'),
+-- 	(17, '', 14.00, 4, 1, '2023-02-18 11:40:45');
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 
 -- Volcando estructura para tabla punto_venta.permissions
@@ -529,7 +487,7 @@ BEGIN
 	WHERE		CONCAT_WS(' ', categoria.name)	LIKE	CONCAT('%', cnombre, '%')
 				AND	CONCAT_WS(' ', categoria.description)	LIKE	CONCAT('%', cdescripcion, '%')
 				AND	(categoria.id	=	nidcategoria	OR	nidcategoria	=	0)
-	ORDER BY categoria.id DESC;
+	ORDER BY categoria.id ASC;
 END//
 DELIMITER ;
 
@@ -579,7 +537,7 @@ BEGIN
 					WHERE		mensaje.`to`	=	nidauthuser
 								AND	mensaje.`from`	=	usuario.id
 								AND	mensaje.`read`	=	0
-					ORDER	BY	mensaje.id	DESC
+					ORDER	BY	mensaje.id	ASC
 					LIMIT	1
 				)	AS	cUltimoMensajeNoLeido
 	FROM		users	usuario
@@ -683,7 +641,7 @@ BEGIN
 				AND	doctor.dni	LIKE	CONCAT('%', ddni, '%')
 				AND	doctor.rfc	LIKE	CONCAT('%', drfc, '%')
 				AND	(doctor.id	=	niddoctor	OR	niddoctor = 0)
-	ORDER	BY	doctor.id DESC;
+	ORDER	BY	doctor.id ASC;
 END//
 DELIMITER ;
 
@@ -770,7 +728,7 @@ BEGIN
                 AND CONCAT_WS(' ', paciente.name, paciente.lastname)	LIKE	CONCAT('%', pnombre, '%')
 				AND	paciente.dni	LIKE	CONCAT('%', pdni, '%')
 				AND	(paciente.id	=	nidpaciente	OR	nidpaciente = 0)
-	ORDER	BY	paciente.id DESC;
+	ORDER	BY	paciente.id ASC;
 END//
 DELIMITER ;
 
@@ -877,7 +835,7 @@ BEGIN
 				AND	tecnico.dni	LIKE	CONCAT('%', tdni, '%')
 				AND	tecnico.rfc	LIKE	CONCAT('%', trfc, '%')
 				AND	(tecnico.id	=	nidtechnical	OR	nidtechnical = 0)
-	ORDER	BY	tecnico.id DESC;
+	ORDER	BY	tecnico.id ASC;
 END//
 DELIMITER ;
 
@@ -1181,7 +1139,7 @@ BEGIN
 	WHERE		CONCAT_WS(' ', permiso.name)	LIKE	CONCAT('%', cnombre, '%')
 				AND	CONCAT_WS(' ', permiso.slug)	LIKE	CONCAT('%', cslug, '%')
 				AND	(permiso.id	=	nidpermiso	OR	nidpermiso = 0)
-	ORDER BY permiso.name ASC;
+	ORDER BY permiso.name DESC;
 END//
 DELIMITER ;
 
@@ -1226,7 +1184,7 @@ BEGIN
 				AND	CONCAT_WS(' ', producto.description)	LIKE	CONCAT('%', cdescripcion, '%')
 				AND	(producto.id	=	nidproducto	OR	nidproducto	=	0)
 				AND	(categoria.id	=	nidcategoria	OR	nidcategoria	=	0)
-	ORDER BY producto.id DESC;
+	ORDER BY producto.id ASC;
 END//
 DELIMITER ;
 
@@ -1324,7 +1282,7 @@ BEGIN
 	WHERE		CONCAT_WS(' ', rol.name)	LIKE	CONCAT('%', cnombre, '%')
 				AND	CONCAT_WS(' ', rol.slug)	LIKE	CONCAT('%', cslug, '%')
 				AND	(rol.id	=	nidrol	OR	nidrol = 0)
-	ORDER BY rol.id DESC;
+	ORDER BY rol.id ASC;
 END//
 DELIMITER ;
 
@@ -1453,7 +1411,7 @@ BEGIN
 				AND	CONCAT_WS(' ', usuario.email)		LIKE	CONCAT('%', ccorreo, '%')
 				AND	(usuario.state	=	cestado	OR	cestado	=	'')
 				AND	(usuario.id		=	nidusuario	OR	nidusuario	=	0)
-	ORDER	BY	usuario.id	DESC;
+	ORDER	BY	usuario.id	ASC;
 END//
 DELIMITER ;
 

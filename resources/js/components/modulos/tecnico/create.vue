@@ -48,7 +48,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">Nombre</label>
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control"
+                                                    <input ref="nombre" type="text" class="form-control"
                                                     v-model="fillCrearTecnico.tNombre"
                                                     @keyup.enter="setRegistrarTecnico">
                                                 </div>
@@ -155,6 +155,7 @@ import { nextTick } from 'vue';
         },
         mounted() {
             this.getNuevoDniTecnico();
+            this.$refs.nombre.focus()
         },
         computed: {
             valitEmail() {
@@ -222,13 +223,13 @@ import { nextTick } from 'vue';
                 this.error = 0;
                 this.mensajeError = [];
 
-                if (!this.fillCrearTecnico.tRfc) {
-                    this.mensajeError.push("El RFC es un campo obligatorio");
-                }else{
-                    if (this.fillCrearTecnico.tRfc.length != 8) {
-                        this.mensajeError.push("El RFC requiere 8 caracteres");
-                    }
-                }
+                // if (!this.fillCrearTecnico.tRfc) {
+                //     this.mensajeError.push("El RFC es un campo obligatorio");
+                // }else{
+                //     if (this.fillCrearTecnico.tRfc.length != 8) {
+                //         this.mensajeError.push("El RFC requiere 8 caracteres");
+                //     }
+                // }
                 if (!this.fillCrearTecnico.tNombre) {
                     this.mensajeError.push("El Nombre es un campo obligatorio");
                 }

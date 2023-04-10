@@ -33,7 +33,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">DNI</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqTecnico.tDni" @keyup.enter="getListarTecnicos">
+                                                    <input ref="dniBusca" type="text" class="form-control" v-model="fillBsqTecnico.tDni" @keyup.enter="getListarTecnicos">
                                                 </div>
                                             </div>
                                         </div>
@@ -74,9 +74,9 @@
                                 <tr>
                                     <th>DNI</th>
                                     <th>Nombre</th>
-                                    <th>RFC</th>
-                                    <th>Correo</th>
-                                    <th>Teléfono</th>
+                                    <!-- <th>RFC</th> -->
+                                    <!-- <th>Correo</th> -->
+                                    <!-- <th>Teléfono</th> -->
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -84,9 +84,9 @@
                                 <tr v-for="(item, index) in listarTecnicosPaginated" :key="index">
                                     <td v-text="item.dni"></td>
                                     <td v-text="item.fullname"></td>
-                                    <td v-text="item.rfc"></td>
-                                    <td v-text="item.email"></td>
-                                    <td v-text="item.phone"></td>
+                                    <!-- <td v-text="item.rfc"></td> -->
+                                    <!-- <td v-text="item.email"></td> -->
+                                    <!-- <td v-text="item.phone"></td> -->
                                     <td>
                                         <template v-if="listaRolPermisosByUsuario.includes('tecnico.editar')">
                                             <router-link  class="btn btn-flat btn-info btn-sm" :to="{ name: 'tecnico.editar', params: {id: item.id}}">
@@ -143,6 +143,7 @@
         },
         mounted() {
             this.getListarTecnicos();
+            this.$refs.dniBusca.focus()
         },
         computed: {
             // Obtener el número de páginas

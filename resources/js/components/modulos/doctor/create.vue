@@ -48,7 +48,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">Nombre</label>
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control"
+                                                    <input ref="nombre" type="text" class="form-control"
                                                     v-model="fillCrearDoctor.dNombre"
                                                     @keyup.enter="setRegistrarDoctor">
                                                 </div>
@@ -156,6 +156,7 @@ import { nextTick } from 'vue';
         },
         mounted() {
             this.getNuevoDniDoctor();
+            this.$refs.nombre.focus()
         },
         computed: {
             validEmail() {
@@ -230,13 +231,6 @@ import { nextTick } from 'vue';
                 this.error = 0;
                 this.mensajeError = [];
 
-                if (!this.fillCrearDoctor.dRfc) {
-                    this.mensajeError.push("El RFC es un campo obligatorio");
-                }else{
-                    if (this.fillCrearDoctor.dRfc.length != 8) {
-                        this.mensajeError.push("El RFC requiere 8 caracteres");
-                    }
-                }
                 if (!this.fillCrearDoctor.dNombre) {
                     this.mensajeError.push("El Nombre es un campo obligatorio");
                 }

@@ -33,7 +33,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-2 col-form-label">DNI</label>
                                                 <div class="col-md-10">
-                                                    <input type="text" class="form-control" v-model="fillBsqDoctor.dDni" @keyup.enter="getListarDoctores">
+                                                    <input ref="dniBusca" type="text" class="form-control" v-model="fillBsqDoctor.dDni" @keyup.enter="getListarDoctores">
                                                 </div>
                                             </div>
                                         </div>
@@ -74,8 +74,8 @@
                                 <tr>
                                     <th>DNI</th>
                                     <th>Nombre</th>
-                                    <th>RFC</th>
-                                    <th>Correo</th>
+                                    <!-- <th>RFC</th> -->
+                                    <!-- <th>Correo</th> -->
                                     <th>Teléfono</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -84,8 +84,8 @@
                                 <tr v-for="(item, index) in listarDoctoresPaginated" :key="index">
                                     <td v-text="item.dni"></td>
                                     <td v-text="item.fullname"></td>
-                                    <td v-text="item.rfc"></td>
-                                    <td v-text="item.email"></td>
+                                    <!-- <td v-text="item.rfc"></td> -->
+                                    <!-- <td v-text="item.email"></td> -->
                                     <td v-text="item.phone"></td>
                                     <td>
                                         <template v-if="listaRolPermisosByUsuario.includes('doctor.editar')">
@@ -148,6 +148,7 @@
         },
         mounted() {
             this.getListarDoctores();
+            this.$refs.dniBusca.focus()
         },
         computed: {
             // Obtener el número de páginas
