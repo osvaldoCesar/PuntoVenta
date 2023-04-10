@@ -235,31 +235,14 @@ import { nextTick } from 'vue';
             return {
                 fillCrearTecnico: {
                     nIdTecnico: '',
-                    cDocumento: '',
-                    cNombre: '',
-                    cApellido: '',
-                    cEmail: '',
-                    cTelefono: '',
                 },
 
                 fillCrearDoctor: {
                     nIdDoctor: '',
-                    cRfcDoc: '',
-                    cNombreCompletoDoc: '',
-                    cNombreDoc: '',
-                    cApellidoDoc: '',
-                    cEmailDoc: '',
-                    cTelefonoDoc: '',
                 },
 
                 fillCrearPaciente: {
                     nIdPaciente: '',
-                    cRfcPaciente: '',
-                    cNombreCompletoPaciente: '',
-                    cNombrePaciente: '',
-                    cApellidoPaciente: '',
-                    cEmailPaciente: '',
-                    cTelefonoPaciente: '',
                 },
 
                 cBusquedaTecnico: '',
@@ -277,6 +260,7 @@ import { nextTick } from 'vue';
                 listProductos: [],
                 listPedidos: [],
                 cComentario: '',
+                pAbono: 0,
                 fTotalPedido: 0,
 
                 fullscreenLoading: false,
@@ -295,9 +279,6 @@ import { nextTick } from 'vue';
             }
         },
         computed: {
-            validEmail() {
-                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillCrearTecnico.cEmail)
-            },
             totalPedido(){
                 return this.listPedidos.reduce(function(valorAnterior, valorActual){
                     return valorAnterior + parseFloat(valorActual.fSubTotal)
@@ -424,11 +405,6 @@ import { nextTick } from 'vue';
                     return ((String(tecnico.id)).indexOf(String(item.link)) != -1);
                 });
                 this.fillCrearTecnico.nIdTecnico            = rpta[0].id;
-                this.fillCrearTecnico.cDocumento            = rpta[0].document;
-                this.fillCrearTecnico.cNombre               = rpta[0].name;
-                this.fillCrearTecnico.cApellido             = rpta[0].lastname;
-                this.fillCrearTecnico.cEmail                = rpta[0].email;
-                this.fillCrearTecnico.cTelefono             = rpta[0].phone;
             },
             filterListarDoctores(){
                 let me = this;
@@ -445,12 +421,6 @@ import { nextTick } from 'vue';
                     return ((String(doctores.id)).indexOf(String(item.link)) != -1);
                 });
                 this.fillCrearDoctor.nIdDoctor      = rpta[0].id;
-                this.fillCrearDoctor.cRfcDoc        = rpta[0].rfc;
-                this.fillCrearDoctor.cNombreCompletoDoc    = rpta[0].name + ' ' + rpta[0].lastname;
-                this.fillCrearDoctor.cNombreDoc     = rpta[0].name;
-                this.fillCrearDoctor.cApellidoDoc   = rpta[0].lastname;
-                this.fillCrearDoctor.cEmailDoc      = rpta[0].email;
-                this.fillCrearDoctor.cTelefonoDoc   = rpta[0].phone;
                 this.getListarPacientes(rpta[0].id);
             },
             filterListarPacientes(){
@@ -468,41 +438,18 @@ import { nextTick } from 'vue';
                     return ((String(pacientes.id)).indexOf(String(item.link)) != -1);
                 });
                 this.fillCrearPaciente.nIdPaciente      = rpta[0].id;
-                this.fillCrearPaciente.cRfcPaciente        = rpta[0].rfc;
-                this.fillCrearPaciente.cNombreCompletoPaciente    = rpta[0].name + ' ' + rpta[0].lastname;
-                this.fillCrearPaciente.cNombrePaciente     = rpta[0].name;
-                this.fillCrearPaciente.cApellidoPaciente   = rpta[0].lastname;
-                this.fillCrearPaciente.cEmailPaciente      = rpta[0].email;
-                this.fillCrearPaciente.cTelefonoPaciente   = rpta[0].phone;
             },
             limpiarCriteriosTecnicos(){
                 this.fillCrearTecnico.nIdTecnico    = '';
                 this.cBusquedaTecnico                      = '';
-                this.fillCrearTecnico.cDocumento    = '';
-                this.fillCrearTecnico.cNombre       = '';
-                this.fillCrearTecnico.cApellido     = '';
-                this.fillCrearTecnico.cEmail        = '';
-                this.fillCrearTecnico.cTelefono     = '';
             },
             limpiarCriteriosDoctores(){
                 this.fillCrearDoctor.nIdDoctor      = '';
                 this.cBusquedaDoctor                   = '';
-                this.fillCrearDoctor.cRfcDoc        = '';
-                this.fillCrearDoctor.cNombreCompletoDoc    = '';
-                this.fillCrearDoctor.cNombreDoc     = '';
-                this.fillCrearDoctor.cApellidoDoc   = '';
-                this.fillCrearDoctor.cEmailDoc      = '';
-                this.fillCrearDoctor.cTelefonoDoc   = '';
             },
             limpiarCriteriosPacientes(){
                 this.fillCrearPaciente.nIdPaciente      = '';
-                this.cBusquedaPaciente                   = '';
-                this.fillCrearPaciente.cRfcPaciente        = '';
-                this.fillCrearPaciente.cNombreCompletoPaciente    = '';
-                this.fillCrearPaciente.cNombrePaciente     = '';
-                this.fillCrearPaciente.cApellidoPaciente   = '';
-                this.fillCrearPaciente.cEmailPaciente      = '';
-                this.fillCrearPaciente.cTelefonoPaciente   = '';
+                this.cBusquedaPacientes                   = '';
             },
             abrirModal(){
                 this.modalShow = !this.modalShow;
@@ -605,7 +552,6 @@ import { nextTick } from 'vue';
                     background: '#E5D9AF',
                     text: 'Cargando...'
                 })
-
                 this.setGuardarPedido(this.fillCrearTecnico.nIdTecnico, this.fillCrearPaciente.nIdPaciente);
             },
             setGuardarPedido(nIdTecnico, nIdPaciente){
