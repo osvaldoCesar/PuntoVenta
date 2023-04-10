@@ -572,9 +572,9 @@ import { nextTick } from 'vue';
 
                     // this.setGenerarEmail(response.data);
                     if(this.pAbono>0){
-                        console.log("Dentro del if del abono mayor a 0")
                         this.setRegistrarAbono(response.data)
                     }
+                    this.setGenerarTicket(response.data);
                     this.setGenerarDocumento(response.data);
                 }).catch(error =>{
                     console.log( `Estoy dentro del error de que el documento no se creó "correctamente"` );
@@ -642,6 +642,29 @@ import { nextTick } from 'vue';
                         this.loading.close();
                     }
                 });
+            },
+            setGenerarTicket(nIdPedido){
+                var config = {
+                    responseType: 'blob'
+                }
+                var url = '/operacion/pedido/setGenerarTicket'
+                axios.post(url, {
+                    'nIdPedido'       :   nIdPedido
+                }, config).then(response => {
+                    var oMyBlob = new Blob([response.data], {type : 'application/pdf'}); // the blob
+                    var url = URL.createObjectURL(oMyBlob);
+                    window.open(url);
+                    this.loading.close();
+                    this.$router.push('/pedido');
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'});
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
+                })
             },
             validarRegistrarPedido(){
                 this.error = 0;

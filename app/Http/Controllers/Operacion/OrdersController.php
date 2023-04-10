@@ -87,6 +87,7 @@ class OrdersController extends Controller
             DB::rollBack();
         }
     }
+
     // Listar Abonos del pedido
     public function getListarAbonoPedidos(Request $request){
         if(!$request->ajax()) return redirect('/');
@@ -156,9 +157,14 @@ class OrdersController extends Controller
                                                                         $nIdPedido
                                                                     ]);
 
+        $rpta3       =   DB::select('call sp_Pedido_getListarAbonoPedidos (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
         $pdf = PDF::loadView('reportes.pedido.pdf.ver', [
             'rpta1' =>  $rpta1,
             'rpta2' =>  $rpta2,
+            'rpta3' =>  $rpta3,
             'logo'  =>  $logo
         ]);
         return $pdf->download('invoice.pdf');
@@ -200,5 +206,36 @@ class OrdersController extends Controller
         if ($rpta1[0]->cCorreo) {
             Mail::to($rpta1[0]->cCorreo)->send(new PedidoCrear($rpta1, $rpta2, $logo));
         }
+    }
+
+    public function setGenerarTicket(Request $request)
+    {
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdPedido  =   $request->nIdPedido;
+
+        $logo       =   public_path('img/AdminLTELogo.png');
+
+        $rpta1       =   DB::select('call sp_Pedido_getPedido (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+
+        $rpta2       =   DB::select('call sp_Pedido_getDetallePedido (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+
+        $rpta3       =   DB::select('call sp_Pedido_getListarAbonoPedidos (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+        $pdf = PDF::loadView('reportes.pedido.pdf.ticket', [
+            'rpta1' =>  $rpta1,
+            'rpta2' =>  $rpta2,
+            'rpta3' =>  $rpta3,
+            'logo'  =>  $logo
+        ]);
+        return $pdf->download('invoice.pdf');
     }
 }

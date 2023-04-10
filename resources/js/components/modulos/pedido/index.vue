@@ -140,6 +140,9 @@
                                             <button class="btn btn-flat btn-info btn-sm" @click.prevent="setGenerarDocumento(item.id)">
                                                 <i class="far fa-file-pdf"></i> Ver PDF
                                             </button>
+                                            <button class="btn btn-flat btn-secondary btn-sm" @click.prevent="setGenerarTicket(item.id)">
+                                                <i class="fa-solid fa-money-check-dollar"></i> Ticket
+                                            </button>
                                         </template>
                                         <template v-if="listaRolPermisosByUsuario.includes('pedido.rechazar')">
                                             <button v-if="item.state == 'A'" class="btn btn-flat btn-danger btn-sm" @click.prevent="setCambiarEstadoPedido(1, item.id)">
@@ -307,6 +310,29 @@
                         loading.close();
                     }
                 });
+            },
+            setGenerarTicket(nIdPedido){
+                var config = {
+                    responseType: 'blob'
+                }
+                var url = '/operacion/pedido/setGenerarTicket'
+                axios.post(url, {
+                    'nIdPedido'       :   nIdPedido
+                }, config).then(response => {
+                    var oMyBlob = new Blob([response.data], {type : 'application/pdf'}); // the blob
+                    var url = URL.createObjectURL(oMyBlob);
+                    window.open(url);
+                    this.loading.close();
+                    this.$router.push('/pedido');
+                }).catch(error => {
+                    console.log(error);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'});
+                        location.reload();
+                        sessionStorage.clear();
+                        this.fullscreenLoading = false;
+                    }
+                })
             },
             setCambiarEstadoPedido(op, id){
                 Swal.fire({

@@ -177,6 +177,43 @@
         </table>
         @endif
 
+
+        @if (count($rpta3) > 0)
+        <table width="100%" cellspacing="0" cellspacing="1" border="1" align="center">
+            <thead style="background-color: lightgray;">
+                <tr align="center" align="middle">
+                    <th colspan="5">Detalle los Abonos</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Cantidad abonada</th>
+                    <th>Fecha de Abono</th>
+                    <th>Comentario</th>
+                    <th>Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($rpta3 as $key => $value)
+                <tr>
+                    <td align="center"><span>{{$key + 1}}</span></td>
+                    <td align="center"><span>${{number_format($value->abonos, 2)}}</span></td>
+                    <td align="center"><span>{{$value->fecha}}</span></td>
+                    <td align="center"><span>{{$value->comentario}}</span></td>
+                    <td align="center"><span>{{$value->vendedor}}</span></td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        @else
+        <table width="50%" cellspacing="0" cellspacing="1" align="center">
+            <tr>
+                <td align="center">
+                    <h3><strong>Sin abonos registrados</strong></h3>
+                </td>
+            </tr>
+        </table>
+        @endif
+
     </div>
 </body>
 

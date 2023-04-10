@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post("/operacion/pedido/setRegistrarAbono", "Operacion\OrdersController@setRegistrarAbono");
     // Generar un Documento
     Route::post("/operacion/pedido/setGenerarDocumento", "Operacion\OrdersController@setGenerarDocumento");
+    // Generar Ticket
+    Route::post("/operacion/pedido/setGenerarTicket", "Operacion\OrdersController@setGenerarTicket");
     // Cambiar estado
     Route::post("/operacion/pedido/setCambiarEstadoPedido", "Operacion\OrdersController@setCambiarEstadoPedido");
     // Enviar Correo
