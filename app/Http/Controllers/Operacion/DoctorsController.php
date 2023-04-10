@@ -99,6 +99,13 @@ class DoctorsController extends Controller
         return $rpta;
     }
 
+    public function getNuevoDniPaciente(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $rpta        =      DB::select('call sp_Paciente_getNuevoDniPaciente()');
+        return $rpta;
+    }
+
     public function getListarPacientes(Request $request){
         if(!$request->ajax()) return redirect('/');
 
@@ -120,6 +127,37 @@ class DoctorsController extends Controller
                                                                                 $pDni,
                                                                                 $pNombre,
                                                                             ]);
+        return $rpta;
+    }
+
+    public function setRegistrarPaciente(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $nIdDoctor    =   $request->nIdDoctor;
+        $pRfc           =      $request->pRfc;
+        $pNombre        =      $request->pNombre;
+        $pApellido      =      $request->pApellido;
+        $pEmail         =      $request->pEmail;
+        $pTelefono      =      $request->pTelefono;
+        $nIdAuthUser    =      Auth::id();
+
+        $nIdDoctor    =    ($nIdDoctor     ==  NULL)  ?  ($nIdDoctor    =    0)  :  $nIdDoctor;
+        $pRfc           =    ($pRfc   ==  NULL)  ?  ($pRfc  =   '')  :  $pRfc;
+        $pNombre        =    ($pNombre      ==  NULL)  ?  ($pNombre     =   '')  :  $pNombre;
+        $pApellido      =    ($pApellido    ==  NULL)  ?  ($pApellido   =   '')  :  $pApellido;
+        $pEmail         =    ($pEmail       ==  NULL)  ?  ($pEmail      =   '')  :  $pEmail;
+        $pTelefono      =    ($pTelefono    ==  NULL)  ?  ($pTelefono   =   '')  :  $pTelefono;
+
+        $rpta        =      DB::select('call sp_Paciente_setRegistrarPaciente(?, ?, ?, ?, ?, ?, ?)',
+                                                                    [
+                                                                        $nIdDoctor,
+                                                                        $pRfc,
+                                                                        $pNombre,
+                                                                        $pApellido,
+                                                                        $pEmail,
+                                                                        $pTelefono,
+                                                                        $nIdAuthUser
+                                                                    ]);
         return $rpta;
     }
 }

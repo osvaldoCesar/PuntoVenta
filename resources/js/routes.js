@@ -291,6 +291,16 @@ export const rutas = [
         },
         props: true,
     },
+    // Crear Pacientes
+    {
+        path: '/doctor/crearPacientes/:id',
+        name: 'paciente.crear',
+        component: require('./components/modulos/doctor/createPatients').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from ,next);
+        },
+        props: true,
+    },
 
 
     // Reportes

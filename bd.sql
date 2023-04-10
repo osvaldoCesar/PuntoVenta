@@ -273,13 +273,13 @@ CREATE TABLE IF NOT EXISTS `orders` (
 
 -- Volcando datos para la tabla punto_venta.orders: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
--- INSERT INTO `orders` (`id`, `order_number`, `comments`, `patient_id`, `user_id`, `technical_id`, `total`, `created_by`, `updated_by`, `state`, `created_at`, `updated_at`, `fecha_cita`) VALUES
--- 	(1, '20232111', 'Prueba', 1, 1, 1, 15.00, 1, 1, 'A', '2023-02-11 15:30:33', '2023-02-11 15:30:33', NULL),
--- 	(2, '20232132', '', 1, 1, 3, 15.00, 1, 1, 'A', '2023-02-13 01:16:02', '2023-02-13 01:16:02', NULL),
--- 	(3, '20232133', '', 1, 1, 3, 15.00, 1, 1, 'A', '2023-02-13 01:44:31', '2023-02-13 01:44:31', NULL),
--- 	(4, '20232134', '', 2, 1, 1, 15.00, 1, 1, 'L', '2023-02-13 20:56:34', '2023-02-13 22:25:58', NULL),
--- 	(5, '20232135', '', 2, 1, 3, 15.00, 1, 1, 'L', '2023-02-13 23:50:07', '2023-02-15 22:23:20', '2023-02-13 23:50:02'),
--- 	(6, '20232146', '', 2, 1, 2, 15.00, 1, 1, 'L', '2023-02-14 00:25:49', '2023-02-14 00:25:49', '2023-02-14 00:25:46');
+INSERT INTO `orders` (`id`, `order_number`, `comments`, `patient_id`, `user_id`, `technical_id`, `total`, `created_by`, `updated_by`, `state`, `created_at`, `updated_at`, `fecha_cita`) VALUES
+	(1, '20232111', 'Prueba', 1, 1, 1, 15.00, 1, 1, 'A', '2023-02-11 15:30:33', '2023-02-11 15:30:33', NULL),
+	(2, '20232132', '', 1, 1, 3, 15.00, 1, 1, 'A', '2023-02-13 01:16:02', '2023-02-13 01:16:02', NULL),
+	(3, '20232133', '', 1, 1, 3, 15.00, 1, 1, 'A', '2023-02-13 01:44:31', '2023-02-13 01:44:31', NULL),
+	(4, '20232134', '', 2, 1, 1, 15.00, 1, 1, 'L', '2023-02-13 20:56:34', '2023-02-13 22:25:58', NULL),
+	(5, '20232135', '', 2, 1, 3, 15.00, 1, 1, 'L', '2023-02-13 23:50:07', '2023-02-15 22:23:20', '2023-02-13 23:50:02'),
+	(6, '20232146', '', 2, 1, 2, 15.00, 1, 1, 'L', '2023-02-14 00:25:49', '2023-02-14 00:25:49', '2023-02-14 00:25:46');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Volcando estructura para tabla punto_venta.payments
@@ -752,12 +752,12 @@ DELIMITER ;
 -- Volcando estructura para procedimiento punto_venta.sp_Paciente_setRegistrarPaciente
 DROP PROCEDURE IF EXISTS `sp_Paciente_setRegistrarPaciente`;
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Paciente_setRegistrarPaciente`(IN `cdocumento` VARCHAR(50), IN `cnombre` VARCHAR(50), IN `capellido` VARCHAR(50), IN `cemail` VARCHAR(50), IN `ctelefono` VARCHAR(50), IN `nidauthuser` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Paciente_setRegistrarPaciente`(IN `niddoctor` INT, IN `cdocumento` VARCHAR(50), IN `cnombre` VARCHAR(50), IN `capellido` VARCHAR(50), IN `cemail` VARCHAR(50), IN `ctelefono` VARCHAR(50), IN `nidauthuser` INT)
 BEGIN
 	SET @nDniPaciente := (SELECT IF(ISNULL(id), 'P00001', CONCAT('P', LPAD(cast(substring(max(dni), 5, 5) AS UNSIGNED INTEGER) + 1,5,'0'))) FROM patients);
 
-	INSERT	INTO	patients	(document, name, lastname, email, phone, created_by, updated_by, created_at, updated_at)
-							VALUES	(cdocumento, cnombre, capellido, cemail, ctelefono, nidauthuser, nidauthuser, NOW(), NOW());
+	INSERT	INTO	patients	(doctor_id, dni, document, name, lastname, email, phone, created_by, updated_by, created_at, updated_at)
+							VALUES	(niddoctor, @nDniPaciente, cdocumento, cnombre, capellido, cemail, ctelefono, nidauthuser, nidauthuser, NOW(), NOW());
 
 	/*OBTENER EL ULTIMO ID REGISTRADO*/
 	SET @nIdPaciente := (SELECT	((IFNULL(MAX(paciente.id), 1)))
