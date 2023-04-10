@@ -5,9 +5,9 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Doctores</h1>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="content container-fluid">
             <div class="card">
@@ -31,17 +31,17 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Nombre</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqDoctor.dNombre" @keyup.enter="getListarDoctores">
+                                                <label class="col-md-2 col-form-label">DNI</label>
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control" v-model="fillBsqDoctor.dDni" @keyup.enter="getListarDoctores">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">RFC</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqDoctor.dRfc" @keyup.enter="getListarDoctores">
+                                                <label class="col-md-2 col-form-label">Nombre</label>
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control" v-model="fillBsqDoctor.dNombre" @keyup.enter="getListarDoctores">
                                                 </div>
                                             </div>
                                         </div>
@@ -72,6 +72,7 @@
                         <table class="table table-hover table-head-fixed text-nowrap">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Nombre</th>
                                     <th>RFC</th>
                                     <th>Correo</th>
@@ -81,6 +82,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in listarDoctoresPaginated" :key="index">
+                                    <td v-text="item.dni"></td>
                                     <td v-text="item.fullname"></td>
                                     <td v-text="item.rfc"></td>
                                     <td v-text="item.email"></td>
@@ -128,6 +130,7 @@
         data() {
             return {
                 fillBsqDoctor: {
+                    dDni: '',
                     dNombre: '',
                     dRfc: '',
                 },
@@ -170,8 +173,9 @@
         },
         methods: {
             limpiarCriteriosBsq(){
-                this.fillBsqDoctor.dNombre      = '';
-                this.fillBsqDoctor.dRfc   = '';
+                this.fillBsqDoctor.dDni     = '';
+                this.fillBsqDoctor.dNombre  = '';
+                this.fillBsqDoctor.dRfc     = '';
             },
             getListarDoctores(){
                 const loading = this.$vs.loading({
@@ -183,6 +187,7 @@
                 var url = '/operacion/doctor/getListarDoctores'
                 axios.get(url, {
                     params: {
+                        'dDni'   : this.fillBsqDoctor.dDni,
                         'dNombre'   : this.fillBsqDoctor.dNombre,
                         'dRfc'      : this.fillBsqDoctor.dRfc
                     }

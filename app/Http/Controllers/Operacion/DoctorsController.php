@@ -9,21 +9,31 @@ use Illuminate\Support\Facades\Auth;
 
 class DoctorsController extends Controller
 {
+    public function getNuevoDniDoctor(Request $request){
+        if(!$request->ajax()) return redirect('/');
+
+        $rpta        =      DB::select('call sp_Doctor_getNuevoDniDoctor()');
+        return $rpta;
+    }
+
     public function getListarDoctores(Request $request){
         if(!$request->ajax()) return redirect('/');
 
         $nIdDoctor   =   $request->nIdDoctor;
+        $dDni        =   $request->dDni;
         $dRfc        =   $request->dRfc;
         $dNombre     =   $request->dNombre;
 
 
         $nIdDoctor   =    ($nIdDoctor   ==  NULL)  ?  ($nIdDoctor  =    0)  :  $nIdDoctor;
+        $dDni        =    ($dDni        ==  NULL)  ?  ($dDni       =   '')  :  $dDni;
         $dRfc        =    ($dRfc        ==  NULL)  ?  ($dRfc       =   '')  :  $dRfc;
         $dNombre     =    ($dNombre     ==  NULL)  ?  ($dNombre    =   '')  :  $dNombre;
 
-        $rpta        =      DB::select('call sp_Doctor_getListarDoctores(?, ?, ?)',
+        $rpta        =      DB::select('call sp_Doctor_getListarDoctores(?, ?, ?, ?)',
                                                                             [
                                                                                 $nIdDoctor,
+                                                                                $dDni,
                                                                                 $dNombre,
                                                                                 $dRfc,
                                                                             ]);

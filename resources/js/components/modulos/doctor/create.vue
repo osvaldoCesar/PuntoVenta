@@ -29,6 +29,15 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
+                                                <label class="col-md-12 col-form-label">ID Doctor</label>
+                                                <div class="col-md-12">
+                                                    <label class="form-control" v-text="this.nDniDoctor"></label>
+                                                    <!-- <input type="text" class="form-control" v-text="fillCrearDoctor.nDniDoctor" v-model="fillCrearDoctor.nDniDoctor" @keyup.enter="setRegistrarDoctor"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
                                                 <label class="col-md-12 col-form-label">RFC</label>
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control" v-model="fillCrearDoctor.dRfc" @keyup.enter="setRegistrarDoctor">
@@ -123,12 +132,14 @@ import { nextTick } from 'vue';
         data() {
             return {
                 fillCrearDoctor: {
+
                     dRfc: '',
                     dNombre: '',
                     dApellido: '',
                     dEmail: '',
                     dTelefono: '',
                 },
+                nDniDoctor: '',
                 fullscreenLoading: false,
                 loading: '',
                 modalShow: false,
@@ -142,6 +153,9 @@ import { nextTick } from 'vue';
                 error: 0,
                 mensajeError: []
             }
+        },
+        mounted() {
+            this.getNuevoDniDoctor();
         },
         computed: {
             validEmail() {
@@ -158,6 +172,28 @@ import { nextTick } from 'vue';
             },
             abrirModal(){
                 this.modalShow = !this.modalShow;
+            },
+            getNuevoDniDoctor(){
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Listando doctores...'
+                })
+                var url = '/operacion/doctor/getNuevoDniDoctor'
+                axios.get(url).then(response => {
+                    this.nDniDoctor =  response.data[0].nDniDoctor;
+                    console.log(response.data[0].nDniDoctor);
+                    loading.close();
+                }).catch(error =>{
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        loading.close();
+                    }
+                });
             },
             setRegistrarDoctor(){
                 if (this.validarRegistrarDoctor()) {

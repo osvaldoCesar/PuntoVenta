@@ -169,7 +169,6 @@ import { nextTick } from 'vue';
                         'nIdDoctor'  : this.fillEditarDoctor.nIdDoctor
                     }
                 }).then(response => {
-                    console.log(response.data[0].rfc);
                     this.fillEditarDoctor.dRfc          = response.data[0].rfc;
                     this.fillEditarDoctor.dNombre       = response.data[0].name;
                     this.fillEditarDoctor.dApellido     = response.data[0].lastname;
