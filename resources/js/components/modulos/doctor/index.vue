@@ -93,6 +93,11 @@
                                                 <i class="fas fa-pencil-alt"></i> Editar
                                             </router-link>
                                         </template>
+                                        <template v-if="listaRolPermisosByUsuario.includes('paciente.ver')">
+                                            <router-link  class="btn btn-flat btn-success btn-sm" :to="{ name: 'paciente.ver', params: {id: item.id}}">
+                                                <i class="fa-solid fa-eye"></i> Pacientes
+                                            </router-link>
+                                        </template>
                                     </td>
                                 </tr>
                             </tbody>

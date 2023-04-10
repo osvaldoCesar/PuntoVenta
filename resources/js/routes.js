@@ -281,6 +281,17 @@ export const rutas = [
         },
         props: true,
     },
+    // Ver Pacientes
+    {
+        path: '/doctor/verPacientes/:id',
+        name: 'paciente.ver',
+        component: require('./components/modulos/doctor/viewPatients').default,
+        beforeEnter: (to, from, next) => {
+            verificarAcceso(to, from ,next);
+        },
+        props: true,
+    },
+
 
     // Reportes
     {

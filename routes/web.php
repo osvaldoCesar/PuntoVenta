@@ -109,6 +109,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post("/operacion/doctor/setRegistrarDoctor", "Operacion\DoctorsController@setRegistrarDoctor");
     // Editar
     Route::post("/operacion/doctor/setEditarDoctor", "Operacion\DoctorsController@setEditarDoctor");
+    // Listar Pacientes
+    Route::get("/operacion/doctor/getListarPacientes", "Operacion\DoctorsController@getListarPacientes");
+
 
     /* Dashboard */
     // Productos más vendidos

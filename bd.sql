@@ -379,28 +379,27 @@ INSERT INTO `permissions` (`id`, `slug`, `name`, `created_at`, `updated_at`) VAL
 	(14, 'permiso.editar', 'Editar Permiso', '2020-05-16 20:13:34', '2020-05-16 20:13:34'),
 	(15, 'dashboard.index', 'Navegar Dashboard', '2020-05-16 20:15:04', '2020-05-16 20:15:04'),
 	(16, 'pedido.index', 'Navegar Pedidos', '2020-05-16 20:15:31', '2020-05-16 20:19:29'),
-	(17, 'cliente.index', 'Navegar Clientes', '2020-05-16 20:15:50', '2020-05-16 20:19:19'),
-	(18, 'categoria.index', 'Navegar Categorias', '2020-05-16 20:16:16', '2020-05-16 20:19:07'),
-	(19, 'producto.index', 'Navegar Productos', '2020-05-16 20:16:26', '2020-05-16 20:18:59'),
-	(20, 'reporte.pedido.index', 'Navegar Reporte Pedido', '2020-05-16 20:20:19', '2020-05-16 20:20:19'),
-	(21, 'categoria.crear', 'Crear Categoria', '2020-05-22 17:31:16', '2020-05-22 17:31:16'),
-	(22, 'categoria.editar', 'Editar Categoria', '2020-05-22 17:57:29', '2020-05-22 17:57:29'),
-	(23, 'producto.crear', 'Crear Producto', '2020-05-23 22:39:54', '2020-05-23 22:39:54'),
-	(24, 'producto.editar', 'Editar Producto', '2020-05-23 22:40:02', '2020-05-23 22:40:02'),
-	(26, 'pedido.crear', 'Crear Pedido', '2020-05-25 20:32:47', '2020-05-25 20:32:47'),
-	(27, 'pedido.ver', 'Ver Pedido', '2020-05-25 20:33:51', '2020-05-25 20:33:51'),
-	(28, 'pedido.rechazar', 'Rechazar Pedido', '2020-05-25 20:34:09', '2020-05-25 20:34:09'),
-	(30, 'cliente.crear', 'Crear Cliente', '2020-05-31 13:16:52', '2020-05-31 13:16:52'),
-	(31, 'cliente.editar', 'Editar Cliente', '2020-05-31 13:17:00', '2020-05-31 13:17:00'),
-	(32, 'productos.mas.vendidos', 'Productos mas vendidos', '2020-06-02 01:12:42', '2020-06-02 01:30:19'),
-	(33, 'ventas.por.dia', 'Ventas por dia', '2020-06-02 01:13:16', '2020-06-02 01:30:11'),
-	(34, 'tecnico.index', 'Navegar Técnicos', '2023-02-09 23:10:37', '2023-02-09 23:10:37'),
-	(35, 'tecnico.editar', 'Editar Técnico', '2023-02-10 21:44:13', '2023-02-10 21:44:13'),
-	(36, 'tecnico.crear', 'Crear Técnico', '2023-02-10 21:44:21', '2023-02-10 21:44:21'),
-	(37, 'doctor.index', 'Navegar Doctores', '2023-02-09 23:10:37', '2023-02-09 23:10:37'),
-	(38, 'doctor.editar', 'Editar Doctor', '2023-02-10 21:44:13', '2023-02-10 21:44:13'),
-	(39, 'doctor.crear', 'Crear Doctor', '2023-02-10 21:44:21', '2023-02-10 21:44:21'),
-	(40, 'pedido.abonar', 'Abonar Pedido', '2023-02-15 23:08:31', '2023-02-15 23:09:45');
+	(17, 'categoria.index', 'Navegar Categorias', '2020-05-16 20:16:16', '2020-05-16 20:19:07'),
+	(18, 'producto.index', 'Navegar Productos', '2020-05-16 20:16:26', '2020-05-16 20:18:59'),
+	(19, 'reporte.pedido.index', 'Navegar Reporte Pedido', '2020-05-16 20:20:19', '2020-05-16 20:20:19'),
+	(20, 'categoria.crear', 'Crear Categoria', '2020-05-22 17:31:16', '2020-05-22 17:31:16'),
+	(21, 'categoria.editar', 'Editar Categoria', '2020-05-22 17:57:29', '2020-05-22 17:57:29'),
+	(22, 'producto.crear', 'Crear Producto', '2020-05-23 22:39:54', '2020-05-23 22:39:54'),
+	(23, 'producto.editar', 'Editar Producto', '2020-05-23 22:40:02', '2020-05-23 22:40:02'),
+	(24, 'pedido.crear', 'Crear Pedido', '2020-05-25 20:32:47', '2020-05-25 20:32:47'),
+	(25, 'pedido.ver', 'Ver Pedido', '2020-05-25 20:33:51', '2020-05-25 20:33:51'),
+	(26, 'pedido.rechazar', 'Rechazar Pedido', '2020-05-25 20:34:09', '2020-05-25 20:34:09'),
+	(27, 'productos.mas.vendidos', 'Productos mas vendidos', '2020-06-02 01:12:42', '2020-06-02 01:30:19'),
+	(28, 'ventas.por.dia', 'Ventas por dia', '2020-06-02 01:13:16', '2020-06-02 01:30:11'),
+	(29, 'tecnico.index', 'Navegar Técnicos', '2023-02-09 23:10:37', '2023-02-09 23:10:37'),
+	(30, 'tecnico.editar', 'Editar Técnico', '2023-02-10 21:44:13', '2023-02-10 21:44:13'),
+	(31, 'tecnico.crear', 'Crear Técnico', '2023-02-10 21:44:21', '2023-02-10 21:44:21'),
+	(32, 'doctor.index', 'Navegar Doctores', '2023-02-09 23:10:37', '2023-02-09 23:10:37'),
+	(33, 'doctor.editar', 'Editar Doctor', '2023-02-10 21:44:13', '2023-02-10 21:44:13'),
+	(34, 'doctor.crear', 'Crear Doctor', '2023-02-10 21:44:21', '2023-02-10 21:44:21'),
+	(35, 'pedido.abonar', 'Abonar Pedido', '2023-02-15 23:08:31', '2023-02-15 23:09:45'),
+	(36, 'paciente.ver', 'Ver Pacientes', '2023-02-15 23:08:31', '2023-02-15 23:09:45'),
+	(37, 'paciente.crear', 'Crear Pacientes', '2023-02-15 23:08:31', '2023-02-15 23:09:45');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 
 -- Volcando estructura para tabla punto_venta.products
@@ -462,14 +461,6 @@ CREATE TABLE IF NOT EXISTS `roles_permissions` (
 -- Volcando datos para la tabla punto_venta.roles_permissions: ~43 rows (aproximadamente)
 /*!40000 ALTER TABLE `roles_permissions` DISABLE KEYS */;
 INSERT INTO `roles_permissions` (`role_id`, `permission_id`) VALUES
-	(3, 1),
-	(3, 26),
-	(3, 27),
-	(3, 28),
-	(3, 30),
-	(3, 31),
-	(3, 32),
-	(3, 33),
 	(2, 1),
 	(2, 2),
 	(2, 3),
@@ -494,9 +485,11 @@ INSERT INTO `roles_permissions` (`role_id`, `permission_id`) VALUES
 	(2, 22),
 	(2, 23),
 	(2, 24),
+	(2, 25),
 	(2, 26),
 	(2, 27),
 	(2, 28),
+	(2, 29),
 	(2, 30),
 	(2, 31),
 	(2, 32),
@@ -504,10 +497,7 @@ INSERT INTO `roles_permissions` (`role_id`, `permission_id`) VALUES
 	(2, 34),
 	(2, 35),
 	(2, 36),
-	(2, 37),
-	(2, 38),
-	(2, 39),
-	(2, 40);
+	(2, 37);
 /*!40000 ALTER TABLE `roles_permissions` ENABLE KEYS */;
 
 -- Volcando estructura para procedimiento punto_venta.sp_Archivo_setRegistrarArchivo
@@ -748,10 +738,10 @@ BEGIN
 END//
 DELIMITER ;
 
--- Volcando estructura para procedimiento punto_venta.sp_Doctor_getNuevoDniPaciente
-DROP PROCEDURE IF EXISTS `sp_Doctor_getNuevoDniPaciente`;
+-- Volcando estructura para procedimiento punto_venta.sp_Paciente_getNuevoDniPaciente
+DROP PROCEDURE IF EXISTS `sp_Paciente_getNuevoDniPaciente`;
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Doctor_getNuevoDniPaciente`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Paciente_getNuevoDniPaciente`(
 )
 BEGIN
 	SET @nDniPaciente := (SELECT IF(ISNULL(id), 'P00001', CONCAT('P', LPAD(cast(substring(max(dni), 5, 5) AS UNSIGNED INTEGER) + 1,5,'0'))) FROM patients);
@@ -764,7 +754,7 @@ DELIMITER ;
 -- Volcando estructura para procedimiento punto_venta.sp_Paciente_getListarPacientes
 DROP PROCEDURE IF EXISTS `sp_Paciente_getListarPacientes`;
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Paciente_getListarPacientes`(IN `nidpaciente` INT, IN `cnombre` VARCHAR(50), IN `cdocumento` VARCHAR(50))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Paciente_getListarPacientes`(IN `nidpaciente` INT, IN `niddoctor` INT, IN `pnombre` VARCHAR(50), IN `pdni` VARCHAR(50))
 BEGIN
 	SELECT	paciente.id,
 				paciente.dni,
@@ -774,9 +764,11 @@ BEGIN
 				paciente.document,
 				paciente.email,
 				paciente.phone
-	FROM		patients	paciente
-	WHERE		CONCAT_WS(' ', paciente.name, paciente.lastname)	LIKE	CONCAT('%', cnombre, '%')
-				AND	paciente.document	LIKE	CONCAT('%', cdocumento, '%')
+	FROM		patients	paciente, doctors doctor
+	WHERE		paciente.doctor_id  =   niddoctor
+                AND paciente.doctor_id  =   doctor.id
+                AND CONCAT_WS(' ', paciente.name, paciente.lastname)	LIKE	CONCAT('%', pnombre, '%')
+				AND	paciente.dni	LIKE	CONCAT('%', pdni, '%')
 				AND	(paciente.id	=	nidpaciente	OR	nidpaciente = 0)
 	ORDER	BY	paciente.id DESC;
 END//
