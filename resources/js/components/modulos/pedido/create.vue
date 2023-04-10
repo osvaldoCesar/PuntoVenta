@@ -181,17 +181,20 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <el-row :gutter="20">
+                                            <el-row :gutter="16">
                                                 <el-col :span="16">
                                                     <vs-input border v-model="cComentario" placeholder="Comentario" />
-                                                </el-col>
-                                                <el-col :span="8">
-                                                    <strong>Total = </strong> <strong style="color: red"> {{ fTotalPedido = totalPedido}} </strong>
                                                 </el-col>
                                             </el-row>
                                             <el-row :gutter="20">
                                                 <el-col :span="16">
-                                                    <vs-input border v-model="pAbono" placeholder="Abono/Pago" />
+                                                    <el-input-number border v-model="pAbono" placeholder="Abono/Pago"
+                                                                                controls-position="right"
+                                                                                :min="0"
+                                                                                :max="fTotalPedido"></el-input-number>
+                                                </el-col>
+                                                <el-col :span="8">
+                                                    <strong>Total = </strong> <strong style="color: red"> {{ fTotalPedido = totalPedido}} </strong>
                                                 </el-col>
                                             </el-row>
                                         </template>
@@ -564,7 +567,14 @@ import { nextTick } from 'vue';
                     'listPedido'   :  this.listPedidos,
                     'dFechaCita'   :  this.dFechaCita,
                 }).then(response => {
+                    console.log(response.data)
+                    console.log(this.pAbono)
+
                     // this.setGenerarEmail(response.data);
+                    if(this.pAbono>0){
+                        console.log("Dentro del if del abono mayor a 0")
+                        this.setRegistrarAbono(response.data)
+                    }
                     this.setGenerarDocumento(response.data);
                 }).catch(error =>{
                     console.log( `Estoy dentro del error de que el documento no se creó "correctamente"` );
@@ -615,6 +625,23 @@ import { nextTick } from 'vue';
                         this.fullscreenLoading = false;
                     }
                 })
+            },
+            setRegistrarAbono(idPedido){
+                var url = '/operacion/pedido/setRegistrarAbono'
+                axios.post(url, {
+                    'nIdPedido'     :  idPedido,
+                    'fAbono'        :  this.pAbono,
+                    'cComentario'   :  'Se' + ((this.fTotalPedido> 0 && this.pAbono<this.fTotalPedido) ? ` abona $` + this.pAbono : ' liquida'),
+                }).then(response => {
+                }).catch(error =>{
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        this.loading.close();
+                    }
+                });
             },
             validarRegistrarPedido(){
                 this.error = 0;
