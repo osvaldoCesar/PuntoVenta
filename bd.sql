@@ -942,23 +942,23 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `sp_Pedido_getListarPedidos`;
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Pedido_getListarPedidos`(
-	IN `cNombre` VARCHAR(50),
-	IN `cDocumento` VARCHAR(50),
+	IN `dDni` VARCHAR(50),
+	IN `tDni` VARCHAR(50),
 	IN `cPedido` VARCHAR(50),
-	IN `cEstado` CHAR(1)
-,
+	IN `cEstado` CHAR(1),
 	IN `dFechaCita` VARCHAR(50)
-
-
-
 )
 BEGIN
 	SELECT	pedido.id,
 				pedido.order_number	AS	pedido,
 				paciente.document		AS	documento,
 				CONCAT_WS(' ', paciente.name, paciente.lastname)	AS	paciente,
+                paciente.dni			AS	dniPaciente,
 				tecnico.rfc				AS	rfcTechnical,
 				CONCAT_WS(' ', tecnico.name, tecnico.lastname)	AS	tecnico,
+                tecnico.dni				AS	dniTecnico,
+				CONCAT_WS(' ', doctor.name, doctor.lastname)	AS	doctor,
+                doctor.dni				AS	dniDoctor,
 				(
 					SELECT	SUM(detalle_venta.price)
 					FROM		details_orders	detalle_venta
@@ -972,10 +972,11 @@ BEGIN
 				CONCAT_WS(' ', vendedor.firstname, vendedor.lastname)	AS	vendedor
 	FROM		orders	pedido
 				INNER	JOIN	patients	paciente	ON	pedido.patient_id	=	paciente.id
+				INNER	JOIN	doctors	doctor	ON	doctor.id	=	paciente.doctor_id
 				INNER	JOIN	technicals	tecnico	ON	pedido.technical_id	=	tecnico.id
 				INNER	JOIN	users			vendedor	ON	pedido.user_id			=	vendedor.id
-	WHERE		CONCAT_WS(' ', paciente.name, paciente.lastname)	LIKE	CONCAT('%', cNombre, '%')
-				AND	paciente.document	LIKE	CONCAT('%', cDocumento, '%')
+	WHERE		doctor.dni	LIKE	CONCAT('%', dDni, '%')
+				AND tecnico.dni	LIKE	CONCAT('%', tDni, '%')
 				AND	pedido.order_number	LIKE	CONCAT('%', cPedido, '%')
 				AND	(pedido.state	=	cEstado	OR	cEstado	=	'')
 				AND	(DATE(pedido.fecha_cita)	Like CONCAT('%', dFechaCita, '%')	OR	(dFechaCita	=	''))

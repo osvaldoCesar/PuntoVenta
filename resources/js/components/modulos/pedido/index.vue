@@ -29,46 +29,45 @@
                             <div class="card-body">
                                 <form role="form">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Nombre</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqPedido.cNombre" @keyup.enter="getListarPedidos">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">RFC Cliente</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" v-model="fillBsqPedido.cDocumento" @keyup.enter="getListarPedidos">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">#Pedido</label>
                                                 <div class="col-md-9">
-                                                    <!-- <el-input ref="num_pedido" placeholder="Número de pedido" type="text" v-model="fillBsqPedido.cPedido" @keyup.enter="getListarPedidos"/> -->
                                                     <input ref="num_pedido" placeholder="Número de pedido" type="text" class="form-control" v-model="fillBsqPedido.cPedido" @keyup.enter="getListarPedidos">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">Fecha de cita</label>
+                                                <label class="col-md-3 col-form-label">DNI Doc</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" v-model="fillBsqPedido.dDni" @keyup.enter="getListarPedidos">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">DNI Técnico</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" v-model="fillBsqPedido.tDni" @keyup.enter="getListarPedidos">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Fecha de entrega</label>
                                                 <div class="col-md-9">
                                                     <el-date-picker
                                                         v-model="fillBsqPedido.dFechaCita"
                                                         type="date"
                                                         format="yyyy-MM-dd"
                                                         value-format="yyyy-MM-dd"
-                                                        placeholder="Selecciona la fecha de la cita">
+                                                        placeholder="Selecciona la fecha programada de la entrega">
                                                     </el-date-picker>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Estado</label>
                                                 <div class="col-md-9">
@@ -113,11 +112,12 @@
                             <thead>
                                 <tr>
                                     <th>#Pedido</th>
-                                    <th>RFC Cliente</th>
-                                    <th>Cliente</th>
+                                    <th>DNI Doctor</th>
                                     <th>Doctor</th>
+                                    <th>DNI Técnico</th>
+                                    <th>DNI Paciente</th>
                                     <th>Total</th>
-                                    <!-- <th>Vendedor</th> -->
+                                    <th>Vendedor</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -125,11 +125,12 @@
                             <tbody>
                                 <tr v-for="(item, index) in listarPedidosPaginated" :key="index">
                                     <td v-text="item.pedido"></td>
-                                    <td v-text="item.documento"></td>
-                                    <td v-text="item.cliente"></td>
+                                    <td v-text="item.dniDoctor"></td>
                                     <td v-text="item.doctor"></td>
+                                    <td v-text="item.dniTecnico"></td>
+                                    <td v-text="item.dniPaciente"></td>
                                     <td v-text="item.total"></td>
-                                    <!-- <td v-text="item.vendedor"></td> -->
+                                    <td v-text="item.vendedor"></td>
                                     <td>
                                         <span v-if="item.state == 'A'" class="badge badge-success" v-text="item.estado"></span>
                                         <span v-else-if="item.state == 'I'" class="badge badge-danger" v-text="item.estado"></span>
@@ -191,8 +192,8 @@
         data() {
             return {
                 fillBsqPedido: {
-                    cNombre: '',
-                    cDocumento: '',
+                    dDni: '',
+                    tDni: '',
                     cPedido: '',
                     cEstado: '',
                     dFechaCita: ''
@@ -242,8 +243,8 @@
         },
         methods: {
             limpiarCriteriosBsq(){
-                this.fillBsqPedido.cNombre      = '';
-                this.fillBsqPedido.cDocumento   = '';
+                this.fillBsqPedido.dDni      = '';
+                this.fillBsqPedido.tDni   = '';
                 this.fillBsqPedido.cPedido      = '';
                 this.fillBsqPedido.cEstado      = '';
                 this.fillBsqPedido.dFechaCita   = '';
@@ -261,8 +262,8 @@
                 var url = '/operacion/pedido/getListarPedidos'
                 axios.get(url, {
                     params: {
-                        'cNombre'      :  this.fillBsqPedido.cNombre,
-                        'cDocumento'   :  this.fillBsqPedido.cDocumento,
+                        'dDni'      :  this.fillBsqPedido.dDni,
+                        'tDni'      :  this.fillBsqPedido.tDni,
                         'cPedido'      :  this.fillBsqPedido.cPedido,
                         'cEstado'      :  this.fillBsqPedido.cEstado,
                         'dFechaCita'   :  this.fillBsqPedido.dFechaCita
