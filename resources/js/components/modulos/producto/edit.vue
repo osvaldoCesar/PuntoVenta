@@ -210,9 +210,9 @@
                         text: 'Se actualizó el producto correctamente',
                         color: 'success',
                     })
-                    setTimeout(() => {
-                        notificacion.toggleClass('new-class')
-                    }, 2000)
+                    // setTimeout(() => {
+                    //     notificacion.toggleClass('new-class')
+                    // }, 2000)
                     this.$router.push('/producto');
                 }).catch(error => {
                     if (error.response.status == 401) {

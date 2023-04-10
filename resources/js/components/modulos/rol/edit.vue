@@ -262,9 +262,9 @@ import axios from 'axios';
                     text: 'Se actualizó el rol correctamente',
                     color: 'success',
                 })
-                setTimeout(() => {
-                    notificacion.toggleClass('new-class')
-                }, 2000)
+                // setTimeout(() => {
+                //     notificacion.toggleClass('new-class')
+                // }, 2000)
                 this.$router.push('/rol');
             },
             validarEditarRolPermisos(){

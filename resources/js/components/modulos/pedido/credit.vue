@@ -379,9 +379,9 @@ import axios from 'axios';
                         text: 'Se agregó el abono correctamente',
                         color: 'success',
                     })
-                    setTimeout(() => {
-                        this.notificacion.toggleClass('new-class')
-                    }, 2000)
+                    // setTimeout(() => {
+                    //     this.notificacion.toggleClass('new-class')
+                    // }, 2000)
                     let resultado = response.data[0].resultado;
                     if(resultado<=0){
                         this.loading.close();

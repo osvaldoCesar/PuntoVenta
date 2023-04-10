@@ -148,8 +148,7 @@ import { nextTick } from 'vue';
             }
         },
         mounted(){
-            this.getListarDoctores
-            s();
+            this.getListarDoctores();
         },
         methods: {
             limpiarCriterios(){
@@ -206,9 +205,6 @@ import { nextTick } from 'vue';
                         text: 'Se actualizó el Doctor correctamente',
                         color: 'success',
                     })
-                    setTimeout(() => {
-                        notificacion.toggleClass('new-class')
-                    }, 2000)
                     this.$router.push('/doctor');
                 }).catch(error =>{
                     console.log(error.response);

@@ -15,7 +15,7 @@
                     <div class="card-tools">
                         <template v-if="listaRolPermisosByUsuario.includes('doctor.crear')">
                             <router-link class="btn btn-info btn-sm" :to="{name: 'doctor.crear'}">
-                                <i class="fas fa-plus-square"></i> Nuevo Técnico
+                                <i class="fas fa-plus-square"></i> Nuevo Doctor
                             </router-link>
                         </template>
                     </div>

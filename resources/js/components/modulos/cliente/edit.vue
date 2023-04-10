@@ -201,9 +201,9 @@ import { nextTick } from 'vue';
                         text: 'Se actualizó el Cliente correctamente',
                         color: 'success',
                     })
-                    setTimeout(() => {
-                        notificacion.toggleClass('new-class')
-                    }, 2000)
+                    // setTimeout(() => {
+                    //     notificacion.toggleClass('new-class')
+                    // }, 2000)
                     this.$router.push('/cliente');
                 }).catch(error =>{
                     console.log(error.response);

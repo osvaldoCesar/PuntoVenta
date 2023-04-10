@@ -151,9 +151,9 @@ import axios from 'axios';
                         text: 'Se actualizó el permiso correctamente',
                         color: 'success',
                     })
-                    setTimeout(() => {
-                        notificacion.toggleClass('new-class')
-                    }, 2000)
+                    // setTimeout(() => {
+                    //     notificacion.toggleClass('new-class')
+                    // }, 2000)
                     this.$router.push('/permiso');
                 }).catch(error =>{
                     console.log(error.response);

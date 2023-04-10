@@ -147,9 +147,9 @@ import axios from 'axios';
                         text: 'Se actualizó la categoría correctamente',
                         color: 'success',
                     })
-                    setTimeout(() => {
-                        notificacion.toggleClass('new-class')
-                    }, 2000)
+                    // setTimeout(() => {
+                    //     notificacion.toggleClass('new-class')
+                    // }, 2000)
                     this.$router.push('/categoria');
                 }).catch(error =>{
                     console.log(error.response);
