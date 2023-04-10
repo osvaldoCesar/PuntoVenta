@@ -86,11 +86,11 @@
                             <td>{{$rpta1[0]->cVendedor}}</td>
                         </tr>
                         <tr>
-                            <td>Doctor Asignado</td>
-                            <td>{{$rpta1[0]->dDoctor}}</td>
+                            <td>Técnico Asignado</td>
+                            <td>{{$rpta1[0]->tTechnical}}</td>
                         </tr>
                         <tr>
-                            <td>Fecha de Cita</td>
+                            <td>Fecha de Entrega</td>
                             <td>{{$rpta1[0]->dFechaCita}}</td>
                         </tr>
                     </table>
@@ -101,24 +101,28 @@
         <table width="100%" cellspacing="0" cellspacing="1" border="1" align="center">
             <tr align="center" align="middle">
                 <td colspan="2">
-                    <h3><strong>Información del Cliente</strong></h3>
+                    <h3><strong>Información del Doctor</strong></h3>
                 </td>
             </tr>
             <tr>
-                <td>Cliente</td>
-                <td>{{$rpta1[0]->cCliente}}</td>
+                <td>Doctor</td>
+                <td>{{$rpta1[0]->dDoctor}}</td>
             </tr>
             <tr>
-                <td>Documento</td>
-                <td>{{$rpta1[0]->cDocumento}}</td>
+                <td>RFC</td>
+                <td>{{$rpta1[0]->dRfc}}</td>
             </tr>
             <tr>
                 <td>Correo Electronico</td>
-                <td>{{$rpta1[0]->cCorreo}}</td>
+                <td>{{$rpta1[0]->dCorreo}}</td>
             </tr>
             <tr>
                 <td>Teléfono</td>
-                <td>{{$rpta1[0]->cTelefono}}</td>
+                <td>{{$rpta1[0]->dTelefono}}</td>
+            </tr>
+            <tr>
+                <td>Paciente</td>
+                <td>{{$rpta1[0]->pPaciente}}</td>
             </tr>
         </table>
 

@@ -40,12 +40,12 @@ class OrdersController extends Controller
     public function setRegistrarPedido(Request $request){
         if(!$request->ajax()) return redirect('/');
 
-        $nIdCliente     =    $request->nIdCliente;
-        $nIdDoctor      =    $request->nIdDoctor;
+        $nIdTecnico     =    $request->nIdTecnico;
+        $nIdPaciente    =    $request->nIdPaciente;
         $cComentario    =    $request->cComentario;
         $fTotalPedido   =    $request->fTotalPedido;
         $listPedido     =    $request->listPedido;
-        $dFechaCita      =   $request->dFechaCita;
+        $dFechaCita     =   $request->dFechaCita;
         $nIdAuthUser    =    Auth::id();
 
         $cComentario     =      ($cComentario  ==  NULL) ? ($cComentario  =  '')    : $cComentario;
@@ -57,8 +57,8 @@ class OrdersController extends Controller
 
             $rpta        =      DB::select('call sp_Pedido_setRegistrarPedido(?, ?, ?, ?, ?, ?)',
                                                                         [
-                                                                            $nIdCliente,
-                                                                            $nIdDoctor,
+                                                                            $nIdPaciente,
+                                                                            $nIdTecnico,
                                                                             $cComentario,
                                                                             $fTotalPedido,
                                                                             $dFechaCita,

@@ -102,18 +102,18 @@ class DoctorsController extends Controller
     public function getListarPacientes(Request $request){
         if(!$request->ajax()) return redirect('/');
 
-        $nIdPaciente      =       $request->nIdPaciente;
-        $nIdDoctor   =   $request->nIdDoctor;
-        $pDni        =   $request->pDni;
-        $pNombre     =   $request->pNombre;
+        $nIdPaciente  =   $request->nIdPaciente;
+        $nIdDoctor    =   $request->nIdDoctor;
+        $pDni         =   $request->pDni;
+        $pNombre      =   $request->pNombre;
 
 
-        $nIdPaciente   =    ($nIdPaciente   ==  NULL)  ?  ($nIdPaciente  =   0)   :  $nIdPaciente;
-        $nIdDoctor   =    ($nIdDoctor   ==  NULL)  ?  ($nIdDoctor  =    0)  :  $nIdDoctor;
-        $pDni        =    ($pDni        ==  NULL)  ?  ($pDni       =   '')  :  $pDni;
-        $pNombre     =    ($pNombre     ==  NULL)  ?  ($pNombre    =   '')  :  $pNombre;
+        $nIdPaciente  =    ($nIdPaciente   ==  NULL)  ?  ($nIdPaciente  =   0)   :  $nIdPaciente;
+        $nIdDoctor    =    ($nIdDoctor     ==  NULL)  ?  ($nIdDoctor    =    0)  :  $nIdDoctor;
+        $pDni         =    ($pDni          ==  NULL)  ?  ($pDni         =   '')  :  $pDni;
+        $pNombre      =    ($pNombre       ==  NULL)  ?  ($pNombre      =   '')  :  $pNombre;
 
-        $rpta        =      DB::select('call sp_Paciente_getListarPacientes(?, ?, ?, ?)',
+        $rpta         =      DB::select('call sp_Paciente_getListarPacientes(?, ?, ?, ?)',
                                                                             [
                                                                                 $nIdPaciente,
                                                                                 $nIdDoctor,

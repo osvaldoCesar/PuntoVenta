@@ -1062,14 +1062,16 @@ BEGIN
 				vendedor.email	AS	cVendedorCorreo,
 				CONCAT_WS(' ', paciente.name, paciente.lastname)	AS	pPaciente,
 				CONCAT_WS(' ', tecnico.name, tecnico.lastname)	AS	tTechnical,
-				paciente.document					AS	cDocumento,
-				IFNULL(paciente.phone, '')		AS	cTelefono,
-				IFNULL(paciente.email, '')		AS	cCorreo,
+				CONCAT_WS(' ', doctor.name, doctor.lastname)	AS	dDoctor,
+				doctor.rfc					AS	dRfc,
+				IFNULL(doctor.phone, '')		AS	dTelefono,
+				IFNULL(doctor.email, '')		AS	dCorreo,
 				pedido.total						AS	fTotalPedido,
 				IFNULL(pedido.comments, '')	AS	cComentario,
 				DATE_FORMAT(pedido.fecha_cita,'%d-%m-%Y %r') AS dFechaCita
 	FROM		orders	pedido
 				INNER	JOIN	patients	paciente	ON	pedido.patient_id	=	paciente.id
+				INNER	JOIN	doctors doctor	ON	paciente.doctor_id	=	doctor.id
 				INNER	JOIN	technicals	tecnico	ON	pedido.technical_id	=	tecnico.id
 				INNER	JOIN	users			vendedor	ON	pedido.user_id			=	vendedor.id
 	WHERE		pedido.id	=	nidpedido;

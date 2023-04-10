@@ -1,14 +1,14 @@
 <template>
     <div>
-        <!-- <div class="content-header">
+        <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Crear Pedido</h1>
+                        <h1 class="m-0">Levantar Pedido</h1>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="content container-fluid">
             <div class="card">
                 <div class="card-header">
@@ -21,22 +21,41 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="card card-secondary">
+                            <div class="col-md-4">
+                                <div class="card card-success">
                                     <div class="card-header">
                                         <h3 class="card-title">Parámetros del Pedido</h3>
                                     </div>
                                     <div class="card-body">
                                         <form role="form">
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-12">
                                                     <div class=" row">
-                                                        <label class="col-md-12 col-form-label">RFC Doctor</label>
+                                                        <label class="col-md-12 col-form-label">Técnico</label>
                                                         <div class="col-md-12">
                                                             <el-autocomplete
-                                                            name="rfcDoc"
                                                                 class="inline-input"
-                                                                v-model="cBusquedaDoc"
+                                                                v-model="cBusquedaTecnico"
+                                                                :fetch-suggestions="querySearchTecnico"
+                                                                placeholder="Buscar..."
+                                                                :trigger-on-focus="true"
+                                                                size="medium"
+                                                                @select="tecnicoSelect">
+                                                                <i @click="limpiarCriteriosTecnicos" class="el-icon-search el-input__icon" slot="suffix">
+                                                                </i>
+                                                            </el-autocomplete>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class=" row">
+                                                        <label class="col-md-12 col-form-label">Doctor</label>
+                                                        <div class="col-md-12">
+                                                            <el-autocomplete
+                                                            name="dniDoc"
+                                                                class="inline-input"
+                                                                v-model="cBusquedaDoctor"
                                                                 :fetch-suggestions="querySearchDoctor"
                                                                 placeholder="Buscar..."
                                                                 :trigger-on-focus="true"
@@ -46,129 +65,40 @@
                                                                 </i>
                                                             </el-autocomplete>
                                                         </div>
-                                                        <template>
-                                                            <label class="ml-3" v-text="fillCrearDoctor.cNombreCompletoDoc" />
-                                                        </template>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+
+                                                <div class="col-md-12">
+                                                    <div class=" row">
+                                                        <label class="col-md-12 col-form-label">Paciente</label>
+                                                        <div class="col-md-12">
+                                                            <el-autocomplete
+                                                                class="inline-input"
+                                                                v-model="cBusquedaPacientes"
+                                                                :fetch-suggestions="querySearchPaciente"
+                                                                placeholder="Buscar..."
+                                                                :trigger-on-focus="true"
+                                                                size="medium"
+                                                                @select="pacienteSelect">
+                                                                <i @click="limpiarCriteriosPacientes" class="el-icon-search el-input__icon" slot="suffix">
+                                                                </i>
+                                                            </el-autocomplete>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
                                                     <div class="form-group row">
-                                                        <label class="col-md-12 col-form-label">Fecha de cita</label>
+                                                        <label class="col-md-12 col-form-label">Fecha de entrega</label>
                                                         <div class="col-md-12">
                                                             <el-date-picker
                                                                 v-model="dFechaCita"
                                                                 type="datetime"
                                                                 format="yyyy-MM-dd HH:mm:ss"
                                                                 value-format="yyyy-MM-dd HH:mm:ss"
-                                                                placeholder="Selecciona la fecha y la hora de la cita"
+                                                                placeholder="Selecciona la fecha y la hora de la entrega"
                                                                 default-time="12:00:00">
                                                             </el-date-picker>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- <div class="col-md-4">
-                                                    <div class="form-group row">
-                                                        <label class="col-md-12 col-form-label">Fecha de cita</label>
-                                                        <div class="col-md-12">
-                                                            <el-date-picker
-                                                                v-model="dFechaCita"
-                                                                type="datetime"
-                                                                placeholder="Selecciona la fecha y la hora de la cita"
-                                                                default-time="12:00:00">
-                                                            </el-date-picker>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card" :class="(switchCliente) ? 'card-info' : 'card-success'">
-                                    <div class="card-header">
-                                        <h3 class="card-title">{{(switchCliente) ? 'Registrar' : 'Buscar'}} Cliente</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <form role="form">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <vs-switch v-model="switchCliente" @change="limpiarCriterios">
-                                                        <template #off>
-                                                            <i class="fas fa-plus-square"></i>
-                                                        </template>
-                                                        <template #on>
-                                                            <i class="fas fa-search"></i>
-                                                        </template>
-                                                    </vs-switch>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class=" row">
-                                                        <label class="col-md-12 col-form-label">RFC</label>
-                                                        <div class="col-md-12">
-                                                            <template v-if="switchCliente">
-                                                                <input type="text" class="form-control" v-model="fillCrearCliente.cDocumento" @keyup.enter="setRegistrarPedido">
-                                                            </template>
-                                                            <template v-else>
-                                                                <el-autocomplete
-                                                                    class="inline-input"
-                                                                    v-model="cBusqueda"
-                                                                    :fetch-suggestions="querySearch"
-                                                                    placeholder="Buscar..."
-                                                                    :trigger-on-focus="true"
-                                                                    size="medium"
-                                                                    @select="clientSelect">
-                                                                    <i @click="limpiarCriterios" class="el-icon-search el-input__icon" slot="suffix">
-                                                                    </i>
-                                                                </el-autocomplete>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class=" row">
-                                                        <label class="col-md-12 col-form-label">Nombre</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" class="form-control"
-                                                            v-model="fillCrearCliente.cNombre"
-                                                            @keyup.enter="setRegistrarPedido"
-                                                            :disabled="(switchCliente) ? false : true">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class=" row">
-                                                        <label class="col-md-12 col-form-label">Apellido</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" class="form-control"
-                                                            v-model="fillCrearCliente.cApellido"
-                                                            @keyup.enter="setRegistrarPedido"
-                                                            :disabled="(switchCliente) ? false : true">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class=" row">
-                                                        <label class="col-md-12 col-form-label">Email</label>
-                                                        <div class="col-md-12">
-                                                            <vs-input v-model="fillCrearCliente.cEmail"
-                                                                    placeholder="correo@gmail.com"
-                                                                    @keyup.enter="setRegistrarPedido"
-                                                                    :disabled="(switchCliente) ? false : true">
-                                                                <template v-if="validEmail" #message-success>Correo Electrónico válido</template>
-                                                                <template v-if="!validEmail && fillCrearCliente.cEmail !== ''" #message-danger>Correo Electrónico inválido</template>
-                                                            </vs-input>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class=" row">
-                                                        <label class="col-md-12 col-form-label">Teléfono</label>
-                                                        <div class="col-md-12">
-                                                            <input type="tel" class="form-control"
-                                                            v-model="fillCrearCliente.cTelefono"
-                                                            @keyup.enter="setRegistrarPedido"
-                                                            :disabled="(switchCliente) ? false : true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -259,6 +189,11 @@
                                                     <strong>Total = </strong> <strong style="color: red"> {{ fTotalPedido = totalPedido}} </strong>
                                                 </el-col>
                                             </el-row>
+                                            <el-row :gutter="20">
+                                                <el-col :span="16">
+                                                    <vs-input border v-model="pAbono" placeholder="Abono/Pago" />
+                                                </el-col>
+                                            </el-row>
                                         </template>
                                         <template v-else>
                                             <div class="callout callout-info">
@@ -298,15 +233,14 @@ import { nextTick } from 'vue';
     export default {
         data() {
             return {
-                fillCrearCliente: {
-                    nIdCliente: '',
+                fillCrearTecnico: {
+                    nIdTecnico: '',
                     cDocumento: '',
                     cNombre: '',
                     cApellido: '',
                     cEmail: '',
                     cTelefono: '',
                 },
-                switchCliente: false,
 
                 fillCrearDoctor: {
                     nIdDoctor: '',
@@ -318,13 +252,27 @@ import { nextTick } from 'vue';
                     cTelefonoDoc: '',
                 },
 
-                cBusqueda: '',
-                listClientes: [],
-                listClientesFilter: [],
+                fillCrearPaciente: {
+                    nIdPaciente: '',
+                    cRfcPaciente: '',
+                    cNombreCompletoPaciente: '',
+                    cNombrePaciente: '',
+                    cApellidoPaciente: '',
+                    cEmailPaciente: '',
+                    cTelefonoPaciente: '',
+                },
 
-                cBusquedaDoc: '',
+                cBusquedaTecnico: '',
+                listTecnicos: [],
+                listTecnicosFilter: [],
+
+                cBusquedaDoctor: '',
                 listDoctores: [],
                 listDoctoresFilter: [],
+
+                cBusquedaPacientes: '',
+                listPacientes: [],
+                listPacientesFilter: [],
 
                 listProductos: [],
                 listPedidos: [],
@@ -348,7 +296,7 @@ import { nextTick } from 'vue';
         },
         computed: {
             validEmail() {
-                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillCrearCliente.cEmail)
+                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fillCrearTecnico.cEmail)
             },
             totalPedido(){
                 return this.listPedidos.reduce(function(valorAnterior, valorActual){
@@ -358,38 +306,49 @@ import { nextTick } from 'vue';
         },
         mounted (){
             this.agregarProducto();
-            this.getListarClientes();
+            this.getListarTecnicos();
             this.getListarDoctores();
             this.getListarProductos();
         },
         methods: {
-            querySearch(queryString, cb) {
-                var links = this.listClientesFilter;
-                var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+            querySearchTecnico(queryString, cb) {
+                var links = this.listTecnicosFilter;
+                var results = queryString ? links.filter(this.createFilterTecnico(queryString)) : links;
                 // call callback function to return suggestions
                 cb(results);
             },
             querySearchDoctor(queryString, cb) {
                 var links = this.listDoctoresFilter;
-                var results = queryString ? links.filter(this.createFilterDoc(queryString)) : links;
+                var results = queryString ? links.filter(this.createFilterDoctor(queryString)) : links;
                 // call callback function to return suggestions
                 cb(results);
             },
-            createFilter(queryString) {
+            querySearchPaciente(queryString, cb) {
+                var links = this.listPacientesFilter;
+                var results = queryString ? links.filter(this.createfilterPaciente(queryString)) : links;
+                // call callback function to return suggestions
+                cb(results);
+            },
+            createFilterTecnico(queryString) {
                 return (link) => {
                     return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
                 };
             },
-            createFilterDoc(queryString) {
+            createFilterDoctor(queryString) {
                 return (link) => {
                     return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
                 };
             },
-            getListarClientes(){
-                var ruta = '/operacion/cliente/getListarClientes';
+            createfilterPaciente(queryString) {
+                return (link) => {
+                    return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
+                };
+            },
+            getListarTecnicos(){
+                var ruta = '/operacion/tecnico/getListarTecnicos';
                 axios.get(ruta).then(response => {
-                    this.listClientes = response.data;
-                    this.filterListarClientes();
+                    this.listTecnicos = response.data;
+                    this.filterListarTecnicos();
                 }).catch(error =>{
                     console.log(error.response);
                     if (error.response.status == 401) {
@@ -415,6 +374,27 @@ import { nextTick } from 'vue';
                     }
                 });
             },
+            getListarPacientes(id){
+                console.log(id)
+                var url = '/operacion/doctor/getListarPacientes'
+                axios.get(url, {
+                    params: {
+                        'nIdDoctor'   : id
+                    }
+                }).then(response => {
+                    this.listPacientes =  response.data;
+                    console.log(response.data)
+                    this.filterListarPacientes();
+                }).catch(error =>{
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'})
+                        location.reload();
+                        sessionStorage.clear();
+                        loading.close();
+                    }
+                });
+            },
             getListarProductos(){
                 var ruta = '/configuracion/producto/getListarProductos';
                 axios.get(ruta).then(response => {
@@ -429,33 +409,33 @@ import { nextTick } from 'vue';
                     }
                 });
             },
-            filterListarClientes(){
+            filterListarTecnicos(){
                 let me = this;
-                me.listClientesFilter = [];
-                me.listClientes.map(function(x, y){
-                    me.listClientesFilter.push({
-                        'value' :   x.document + ' - ' + x.fullname,
+                me.listTecnicosFilter = [];
+                me.listTecnicos.map(function(x, y){
+                    me.listTecnicosFilter.push({
+                        'value' :   x.dni + ' - ' + x.fullname,
                         'link'  :   x.id
                     });
                 });
             },
-            clientSelect(item) {
-                let rpta = this.listClientes.filter(cliente => {
-                    return ((String(cliente.id)).indexOf(String(item.link)) != -1);
+            tecnicoSelect(item) {
+                let rpta = this.listTecnicos.filter(tecnico => {
+                    return ((String(tecnico.id)).indexOf(String(item.link)) != -1);
                 });
-                this.fillCrearCliente.nIdCliente            = rpta[0].id;
-                this.fillCrearCliente.cDocumento            = rpta[0].document;
-                this.fillCrearCliente.cNombre               = rpta[0].name;
-                this.fillCrearCliente.cApellido             = rpta[0].lastname;
-                this.fillCrearCliente.cEmail                = rpta[0].email;
-                this.fillCrearCliente.cTelefono             = rpta[0].phone;
+                this.fillCrearTecnico.nIdTecnico            = rpta[0].id;
+                this.fillCrearTecnico.cDocumento            = rpta[0].document;
+                this.fillCrearTecnico.cNombre               = rpta[0].name;
+                this.fillCrearTecnico.cApellido             = rpta[0].lastname;
+                this.fillCrearTecnico.cEmail                = rpta[0].email;
+                this.fillCrearTecnico.cTelefono             = rpta[0].phone;
             },
             filterListarDoctores(){
                 let me = this;
                 me.listDoctoresFilter = [];
                 me.listDoctores.map(function(x, y){
                     me.listDoctoresFilter.push({
-                        'value' :   x.rfc + ' - ' + x.fullname,
+                        'value' :   x.dni + ' - ' + x.fullname,
                         'link'  :   x.id
                     });
                 });
@@ -471,25 +451,58 @@ import { nextTick } from 'vue';
                 this.fillCrearDoctor.cApellidoDoc   = rpta[0].lastname;
                 this.fillCrearDoctor.cEmailDoc      = rpta[0].email;
                 this.fillCrearDoctor.cTelefonoDoc   = rpta[0].phone;
+                this.getListarPacientes(rpta[0].id);
             },
-            limpiarCriterios(){
-                this.fillCrearCliente.nIdCliente    = '';
-                this.cBusqueda                      = '';
-                this.fillCrearCliente.cDocumento    = '';
-                this.fillCrearCliente.cNombre       = '';
-                this.fillCrearCliente.cApellido     = '';
-                this.fillCrearCliente.cEmail        = '';
-                this.fillCrearCliente.cTelefono     = '';
+            filterListarPacientes(){
+                let me = this;
+                me.listPacientesFilter = [];
+                me.listPacientes.map(function(x, y){
+                    me.listPacientesFilter.push({
+                        'value' :   x.dni + ' - ' + x.fullname,
+                        'link'  :   x.id
+                    });
+                });
+            },
+            pacienteSelect(item) {
+                let rpta = this.listPacientes.filter(pacientes => {
+                    return ((String(pacientes.id)).indexOf(String(item.link)) != -1);
+                });
+                this.fillCrearPaciente.nIdPaciente      = rpta[0].id;
+                this.fillCrearPaciente.cRfcPaciente        = rpta[0].rfc;
+                this.fillCrearPaciente.cNombreCompletoPaciente    = rpta[0].name + ' ' + rpta[0].lastname;
+                this.fillCrearPaciente.cNombrePaciente     = rpta[0].name;
+                this.fillCrearPaciente.cApellidoPaciente   = rpta[0].lastname;
+                this.fillCrearPaciente.cEmailPaciente      = rpta[0].email;
+                this.fillCrearPaciente.cTelefonoPaciente   = rpta[0].phone;
+            },
+            limpiarCriteriosTecnicos(){
+                this.fillCrearTecnico.nIdTecnico    = '';
+                this.cBusquedaTecnico                      = '';
+                this.fillCrearTecnico.cDocumento    = '';
+                this.fillCrearTecnico.cNombre       = '';
+                this.fillCrearTecnico.cApellido     = '';
+                this.fillCrearTecnico.cEmail        = '';
+                this.fillCrearTecnico.cTelefono     = '';
             },
             limpiarCriteriosDoctores(){
                 this.fillCrearDoctor.nIdDoctor      = '';
-                this.cBusquedaDoc                   = '';
+                this.cBusquedaDoctor                   = '';
                 this.fillCrearDoctor.cRfcDoc        = '';
                 this.fillCrearDoctor.cNombreCompletoDoc    = '';
                 this.fillCrearDoctor.cNombreDoc     = '';
                 this.fillCrearDoctor.cApellidoDoc   = '';
                 this.fillCrearDoctor.cEmailDoc      = '';
                 this.fillCrearDoctor.cTelefonoDoc   = '';
+            },
+            limpiarCriteriosPacientes(){
+                this.fillCrearPaciente.nIdPaciente      = '';
+                this.cBusquedaPaciente                   = '';
+                this.fillCrearPaciente.cRfcPaciente        = '';
+                this.fillCrearPaciente.cNombreCompletoPaciente    = '';
+                this.fillCrearPaciente.cNombrePaciente     = '';
+                this.fillCrearPaciente.cApellidoPaciente   = '';
+                this.fillCrearPaciente.cEmailPaciente      = '';
+                this.fillCrearPaciente.cTelefonoPaciente   = '';
             },
             abrirModal(){
                 this.modalShow = !this.modalShow;
@@ -593,40 +606,13 @@ import { nextTick } from 'vue';
                     text: 'Cargando...'
                 })
 
-                if (this.switchCliente) {
-                    this.setRegistrarCliente();
-                } else {
-                    this.setGuardarPedido(this.fillCrearCliente.nIdCliente);
-                }
+                this.setGuardarPedido(this.fillCrearTecnico.nIdTecnico, this.fillCrearPaciente.nIdPaciente);
             },
-            setRegistrarCliente(){
-                this.fullscreenLoading = true;
-                var url = '/operacion/cliente/setRegistrarCliente'
-                axios.post(url, {
-                    'cDocumento'    :  this.fillCrearCliente.cDocumento,
-                    'cNombre'       :  this.fillCrearCliente.cNombre,
-                    'cApellido'     :  this.fillCrearCliente.cApellido,
-                    'cEmail'        :  this.fillCrearCliente.cEmail,
-                    'cTelefono'     :  this.fillCrearCliente.cTelefono,
-                }).then(response => {
-                    let nIdCliente = response.data[0].nIdCliente;
-                    this.setGuardarPedido(nIdCliente);
-                }).catch(error =>{
-                    console.log(error.response);
-                    if (error.response.status == 401) {
-                        this.$router.push({name: 'login'})
-                        location.reload();
-                        sessionStorage.clear();
-                        this.fullscreenLoading = false;
-                    }
-                });
-            },
-            setGuardarPedido(nIdCliente){
+            setGuardarPedido(nIdTecnico, nIdPaciente){
                 var url = '/operacion/pedido/setRegistrarPedido'
-                console.log(this.dFechaCita)
                 axios.post(url, {
-                    'nIdCliente'   :  nIdCliente,
-                    'nIdDoctor'    :  this.fillCrearDoctor.nIdDoctor,
+                    'nIdTecnico'   :  nIdTecnico,
+                    'nIdPaciente'    :  nIdPaciente,
                     'cComentario'  :  this.cComentario,
                     'fTotalPedido' :  this.fTotalPedido,
                     'listPedido'   :  this.listPedidos,
@@ -689,31 +675,17 @@ import { nextTick } from 'vue';
                 this.mensajeError = [];
 
                 if (!this.fillCrearDoctor.nIdDoctor) {
-                    this.mensajeError.push("Se debe asignar un doctor");
+                    this.mensajeError.push("Eliga primero el Doctor y posteriormente su Paciente");
                 }
-                if (!this.dFechaCita) {
-                    this.mensajeError.push("Se debe elegir la fecha de la cita");
+
+                if (!this.fillCrearTecnico.nIdTecnico) {
+                    this.mensajeError.push("Se debe asignar un Técnico");
                 }
-                if (this.switchCliente) {
-                    if (!this.fillCrearCliente.cDocumento) {
-                        this.mensajeError.push("El Documento es un campo obligatorio");
-                    }
-                    if (!this.fillCrearCliente.cNombre) {
-                        this.mensajeError.push("El Nombre es un campo obligatorio");
-                    }
-                    if (!this.fillCrearCliente.cApellido) {
-                        this.mensajeError.push("El apellido es un campo obligatorio");
-                    }
-                    if (this.fillCrearCliente.cEmail) {
-                        if (!this.validEmail) {
-                            this.mensajeError.push("El correo electrónico tiene un formato inválido");
-                        }
-                    }
-                }else{
-                    if (!this.fillCrearCliente.nIdCliente) {
-                        this.mensajeError.push("El Cliente es necesario cargar");
-                    }
+
+                if (!this.fillCrearPaciente.nIdPaciente) {
+                    this.mensajeError.push("Se debe seleccionar el Paciente del Doctor");
                 }
+
                 if (this.mensajeError.length){
                     this.error = 1;
                 }
