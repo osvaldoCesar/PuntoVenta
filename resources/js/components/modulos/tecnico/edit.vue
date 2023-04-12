@@ -220,13 +220,13 @@ import { nextTick } from 'vue';
                 this.error = 0;
                 this.mensajeError = [];
 
-                if (!this.fillEditarTecnico.tRfc) {
-                    this.mensajeError.push("El RFC es un campo obligatorio");
-                }else{
-                    if (this.fillEditarTecnico.tRfc.length != 8) {
-                        this.mensajeError.push("El RFC requiere 8 caracteres");
-                    }
-                }
+                // if (!this.fillEditarTecnico.tRfc) {
+                //     this.mensajeError.push("El RFC es un campo obligatorio");
+                // }else{
+                //     if (this.fillEditarTecnico.tRfc.length != 8) {
+                //         this.mensajeError.push("El RFC requiere 8 caracteres");
+                //     }
+                // }
                 if (!this.fillEditarTecnico.tNombre) {
                     this.mensajeError.push("El Nombre es un campo obligatorio");
                 }

@@ -108,18 +108,24 @@
                 <td>Doctor</td>
                 <td>{{$rpta1[0]->dDoctor}}</td>
             </tr>
+            @if($rpta1[0]->dRfc)
             <tr>
                 <td>RFC</td>
                 <td>{{$rpta1[0]->dRfc}}</td>
             </tr>
+            @endif
+            @if($rpta1[0]->dCorreo)
             <tr>
                 <td>Correo Electronico</td>
                 <td>{{$rpta1[0]->dCorreo}}</td>
             </tr>
+            @endif
+            @if($rpta1[0]->dTelefono)
             <tr>
                 <td>Teléfono</td>
                 <td>{{$rpta1[0]->dTelefono}}</td>
             </tr>
+            @endif
             <tr>
                 <td>Paciente</td>
                 <td>{{$rpta1[0]->pPaciente}}</td>
@@ -144,7 +150,7 @@
                 @foreach ($rpta2 as $key => $value)
                 <tr>
                     <td align="center"><span>{{$key + 1}}</span></td>
-                    <td align="center"><span>{{$value->cProducto}}</span></td>
+                    <td align="center"><span>{{$value->cProducto}} - {{$value->categoria}}</span></td>
                     <td align="center"><span>{{$value->nCantidad}}</span></td>
                     <td align="center"><span>${{number_format($value->fPrecio, 2)}}</span></td>
                     <td align="center"><span>${{number_format($value->fSubTotal, 2)}}</span></td>
@@ -153,18 +159,6 @@
             </tbody>
         </table>
         @endif
-
-
-        <table width="50%" cellspacing="0" cellspacing="1" align="center">
-            <tr>
-                <td align="right">
-                    <h3><strong>Total del Pedido</strong></h3>
-                </td>
-                <td align="center">
-                    <h3>${{number_format($rpta1[0]->fTotalPedido, 2)}}</h3>
-                </td>
-            </tr>
-        </table>
 
         @if (!empty($rpta1[0]->cComentario))
         <table width="100%" cellspacing="0" cellspacing="1" align="center">
@@ -176,7 +170,21 @@
             </tr>
         </table>
         @endif
-
+        
+        <table width="50%" border="" cellspacing="0" align="center">
+            <tr>
+                <td align="right"><strong>Abono:</strong></td>
+                <td align="center">${{number_format($rpta4[0]->totalAbonos, 2)}}</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Total:</strong></td>
+                <td align="center">${{number_format($rpta4[0]->totalPedido, 2)}}</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Restante:</strong></td>
+                <td align="center">${{number_format($rpta4[0]->restante, 2)}}</td>
+            </tr>
+        </table>
 
         @if (count($rpta3) > 0)
         <table width="100%" cellspacing="0" cellspacing="1" border="1" align="center">

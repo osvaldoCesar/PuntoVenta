@@ -219,13 +219,13 @@ import { nextTick } from 'vue';
                 this.error = 0;
                 this.mensajeError = [];
 
-                if (!this.fillEditarDoctor.dRfc) {
-                    this.mensajeError.push("El RFC es un campo obligatorio");
-                }else{
-                    if (this.fillEditarDoctor.dRfc.length != 8) {
-                        this.mensajeError.push("El RFC requiere 8 caracteres");
-                    }
-                }
+                // if (!this.fillEditarDoctor.dRfc) {
+                //     this.mensajeError.push("El RFC es un campo obligatorio");
+                // }else{
+                //     if (this.fillEditarDoctor.dRfc.length != 8) {
+                //         this.mensajeError.push("El RFC requiere 8 caracteres");
+                //     }
+                // }
                 if (!this.fillEditarDoctor.dNombre) {
                     this.mensajeError.push("El Nombre es un campo obligatorio");
                 }

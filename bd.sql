@@ -366,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
-  `stock` smallint(6) NOT NULL DEFAULT '1',
+  `stock` bigint(20) NOT NULL DEFAULT '1',
   `state` enum('Y','N') COLLATE utf8mb4_unicode_ci DEFAULT 'Y',
   `price` double(8,2) NOT NULL DEFAULT '10.50',
   `categorie_id` bigint(20) unsigned DEFAULT NULL,
@@ -899,10 +899,12 @@ BEGIN
 				producto.name				AS	cProducto,
 				detalle_pedido.quantity	AS	nCantidad,
 				detalle_pedido.price		AS	fPrecio,
-				(detalle_pedido.quantity * detalle_pedido.price)	AS	fSubTotal
+				(detalle_pedido.quantity * detalle_pedido.price)	AS	fSubTotal,
+                categoria.name	AS	categoria
 	FROM		orders	pedido
 				INNER	JOIN	details_orders	detalle_pedido	ON	pedido.id	=	detalle_pedido.order_id
 				INNER	JOIN	products			producto			ON	detalle_pedido.product_id	=	producto.id
+                INNER JOIN categories categoria	ON	producto.categorie_id = categoria.id
 	WHERE		pedido.id	=	nidpedido;
 END//
 DELIMITER ;

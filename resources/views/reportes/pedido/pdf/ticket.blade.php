@@ -51,19 +51,23 @@
 
 <body>
     <div class="cabecera">
-        <table width="100%" cellspacing="0" cellspacing="1" border="0" align="center">
+        <table width="50%" cellspacing="1" align="center">
             <tr>
                 <td>
-                    <table width="100%" cellspacing="0" cellspacing="1" align="center">
+                    <table width="100%" cellspacing="1" align="center">
                         <tr>
-                            <td align="center">
+                            <td colspan="2" align="center">
                                 <img src="{{$logo}}" alt="Logo de Welldent" class="logo" width="100" height="100">
                             </td>
                         </tr>
                         <tr>
-                            <td width="100%" cellspacing="0" cellspacing="1" align="center">
+                            <td colspan="2" width="100%" cellspacing="1" align="center">
                                 Ticket de Welldent
                             </td>
+                        </tr>
+                        <tr>
+                            <td align="center">#Pedido: {{$rpta1[0]->nNumeroPedido}}</td>
+                            <td align="center">{{$date}}</td>
                         </tr>
                     </table>
                 </td>
@@ -71,7 +75,7 @@
         </table>
 
         @if (count($rpta2) > 0)
-        <table width="50%" cellspacing="0" cellspacing="1" border="1" align="center">
+        <table width="50%" cellspacing="0" border="1" align="center">
             <thead style="background-color: lightgray;">
                 <tr align="center" align="middle">
                     <th colspan="5">Detalle del Pedido</th>
@@ -99,7 +103,7 @@
         @endif
 
         @if (count($rpta3) > 0)
-        <table width="50%" cellspacing="0" cellspacing="1" border="1" align="center">
+        <table width="50%" cellspacing="0" border="1" align="center">
             <thead style="background-color: lightgray;">
                 <tr align="center" align="middle">
                     <th colspan="5">Detalle los Abonos</th>
@@ -124,12 +128,30 @@
                 @endforeach
             </tbody>
         </table>
-        @else
-        <table width="50%" cellspacing="0" cellspacing="1" align="center">
+        <table width="30%" cellspacing="0" align="center">
             <tr>
-                <td align="center">
-                    <h3><strong>Sin abonos registrados</strong></h3>
+                <td align="right"><strong>Abono:</strong></td>
+                <td align="right">${{number_format($rpta4[0]->totalAbonos, 2)}}</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Total:</strong></td>
+                <td align="right">${{number_format($rpta4[0]->totalPedido, 2)}}</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Restante:</strong></td>
+                <td align="right">${{number_format($rpta4[0]->restante, 2)}}</td>
+            </tr>
+        </table>
+        @else
+        <table width="50%" cellspacing="0" align="center">
+            <tr>
+                <td colspan="2" align="center" style="margin-bottom: 15px !important;">
+                    <strong>Sin abonos registrados</strong>
                 </td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Total:</strong></td>
+                <td align="right">${{number_format($rpta4[0]->totalPedido, 2)}}</td>
             </tr>
         </table>
         @endif

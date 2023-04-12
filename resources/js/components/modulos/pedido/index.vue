@@ -297,7 +297,6 @@
                 axios.post(url, {
                         'nIdPedido'  : nIdPedido
                 }, config).then(response => {
-                    console.log(response.data);
                     var oMyBlob = new Blob([response.data], {type : 'application/pdf'});
                     var url = URL.createObjectURL(oMyBlob);
                     window.open(url);
@@ -313,6 +312,13 @@
                 });
             },
             setGenerarTicket(nIdPedido){
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Generando ticket...'
+                })
+
                 var config = {
                     responseType: 'blob'
                 }
@@ -323,15 +329,14 @@
                     var oMyBlob = new Blob([response.data], {type : 'application/pdf'}); // the blob
                     var url = URL.createObjectURL(oMyBlob);
                     window.open(url);
-                    this.loading.close();
-                    this.$router.push('/pedido');
+                    loading.close();
                 }).catch(error => {
-                    console.log(error);
+                    console.log(error.response);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'});
                         location.reload();
                         sessionStorage.clear();
-                        this.fullscreenLoading = false;
+                        loading.close();
                     }
                 })
             },

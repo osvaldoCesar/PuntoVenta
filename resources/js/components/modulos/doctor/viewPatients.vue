@@ -74,26 +74,26 @@
                                 <tr>
                                     <th>DNI</th>
                                     <th>Nombre</th>
-                                    <th>RFC</th>
+                                    <!-- <th>RFC</th>
                                     <th>Correo</th>
-                                    <th>Teléfono</th>
-                                    <th>Acciones</th>
+                                    <th>Teléfono</th> -->
+                                    <!-- <th>Acciones</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in listarDoctoresPaginated" :key="index">
                                     <td v-text="item.dni"></td>
                                     <td v-text="item.fullname"></td>
-                                    <td v-text="item.rfc"></td>
+                                    <!-- <td v-text="item.rfc"></td>
                                     <td v-text="item.email"></td>
-                                    <td v-text="item.phone"></td>
-                                    <td>
+                                    <td v-text="item.phone"></td> -->
+                                    <!-- <td>
                                         <template v-if="listaRolPermisosByUsuario.includes('doctor.editar')">
                                             <router-link  class="btn btn-flat btn-danger btn-sm" :to="{ name: 'doctor.editar', params: {id: item.id}}">
                                                 <i class="fas fa-pencil-alt"></i> Eliminar
                                             </router-link>
                                         </template>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class OrdersController extends Controller
 {
@@ -161,10 +162,16 @@ class OrdersController extends Controller
                                                                     [
                                                                         $nIdPedido
                                                                     ]);
+
+        $rpta4       =   DB::select('call sp_Pedido_getListarTotales (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
         $pdf = PDF::loadView('reportes.pedido.pdf.ver', [
             'rpta1' =>  $rpta1,
             'rpta2' =>  $rpta2,
             'rpta3' =>  $rpta3,
+            'rpta4' =>  $rpta4,
             'logo'  =>  $logo
         ]);
         return $pdf->download('invoice.pdf');
@@ -230,10 +237,20 @@ class OrdersController extends Controller
                                                                     [
                                                                         $nIdPedido
                                                                     ]);
+
+        $rpta4       =   DB::select('call sp_Pedido_getListarTotales (?)',
+                                                                    [
+                                                                        $nIdPedido
+                                                                    ]);
+
+        $date = Carbon::now();
+
         $pdf = PDF::loadView('reportes.pedido.pdf.ticket', [
             'rpta1' =>  $rpta1,
             'rpta2' =>  $rpta2,
             'rpta3' =>  $rpta3,
+            'rpta4' =>  $rpta4,
+            'date' =>  $date->format('d-m-Y - h:i:s A'),
             'logo'  =>  $logo
         ]);
         return $pdf->download('invoice.pdf');

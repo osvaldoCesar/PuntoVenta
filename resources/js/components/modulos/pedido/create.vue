@@ -664,6 +664,7 @@ import { nextTick } from 'vue';
                     this.loading.close();
                     this.$router.push('/pedido');
                 }).catch(error => {
+                    console.log("Dentro de catch de gnerar ticker")
                     console.log(error);
                     if (error.response.status == 401) {
                         this.$router.push({name: 'login'});
