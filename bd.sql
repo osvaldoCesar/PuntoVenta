@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS `details_orders`;
 CREATE TABLE IF NOT EXISTS `details_orders` (
   `order_id` bigint(20) unsigned NOT NULL,
   `product_id` bigint(20) unsigned NOT NULL,
-  `quantity` smallint(6) DEFAULT '12',
+  `quantity` bigint(20) DEFAULT '12',
   `price` double DEFAULT '12',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -368,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `description` text COLLATE utf8mb4_unicode_ci,
   `stock` smallint(6) NOT NULL DEFAULT '1',
   `state` enum('Y','N') COLLATE utf8mb4_unicode_ci DEFAULT 'Y',
-  `price` double(4,2) NOT NULL DEFAULT '10.50',
+  `price` double(8,2) NOT NULL DEFAULT '10.50',
   `categorie_id` bigint(20) unsigned DEFAULT NULL,
   `created_by` bigint(20) unsigned NOT NULL,
   `updated_by` bigint(20) unsigned NOT NULL,

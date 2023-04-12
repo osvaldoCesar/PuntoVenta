@@ -147,13 +147,13 @@
                                                             <td>
                                                                 <el-select v-model="item.nIdProducto"
                                                                     @change="obtenerProducto(item.nIdProducto, index)"
-                                                                    placeholder="Seleccione una Producto"
+                                                                    placeholder="Seleccione un Producto"
                                                                     clearable
                                                                     filterable>
                                                                     <el-option
                                                                         v-for="item in listProductos"
                                                                         :key="item.id"
-                                                                        :label="item.name"
+                                                                        :label="item.name + ' - ' + item.categoria"
                                                                         :value="item.id">
                                                                     </el-option>
                                                                 </el-select>
@@ -181,20 +181,27 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <el-row :gutter="16">
-                                                <el-col :span="16">
+                                            <el-row :gutter="24">
+                                                <el-col :span="12">
                                                     <vs-input border v-model="cComentario" placeholder="Comentario" />
                                                 </el-col>
-                                            </el-row>
-                                            <el-row :gutter="20">
-                                                <el-col :span="16">
+                                                <el-col :span="12">
                                                     <el-input-number border v-model="pAbono" placeholder="Abono/Pago"
                                                                                 controls-position="right"
                                                                                 :min="0"
                                                                                 :max="fTotalPedido"></el-input-number>
                                                 </el-col>
-                                                <el-col :span="8">
-                                                    <strong>Total = </strong> <strong style="color: red"> {{ fTotalPedido = totalPedido}} </strong>
+
+                                            </el-row>
+                                            <el-row :gutter="24">
+                                                <el-col :span="6">
+                                                    <strong>SubTotal = </strong> <strong style="color: red"> $&nbsp;{{ fTotalPedido = totalPedido}} </strong>
+                                                </el-col>
+                                                <el-col :span="6">
+                                                    <strong>Abono = </strong> <strong style="color: red"> $&nbsp;{{ pAbono }} </strong>
+                                                </el-col>
+                                                <el-col :span="6">
+                                                    <strong>Restante = </strong> <strong style="color: red"> $&nbsp;{{ totalPedido - pAbono }} </strong>
                                                 </el-col>
                                             </el-row>
                                         </template>
