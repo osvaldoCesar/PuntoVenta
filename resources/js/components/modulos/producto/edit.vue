@@ -48,7 +48,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Stock</label>
                                                 <div class="col-md-9">
-                                                    <el-input-number v-model="fillEditarProducto.nStock" controls-position="right" @keyup.enter="setEditarProducto" :min="1"></el-input-number>
+                                                    <el-input-number v-model="fillEditarProducto.nStock" controls-position="right" @keyup.enter="setEditarProducto" :min="1" :max="1000000000"></el-input-number>
                                                 </div>
                                             </div>
                                         </div>

@@ -139,8 +139,6 @@
                                                             <th>Stock</th>
                                                             <th>Precio</th>
                                                             <th>SubTotal</th>
-                                                            <th>Descuento</th>
-                                                            <th>Total</th>
                                                             <th>Acción</th>
                                                         </tr>
                                                     </thead>
@@ -168,15 +166,6 @@
                                                             </td>
                                                             <td v-text="item.fPrecio"></td>
                                                             <td>{{ item.fSubTotal = item.nStock * item.fPrecio }}</td>
-                                                            <td>
-                                                                <el-input-number v-model="item.fDescuento"
-                                                                                controls-position="right"
-                                                                                :precision="2"
-                                                                                :step="50.00"
-                                                                                :min="0"
-                                                                                :max="(item.nIdProducto) ? item.fSubTotal : 0"></el-input-number>
-                                                            </td>
-                                                            <td>{{ item.fTotal = item.fSubTotal - item.fDescuento }}</td>
                                                             <td>
                                                                 <el-tooltip class="item" effect="dark" content="Remover Producto" placement="left">
                                                                     <vs-button
@@ -302,7 +291,7 @@ import { nextTick } from 'vue';
         computed: {
             totalPedido(){
                 return this.listPedidos.reduce(function(valorAnterior, valorActual){
-                    return valorAnterior + parseFloat(valorActual.fTotal)
+                    return valorAnterior + parseFloat(valorActual.fSubTotal)
                 },0)
             }
         },
@@ -484,13 +473,11 @@ import { nextTick } from 'vue';
                         'nStockFlag'    : '',
                         'fPrecio'       : '',
                         'fSubTotal'     : '',
-                        'fDescuento'    : '',
-                        'fTotal'        : '',
                     })
                 }else{
                     let contador = 0;
                     this.listPedidos.map(function(x, y){
-                        if (!x.nIdProducto || !x.nStock || !x.fPrecio || !x.fSubTotal || !x.fTotal) {
+                        if (!x.nIdProducto || !x.nStock || !x.fPrecio || !x.fSubTotal) {
                             contador++;
                             // Notificación
                             const noti = me.$vs.notification({
@@ -509,8 +496,6 @@ import { nextTick } from 'vue';
                             'nStockFlag'    : '',
                             'fPrecio'       : '',
                             'fSubTotal'     : '',
-                            'fDescuento'    : '',
-                            'fTotal'        : '',
                         })
                     }
                 }

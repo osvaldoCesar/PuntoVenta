@@ -72,12 +72,13 @@ class OrdersController extends Controller
             $listPedidoSize   =    sizeof($listPedido);
             if ($listPedidoSize > 0) {
                 foreach ($listPedido as $key => $value) {
-                    DB::select('call sp_Pedido_setRegistrarDetallePedido(?, ?, ?, ?)',
+                    DB::select('call sp_Pedido_setRegistrarDetallePedido(?, ?, ?, ?, ?)',
                                                                 [
                                                                     $nIdPedido,
                                                                     $value['nIdProducto'],
                                                                     $value['nStock'],
                                                                     $value['fPrecio'],
+                                                                    $value['fDescuento'],
                                                                 ]);
                 }
             }

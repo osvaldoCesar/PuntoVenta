@@ -78,7 +78,7 @@
         <table width="50%" cellspacing="0" border="1" align="center">
             <thead style="background-color: lightgray;">
                 <tr align="center" align="middle">
-                    <th colspan="5">Detalle del Pedido</th>
+                    <th colspan="7">Detalle del Pedido</th>
                 </tr>
                 <tr>
                     <th>#</th>
@@ -86,6 +86,8 @@
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>SubTotal</th>
+                    <th>Descuento</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -96,6 +98,8 @@
                     <td align="center"><span>{{$value->nCantidad}}</span></td>
                     <td align="center"><span>${{number_format($value->fPrecio, 2)}}</span></td>
                     <td align="center"><span>${{number_format($value->fSubTotal, 2)}}</span></td>
+                    <td align="center"><span>${{number_format($value->fDescuento, 2)}}</span></td>
+                    <td align="center"><span>${{number_format($value->fTotal, 2)}}</span></td>
                 </tr>
                 @endforeach
             </tbody>
