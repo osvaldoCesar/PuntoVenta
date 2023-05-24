@@ -16,22 +16,22 @@ class OrdersController extends Controller
     public function getListarPedidos(Request $request){
         if(!$request->ajax()) return redirect('/');
 
-        $dDni        =      $request->dDni;
-        $tDni     =      $request->tDni;
+        $dNombre        =      $request->dNombre;
+        $pNombre     =      $request->pNombre;
         $cPedido        =      $request->cPedido;
         $cEstado        =      $request->cEstado;
         $dFechaCita      =   $request->dFechaCita;
 
-        $dDni        =    ($dDni      ==  NULL)  ?  ($dDni     =   '')  :  $dDni;
-        $tDni     =    ($tDni   ==  NULL)  ?  ($tDni  =   '')  :  $tDni;
+        $dNombre        =    ($dNombre      ==  NULL)  ?  ($dNombre     =   '')  :  $dNombre;
+        $pNombre     =    ($pNombre   ==  NULL)  ?  ($pNombre  =   '')  :  $pNombre;
         $cPedido        =    ($cPedido      ==  NULL)  ?  ($cPedido     =   '')  :  $cPedido;
         $cEstado        =    ($cEstado      ==  NULL)  ?  ($cEstado     =   '')  :  $cEstado;
         $dFechaCita      =      ($dFechaCita   ==  NULL) ? ($dFechaCita   =  '')    : $dFechaCita;
 
         $rpta        =      DB::select('call sp_Pedido_getListarPedidos(?, ?, ?, ?, ?)',
                                                                     [
-                                                                        $dDni,
-                                                                        $tDni,
+                                                                        $dNombre,
+                                                                        $pNombre,
                                                                         $cPedido,
                                                                         $cEstado,
                                                                         $dFechaCita

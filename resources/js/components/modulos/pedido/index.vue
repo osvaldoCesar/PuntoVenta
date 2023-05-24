@@ -29,31 +29,47 @@
                             <div class="card-body">
                                 <form role="form">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <!-- <div class="col-md-3">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">#Pedido</label>
                                                 <div class="col-md-9">
                                                     <input ref="num_pedido" placeholder="Número de pedido" type="text" class="form-control" v-model="fillBsqPedido.cPedido" @keyup.enter="getListarPedidos">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
+                                        </div> -->
+                                        <!-- <div class="col-md-3">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">DNI Doc</label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control" v-model="fillBsqPedido.dDni" @keyup.enter="getListarPedidos">
                                                 </div>
                                             </div>
+                                        </div> -->
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-md-4 col-form-label">Nombre Doctor</label>
+                                                <div class="col-md-8">
+                                                    <input ref="nom_doctor" type="text" class="form-control" v-model="fillBsqPedido.dNombre" @keyup.enter="getListarPedidos">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-md-4 col-form-label">Nombre Paciente</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" v-model="fillBsqPedido.pNombre" @keyup.enter="getListarPedidos">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-3">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">DNI Técnico</label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control" v-model="fillBsqPedido.tDni" @keyup.enter="getListarPedidos">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
+                                        </div> -->
+                                        <!-- <div class="col-md-3">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Fecha de entrega</label>
                                                 <div class="col-md-9">
@@ -66,8 +82,8 @@
                                                     </el-date-picker>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
+                                        </div> -->
+                                        <div class="col-md-4">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Estado</label>
                                                 <div class="col-md-9">
@@ -112,10 +128,10 @@
                             <thead>
                                 <tr>
                                     <th>#Pedido</th>
-                                    <th>DNI Doctor</th>
+                                    <!-- <th>DNI Doctor</th> -->
                                     <th>Doctor</th>
-                                    <th>DNI Técnico</th>
-                                    <th>DNI Paciente</th>
+                                    <th>Técnico</th>
+                                    <th>Paciente</th>
                                     <th>Total</th>
                                     <th>Vendedor</th>
                                     <th>Estado</th>
@@ -125,10 +141,10 @@
                             <tbody>
                                 <tr v-for="(item, index) in listarPedidosPaginated" :key="index">
                                     <td v-text="item.pedido"></td>
-                                    <td v-text="item.dniDoctor"></td>
+                                    <!-- <td v-text="item.dniDoctor"></td> -->
                                     <td v-text="item.doctor"></td>
-                                    <td v-text="item.dniTecnico"></td>
-                                    <td v-text="item.dniPaciente"></td>
+                                    <td v-text="item.tecnico"></td>
+                                    <td v-text="item.paciente"></td>
                                     <td v-text="item.total"></td>
                                     <td v-text="item.vendedor"></td>
                                     <td>
@@ -192,8 +208,8 @@
         data() {
             return {
                 fillBsqPedido: {
-                    dDni: '',
-                    tDni: '',
+                    dNombre: '',
+                    pNombre: '',
                     cPedido: '',
                     cEstado: '',
                     dFechaCita: ''
@@ -212,7 +228,7 @@
         },
         mounted() {
             this.getListarPedidos();
-            this.$refs.num_pedido.focus()
+            this.$refs.nom_doctor.focus()
         },
         computed: {
             // Obtener el número de páginas
@@ -243,11 +259,12 @@
         },
         methods: {
             limpiarCriteriosBsq(){
-                this.fillBsqPedido.dDni      = '';
-                this.fillBsqPedido.tDni   = '';
+                this.fillBsqPedido.dNombre      = '';
+                this.fillBsqPedido.pNombre   = '';
                 this.fillBsqPedido.cPedido      = '';
                 this.fillBsqPedido.cEstado      = '';
                 this.fillBsqPedido.dFechaCita   = '';
+                this.getListarPedidos();
             },
             limpiarBandejaUsuarios(){
                 this.listPedidos = [];
@@ -262,8 +279,8 @@
                 var url = '/operacion/pedido/getListarPedidos'
                 axios.get(url, {
                     params: {
-                        'dDni'      :  this.fillBsqPedido.dDni,
-                        'tDni'      :  this.fillBsqPedido.tDni,
+                        'dNombre'      :  this.fillBsqPedido.dNombre,
+                        'pNombre'      :  this.fillBsqPedido.pNombre,
                         'cPedido'      :  this.fillBsqPedido.cPedido,
                         'cEstado'      :  this.fillBsqPedido.cEstado,
                         'dFechaCita'   :  this.fillBsqPedido.dFechaCita

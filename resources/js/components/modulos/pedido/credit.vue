@@ -31,7 +31,14 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Cantidad a abonar</label>
                                                 <div class="col-md-9">
-                                                    <el-input-number ref="abono_total" v-model="fillAbonarPedido.fAbono" controls-position="right" @keyup.enter="setRegistrarAbono" :min="1" :max="this.fTotalRestante"></el-input-number>
+                                                    <el-input-number ref="abono_total"
+                                                    v-model="fillAbonarPedido.fAbono"
+                                                    controls-position="right"
+                                                    @keyup.enter="setRegistrarAbono"
+                                                    :precision="2"
+                                                    :step="50.00"
+                                                    :min="1"
+                                                    :max="this.fTotalRestante"></el-input-number>
                                                 </div>
                                             </div>
                                         </div>
