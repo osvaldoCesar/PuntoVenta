@@ -157,7 +157,7 @@
                                             <button class="btn btn-flat btn-info btn-sm" @click.prevent="setGenerarDocumento(item.id)">
                                                 <i class="far fa-file-pdf"></i> Ver PDF
                                             </button>
-                                            <button class="btn btn-flat btn-secondary btn-sm" @click.prevent="setGenerarTicket(item.id)">
+                                            <button class="btn btn-flat btn-secondary btn-sm" @click.prevent="setGenerarTicket2(item.id)">
                                                 <i class="fa-solid fa-money-check-dollar"></i> Ticket
                                             </button>
                                         </template>
@@ -327,6 +327,32 @@
                         loading.close();
                     }
                 });
+            },
+            setGenerarTicket2(nIdPedido){
+                const loading = this.$vs.loading({
+                    type: 'points',
+                    color: '#90A637',
+                    background: '#DBE6B1',
+                    text: 'Generando ticket...'
+                })
+
+                var config = {
+                    responseType: 'blob'
+                }
+                var url = '/operacion/pedido/setGenerarTicket2'
+                axios.post(url, {
+                    'nIdPedido'       :   nIdPedido
+                }, config).then(response => {
+                    loading.close();
+                }).catch(error => {
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        this.$router.push({name: 'login'});
+                        location.reload();
+                        sessionStorage.clear();
+                        loading.close();
+                    }
+                })
             },
             setGenerarTicket(nIdPedido){
                 const loading = this.$vs.loading({
