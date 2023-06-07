@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Mike42\Escpos;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\PrintBuffers\ImagePrintBuffer;
 use Mike42\Escpos\CapabilityProfiles\DefaultCapabilityProfile;
@@ -297,25 +298,68 @@ class OrdersController extends Controller
         $connector = new WindowsPrintConnector($nombreImpresora);
         $impresora = new Printer($connector);
         $logo       =   public_path('img/AdminLTELogo.png');
-        $impresora->setJustification(Printer::JUSTIFY_LEFT);
+
+
+
+        /*
+        Intentaremos cargar e imprimir
+        el logo
+        */
+        // try{
+            //     $logo = EscposImage::load($logo, false);
+            //     $impresora->bitImage($logo);
+        // }catch(Exception $e){/*No hacemos nada si hay error*/}
+
+
+        $impresora->setJustification(Printer::JUSTIFY_CENTER);
+        $impresora->setTextSize(2, 2);
+        $impresora->text("Ticket Welldent" . "\n");
+        $impresora->setTextSize(1, 1);
+        $impresora->text("#Pedido: " . $rpta1[0]->nNumeroPedido . "\n");
+        $impresora->text("Fecha pedido: " . date('d-m-Y', strtotime($rpta1[0]->dFechaPedido)) . "\n");
+        // $impresora->text("Estatus: " . $rpta1[0]->cEstadoPedido . "\n");
+        $impresora->text("Vendedor: " . $rpta1[0]->cVendedor . "\n");
+        $impresora->text("Fecha entrega: " . date('d-m-Y', strtotime($rpta1[0]->dFechaCita)) . "\n");
+        $impresora->text("Técnico: " . $rpta1[0]->tTechnical . "\n");
+        $impresora->text("Doctor: " . $rpta1[0]->dDoctor . "\n");
+        $impresora->text("Paciente: " . $rpta1[0]->pPaciente . "\n");
+        #impresoraa también
+        $impresora->text("F. impres.: " .date("d-m-Y h:i a")."\n");
+
+        $impresora->text("\nProd  Cant P.Uni SubT Desc Total");
+
+        foreach ($rpta2 as $key => $value) {
+            $impresora->setJustification(Printer::JUSTIFY_LEFT);
+            $impresora->text($value->cProducto. ' - ' . $value->categoria . "\n");
+            $impresora->setJustification(Printer::JUSTIFY_RIGHT);
+            $impresora->text((strlen(($value->nCantidad)) <= 2) ? '  '. ($value->nCantidad).'  ' : ' '. ($value->nCantidad).'  ');
+            $impresora->text((strlen(($value->fPrecio)) <= 4) ? '$'. ($value->fPrecio).' ' : '$'.($value->fPrecio));
+            $impresora->text((strlen(($value->fSubTotal)) <= 4) ? '$'. ($value->fSubTotal).' ' : '$'.($value->fSubTotal));
+            $impresora->text((strlen(($value->fDescuento)) <= 4) ? '$'. ($value->fDescuento).' ' : ((strlen(($value->fDescuento)) <= 1) ? '   $'.($value->fDescuento) : '   $'.($value->fDescuento)));
+            $impresora->text('$'.$value->fTotal. "\n");
+        }
 
         // 32 espacios
-        $impresora->text("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        $impresora->text("Prod  ");
-        $impresora->text("Cant ");
-        $impresora->text("P.Uni ");
-        $impresora->text("SubT ");
-        $impresora->text("Desc ");
-        $impresora->text("Total");
-        foreach ($rpta2 as $key => $value) {
-            $impresora->text((strlen(($value->cProducto)) >= 6) ? Str::contains($value->cProducto, 'Cor') : ($value->cProducto));
-            $impresora->text((strlen(($value->nCantidad)) <= 2) ? '  '. ($value->nCantidad).'  ' : '  '. ($value->nCantidad).' ');
-            $impresora->text((strlen(($value->fPrecio)) <= 4) ? ' '. ($value->fPrecio).' ' : ($value->fPrecio));
-            $impresora->text((strlen(($value->fSubTotal)) <= 4) ? ' '. ($value->fSubTotal).' ' : ($value->fSubTotal));
-            $impresora->text((strlen(($value->fDescuento)) <= 4) ? ' '. ($value->fDescuento).' ' : ($value->fDescuento));
-            $impresora->text($value->fTotal);
+        if (count($rpta3) > 0) {
+            $impresora->setJustification(Printer::JUSTIFY_LEFT);
+            $impresora->text("\nAbono       ");
+            $impresora->text("Fecha            \n");
+            foreach ($rpta3 as $key => $value) {
+                $impresora->setJustification(Printer::JUSTIFY_LEFT);
+                $impresora->text((strlen(($value->abonos)) <= 3) ? '$'. number_format($value->abonos, 2)."     " : '$'. number_format($value->abonos, 2)."    ");
+                $impresora->text(date('d-m-y h:i a', strtotime($value->fecha)). "\n");
+            }
+            $impresora->setJustification(Printer::JUSTIFY_RIGHT);
+            $impresora->text("\nAbonos  : $". number_format($rpta4[0]->totalAbonos, 2));
+            $impresora->text("\nTotal   : $". number_format($rpta4[0]->totalPedido, 2));
+            $impresora->text("\nRestante: $". number_format($rpta4[0]->restante, 2));
+        } else {
+            $impresora->setJustification(Printer::JUSTIFY_CENTER);
+            $impresora->text("\nSin abonos registrados\n");
+            $impresora->setJustification(Printer::JUSTIFY_RIGHT);
+            $impresora->text("Total     : $". number_format($rpta4[0]->totalPedido, 2));
         }
-        $impresora->setTextSize(1, 1);
+
         $impresora->feed(3);
         $impresora->close();
         return $rpta1;
