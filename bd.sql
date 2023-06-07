@@ -1223,8 +1223,8 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `sp_Reporte_getListarPedidos`;
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Reporte_getListarPedidos`(
-	IN `cNombre` VARCHAR(50),
-	IN `cDocumento` VARCHAR(50),
+	IN `dnombre` VARCHAR(50),
+	IN `pnombre` VARCHAR(50),
 	IN `cPedido` VARCHAR(50),
 	IN `cEstado` CHAR(1),
 	IN `dFechaInicio` VARCHAR(50),
@@ -1235,21 +1235,26 @@ BEGIN
 				pedido.order_number	AS	pedido,
 				paciente.document		AS	documento,
 				CONCAT_WS(' ', paciente.name, paciente.lastname)	AS	paciente,
-				(
-					SELECT	SUM(detalle_venta.price)
-					FROM		details_orders	detalle_venta
-					WHERE		detalle_venta.order_id		=	pedido.id
-				)	AS	total,
+                paciente.dni			AS	dniPaciente,
+				tecnico.rfc				AS	rfcTechnical,
+				CONCAT_WS(' ', tecnico.name, tecnico.lastname)	AS	tecnico,
+                tecnico.dni				AS	dniTecnico,
+				CONCAT_WS(' ', doctor.name, doctor.lastname)	AS	doctor,
+                doctor.dni				AS	dniDoctor,
+				pedido.total	AS	total,
 				CASE	IFNULL(pedido.state, '')	WHEN	'A'	THEN	'ACTIVO'
-																			ELSE	'RECHAZADO'
+															WHEN	'I'	THEN	'RECHAZADO'
+																			ELSE	'LIQUIDADO'
 																			END	estado,
 				IFNULL(pedido.state, '')	AS	state,
 				CONCAT_WS(' ', vendedor.firstname, vendedor.lastname)	AS	vendedor
 	FROM		orders	pedido
 				INNER	JOIN	patients	paciente	ON	pedido.patient_id	=	paciente.id
+				INNER	JOIN	doctors	doctor	ON	doctor.id	=	paciente.doctor_id
+				INNER	JOIN	technicals	tecnico	ON	pedido.technical_id	=	tecnico.id
 				INNER	JOIN	users			vendedor	ON	pedido.user_id			=	vendedor.id
-	WHERE		CONCAT_WS(' ', paciente.name, paciente.lastname)	LIKE	CONCAT('%', cNombre, '%')
-				AND	paciente.document	LIKE	CONCAT('%', cDocumento, '%')
+	WHERE		CONCAT_WS(' ', doctor.name, doctor.lastname)	LIKE	CONCAT('%', dnombre, '%')
+                AND CONCAT_WS(' ', paciente.name, paciente.lastname)	LIKE	CONCAT('%', pnombre, '%')
 				AND	pedido.order_number	LIKE	CONCAT('%', cPedido, '%')
 				AND	(pedido.state	=	cEstado	OR	cEstado	=	'')
 				AND	((DATE(pedido.created_at)	BETWEEN	dFechaInicio	AND	dFechaFin)	OR	(dFechaInicio	=	''	AND	dFechaFin = ''))

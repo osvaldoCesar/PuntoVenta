@@ -12,8 +12,9 @@
             <tr>
                 <th>#</th>
                 <th>Pedido</th>
-                <th>RFC Cliente</th>
-                <th>Cliente</th>
+                <th>Doctor</th>
+                <th>Técnico</th>
+                <th>Paciente</th>
                 <th>Total</th>
                 <th>Vendedor</th>
                 <th>Estatus</th>
@@ -24,8 +25,9 @@
                 <tr>
                     <td>{{ $key+ 1}}</td>
                     <td>{{ $value->pedido }}</td>
-                    <td>{{ $value->documento }}</td>
-                    <td>{{ $value->cliente }}</td>
+                    <td>{{ $value->doctor }}</td>
+                    <td>{{ $value->tecnico }}</td>
+                    <td>{{ $value->paciente }}</td>
                     <td>{{ number_format($value->total, 2) }}</td>
                     <td>{{ $value->vendedor }}</td>
                     <td>{{ $value->state == 'A' ? 'Activo' : ($value->state == 'I' ? 'Rechazado' : 'Liquidado') }}</td>
